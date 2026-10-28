@@ -3,563 +3,90 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Confusing Verb Pairs Masterclass</title>
+    <meta name="description" content="Interactive English lessons and practice exercises.">
+    <title>English Lessons</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
         }
-        .tab-btn.active {
-            border-bottom: 3px solid #4F46E5;
-            color: #4F46E5;
-            font-weight: 700;
-        }
-        .match-card {
-            transition: all 0.2s ease;
-        }
-        .match-card.selected {
-            border-color: #4F46E5;
-            background-color: #EEF2FF;
-            transform: scale(1.02);
-        }
-        .match-card.matched {
-            border-color: #10B981;
-            background-color: #ECFDF5;
-            opacity: 0.6;
-            cursor: default;
-            pointer-events: none;
-        }
-        .match-card.error {
-            border-color: #EF4444;
-            background-color: #FEF2F2;
-            animation: shake 0.3s ease-in-out;
-        }
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            20%, 60% { transform: translateX(-5px); }
-            40%, 80% { transform: translateX(5px); }
-        }
     </style>
 </head>
 <body class="bg-slate-50 text-slate-800 min-h-screen flex flex-col">
-
-    <!-- Header & Navigation -->
-    <header class="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-sm">
-        <div class="max-w-6xl mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center gap-4">
-            <div class="flex items-center gap-3">
-                <div class="p-2.5 bg-indigo-600 text-white rounded-xl shadow-md shadow-indigo-200">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C20.832 18.477 19.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                </div>
-                <div>
-                    <h1 class="text-xl font-extrabold text-slate-900 leading-tight">Confusing Verbs Masterclass</h1>
-                    <p class="text-xs text-slate-500 font-medium">14 Essential English Verb Pairs Practice</p>
-                </div>
+    <header class="bg-white border-b border-slate-200">
+        <div class="max-w-6xl mx-auto px-4 py-4 flex items-center gap-3">
+            <div class="p-2.5 bg-indigo-600 text-white rounded-xl shadow-md shadow-indigo-200">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C20.832 18.477 19.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                </svg>
             </div>
-
-            <div class="flex items-center gap-3">
-                <button onclick="openCheatSheet()" class="px-3.5 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 text-xs font-semibold rounded-lg transition-colors flex items-center gap-1.5 border border-indigo-200">
-                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    Verb Reference Guide
-                </button>
+            <div>
+                <p class="text-xl font-extrabold text-slate-900 leading-tight">English Lessons</p>
+                <p class="text-xs text-slate-500 font-medium">Learn and practise at your own pace</p>
             </div>
-        </div>
-
-        <!-- Navigation Tabs -->
-        <div class="max-w-6xl mx-auto px-4 mt-2 flex overflow-x-auto gap-2 border-b border-slate-200 scrollbar-none">
-            <button onclick="switchTab('task1')" id="tab-task1" class="tab-btn px-4 py-3 text-sm font-semibold text-slate-600 hover:text-indigo-600 transition-all flex items-center gap-2 whitespace-nowrap active">
-                <span class="w-5 h-5 rounded-full bg-slate-200 text-xs flex items-center justify-center font-bold">1</span>
-                Matching
-            </button>
-            <button onclick="switchTab('task2')" id="tab-task2" class="tab-btn px-4 py-3 text-sm font-semibold text-slate-600 hover:text-indigo-600 transition-all flex items-center gap-2 whitespace-nowrap">
-                <span class="w-5 h-5 rounded-full bg-slate-200 text-xs flex items-center justify-center font-bold">2</span>
-                Multiple Choice
-            </button>
-            <button onclick="switchTab('task3')" id="tab-task3" class="tab-btn px-4 py-3 text-sm font-semibold text-slate-600 hover:text-indigo-600 transition-all flex items-center gap-2 whitespace-nowrap">
-                <span class="w-5 h-5 rounded-full bg-slate-200 text-xs flex items-center justify-center font-bold">3</span>
-                Fill in the Blanks
-            </button>
-            <button onclick="switchTab('task4')" id="tab-task4" class="tab-btn px-4 py-3 text-sm font-semibold text-slate-600 hover:text-indigo-600 transition-all flex items-center gap-2 whitespace-nowrap">
-                <span class="w-5 h-5 rounded-full bg-slate-200 text-xs flex items-center justify-center font-bold">4</span>
-                Error Spotting & Scenarios
-            </button>
         </div>
     </header>
 
-    <!-- Main Content Container -->
-    <main class="max-w-6xl mx-auto px-4 py-6 flex-grow w-full">
-
-        <!-- ================= TASK 1: MATCHING ================= -->
-        <section id="task1" class="tab-content block">
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 mb-6">
-                <div class="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-6">
-                    <div>
-                        <h2 class="text-lg font-bold text-slate-900">Task 1: Match Verbs to Translation</h2>
-                        <p class="text-sm text-slate-500">Click a English verb on the left, then click its Russian translation on the right.</p>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <span id="t1-score" class="text-xs font-bold px-3 py-1.5 bg-slate-100 text-slate-700 rounded-full border border-slate-200">Pairs Matched: 0 / 14</span>
-                        <button onclick="resetTask1()" class="text-xs text-indigo-600 font-semibold hover:underline">Reset</button>
-                    </div>
-                </div>
-
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <!-- Left Column: English -->
-                    <div id="t1-english-list" class="space-y-2.5"></div>
-                    <!-- Right Column: Russian -->
-                    <div id="t1-russian-list" class="space-y-2.5"></div>
-                </div>
-            </div>
+    <main class="max-w-6xl mx-auto px-4 py-10 sm:py-16 flex-grow w-full">
+        <section class="mb-10 max-w-2xl">
+            <p class="text-sm font-bold text-indigo-600 uppercase tracking-wider mb-3">Your learning space</p>
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight mb-4">Choose a lesson and start practising</h1>
+            <p class="text-slate-600 leading-relaxed">Interactive exercises to help you understand tricky English topics and use them with confidence.</p>
         </section>
 
-        <!-- ================= TASK 2: MULTIPLE CHOICE ================= -->
-        <section id="task2" class="tab-content hidden">
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 mb-6">
-                <div class="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-6">
-                    <div>
-                        <h2 class="text-lg font-bold text-slate-900">Task 2: Choose the Right Verb in Context</h2>
-                        <p class="text-sm text-slate-500">Select the option that correctly completes each sentence.</p>
+        <section aria-labelledby="lessons-heading">
+            <h2 id="lessons-heading" class="text-lg font-bold text-slate-900 mb-4">Available lessons</h2>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6 max-w-5xl">
+                <a href="lesson.html" class="group block bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:border-indigo-300 hover:shadow-lg transition-all">
+                    <div class="flex items-start justify-between gap-4 mb-5">
+                        <div class="p-3 bg-indigo-50 text-indigo-600 rounded-xl">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"></path>
+                            </svg>
+                        </div>
+                        <span class="text-xs font-bold px-3 py-1.5 bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200">Interactive</span>
                     </div>
-                    <div class="flex items-center gap-3">
-                        <button onclick="checkTask2()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl shadow-md transition-colors">Check Answers</button>
-                        <button onclick="resetTask2()" class="text-xs text-slate-500 font-semibold hover:underline">Reset</button>
+                    <h3 class="text-xl font-extrabold text-slate-900 group-hover:text-indigo-600 transition-colors mb-2">Confusing Verbs Masterclass</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-5">Master 14 commonly confused English verb pairs through matching, multiple choice, gap-fill and error-correction exercises.</p>
+                    <div class="flex items-center justify-between gap-4">
+                        <span class="text-xs font-semibold text-slate-500">4 practice activities</span>
+                        <span class="inline-flex items-center gap-2 text-sm font-bold text-indigo-600">
+                            Start lesson
+                            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                            </svg>
+                        </span>
                     </div>
-                </div>
+                </a>
 
-                <div id="t2-container" class="space-y-6"></div>
+                <a href="pronouns.html" class="group block bg-white rounded-2xl p-6 shadow-sm border border-slate-200 hover:border-indigo-300 hover:shadow-lg transition-all">
+                    <div class="flex items-start justify-between gap-4 mb-5">
+                        <div class="p-3 bg-indigo-50 text-indigo-600 rounded-xl">
+                            <svg class="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                            </svg>
+                        </div>
+                        <span class="text-xs font-bold px-3 py-1.5 bg-emerald-50 text-emerald-700 rounded-full border border-emerald-200">Interactive</span>
+                    </div>
+                    <h3 class="text-xl font-extrabold text-slate-900 group-hover:text-indigo-600 transition-colors mb-2">Pronouns &amp; Possessives</h3>
+                    <p class="text-sm text-slate-600 leading-relaxed mb-5">Practise personal and possessive pronouns with three Russian-language grammar exercises and instant answer checking.</p>
+                    <div class="flex items-center justify-between gap-4">
+                        <span class="text-xs font-semibold text-slate-500">3 practice activities</span>
+                        <span class="inline-flex items-center gap-2 text-sm font-bold text-indigo-600">
+                            Start lesson
+                            <svg class="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7l5 5m0 0l-5 5m5-5H6"></path>
+                            </svg>
+                        </span>
+                    </div>
+                </a>
             </div>
         </section>
-
-        <!-- ================= TASK 3: FILL IN BLANKS ================= -->
-        <section id="task3" class="tab-content hidden">
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 mb-6">
-                <div class="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-6">
-                    <div>
-                        <h2 class="text-lg font-bold text-slate-900">Task 3: Correct Form Fill-in</h2>
-                        <p class="text-sm text-slate-500">Fill in the blanks with the correct verb from the given pair in its <b>correct tense or form</b>.</p>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <button onclick="checkTask3()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl shadow-md transition-colors">Check Answers</button>
-                        <button onclick="resetTask3()" class="text-xs text-slate-500 font-semibold hover:underline">Reset</button>
-                    </div>
-                </div>
-
-                <div id="t3-container" class="space-y-6"></div>
-            </div>
-        </section>
-
-        <!-- ================= TASK 4: ERROR SPOTTING & SCENARIOS ================= -->
-        <section id="task4" class="tab-content hidden">
-            <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 mb-6">
-                <div class="flex flex-col md:flex-row justify-between md:items-center gap-4 mb-6">
-                    <div>
-                        <h2 class="text-lg font-bold text-slate-900">Task 4: Error Correction & Situational Logic</h2>
-                        <p class="text-sm text-slate-500">Analyze real-world scenarios and correct mistakes or choose the best response.</p>
-                    </div>
-                    <div class="flex items-center gap-3">
-                        <button onclick="checkTask4()" class="px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-xs rounded-xl shadow-md transition-colors">Check Answers</button>
-                        <button onclick="resetTask4()" class="text-xs text-slate-500 font-semibold hover:underline">Reset</button>
-                    </div>
-                </div>
-
-                <div id="t4-container" class="space-y-6"></div>
-            </div>
-        </section>
-
     </main>
 
-    <!-- Reference Modal / Cheat Sheet -->
-    <div id="cheat-sheet-modal" class="fixed inset-0 bg-slate-900/40 backdrop-blur-sm z-50 flex items-center justify-center hidden p-4">
-        <div class="bg-white w-full max-w-3xl rounded-2xl shadow-xl border border-slate-200 max-h-[85vh] flex flex-col overflow-hidden">
-            <div class="p-5 border-b border-slate-100 flex justify-between items-center bg-slate-50">
-                <h3 class="font-bold text-slate-900 text-lg flex items-center gap-2">
-                    <svg class="w-5 h-5 text-indigo-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C20.832 18.477 19.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                    Verb Pairs Reference Guide
-                </h3>
-                <button onclick="closeCheatSheet()" class="text-slate-400 hover:text-slate-600 p-1 rounded-lg">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                </button>
-            </div>
-            <div id="cheat-sheet-content" class="p-6 overflow-y-auto divide-y divide-slate-100 space-y-4">
-                <!-- Dynamic insertion -->
-            </div>
-        </div>
-    </div>
-
-    <!-- JS Logic -->
-    <script>
-        // Data Definitions
-        const verbPairs = [
-            { id: 1, pair: "argue / discuss", en1: "argue", ru1: "спорить, ругаться", en2: "discuss", ru2: "обсуждать", rule: "Argue = express angry disagreement; Discuss = talk about something constructively." },
-            { id: 2, pair: "notice / realize", en1: "notice", ru1: "замечать (органами чувств)", en2: "realize", ru2: "осознавать (умом)", rule: "Notice = become aware using senses (see, hear); Realize = understand or become aware mentally." },
-            { id: 3, pair: "avoid / prevent", en1: "avoid", ru1: "избегать, уклоняться", en2: "prevent", ru2: "предотвращать, не допускать", rule: "Avoid = stay away from something; Prevent = stop something from happening or someone from doing something." },
-            { id: 4, pair: "lend / borrow", en1: "lend", ru1: "одалживать (давать взаймы)", en2: "borrow", ru2: "занимать (брать взаймы)", rule: "Lend = give something temporarily to someone; Borrow = take something temporarily from someone." },
-            { id: 5, pair: "mind / matter", en1: "mind", ru1: "возражать, быть против", en2: "matter", ru2: "иметь значение, быть важным", rule: "Mind = feel annoyed or object to (used in questions/negatives); Matter = be important or of consequence." },
-            { id: 6, pair: "remember / remind", en1: "remember", ru1: "помнить, вспоминать", en2: "remind", ru2: "напоминать (кому-то)", rule: "Remember = keep in memory / recall yourself; Remind = make someone else remember." },
-            { id: 7, pair: "expect / wait", en1: "expect", ru1: "ожидать (рассчитывать)", en2: "wait", ru2: "ждать (проводить время)", rule: "Expect = think that something will happen; Wait = stay in one place or delay action until something happens." },
-            { id: 8, pair: "wish / hope", en1: "wish", ru1: "желать (маловероятно/нереально)", en2: "hope", ru2: "надеяться (реалистично)", rule: "Hope = want something to happen that is possible; Wish = want something improbable/impossible." },
-            { id: 9, pair: "beat / win", en1: "beat", ru1: "побеждать (кого-то/команду)", en2: "win", ru2: "выигрывать (приз, матч)", rule: "Beat = defeat an opponent/rival; Win = achieve victory in a game, match, race, or prize." },
-            { id: 10, pair: "refuse / deny", en1: "refuse", ru1: "отказываться (делать что-то)", en2: "deny", ru2: "отрицать (вину/факт)", rule: "Refuse = say you will not do something; Deny = state that something is not true." },
-            { id: 11, pair: "raise / rise", en1: "raise", ru1: "поднимать (что-то/кого-то)", en2: "rise", ru2: "подниматься (самому)", rule: "Raise = transitive (needs object: raise your hand); Rise = intransitive (goes up by itself: the sun rises)." },
-            { id: 12, pair: "lay / lie", en1: "lay", ru1: "класть, положить (что-то)", en2: "lie", ru2: "лежать (самому)", rule: "Lay (laid, laid) = put something down flat; Lie (lay, lain) = recline/be in horizontal position." },
-            { id: 13, pair: "steal / rob", en1: "steal", ru1: "красть (предмет/деньги)", en2: "rob", ru2: "грабить (человека/банк)", rule: "Steal = take an object/money unlawfully; Rob = steal from a person or location (bank, store)." },
-            { id: 14, pair: "advise / warn", en1: "advise", ru1: "советовать, давать рекомендацию", en2: "warn", ru2: "предупреждать (о опасности)", rule: "Advise = give helpful suggestion; Warn = inform someone of potential danger or problem." }
-        ];
-
-        // Task 2 Questions
-        const task2Questions = [
-            { id: 1, pair: "argue / discuss", sentence: "We need to _______ our business strategy for next year calmly.", options: ["argue", "discuss"], answer: "discuss", exp: "'Discuss' means talking about a topic constructively without conflict." },
-            { id: 2, pair: "notice / realize", sentence: "Did you _______ that new haircut she got yesterday?", options: ["notice", "realize"], answer: "notice", exp: "'Notice' refers to seeing or detecting something with your senses." },
-            { id: 3, pair: "avoid / prevent", sentence: "Wearing seatbelts can _______ serious injuries in traffic accidents.", options: ["avoid", "prevent"], answer: "prevent", exp: "'Prevent' means stopping something bad from happening." },
-            { id: 4, pair: "lend / borrow", sentence: "Could you _______ me 20 dollars until Friday?", options: ["lend", "borrow"], answer: "lend", exp: "You ask someone to 'lend' (give) you money; you 'borrow' (take) from them." },
-            { id: 5, pair: "mind / matter", sentence: "It doesn't _______ if we arrive ten minutes late.", options: ["mind", "matter"], answer: "matter", exp: "'Matter' means to be important or have consequences." },
-            { id: 6, pair: "remember / remind", sentence: "Please _______ me to turn off the oven before we leave.", options: ["remember", "remind"], answer: "remind", exp: "'Remind' means to make someone else remember." },
-            { id: 7, pair: "expect / wait", sentence: "We _______ high sales figures this quarter due to the new product launch.", options: ["expect", "wait"], answer: "expect", exp: "'Expect' means to anticipate or think something will happen." },
-            { id: 8, pair: "wish / hope", sentence: "I _______ you have a wonderful time on your vacation!", options: ["wish", "hope"], answer: "hope", exp: "'Hope' is used for positive, achievable future desires." },
-            { id: 9, pair: "beat / win", sentence: "Our team played amazingly and managed to _______ the championship leaders.", options: ["beat", "win"], answer: "beat", exp: "You 'beat' an opponent/team; you 'win' a match or championship." },
-            { id: 10, pair: "refuse / deny", sentence: "The suspect continues to _______ all allegations of fraud.", options: ["refuse", "deny"], answer: "deny", exp: "'Deny' means to state that a statement or charge is not true." },
-            { id: 11, pair: "raise / rise", sentence: "The government decided to _______ taxes on luxury items.", options: ["raise", "rise"], answer: "raise", exp: "'Raise' needs a direct object (taxes)." },
-            { id: 12, pair: "lay / lie", sentence: "I just want to _______ down on the sofa and rest for an hour.", options: ["lay", "lie"], answer: "lie", exp: "'Lie' is an intransitive verb meaning to recline." },
-            { id: 13, pair: "steal / rob", sentence: "Someone tried to _______ a bank downtown yesterday afternoon.", options: ["steal", "rob"], answer: "rob", exp: "You 'rob' a venue or person; you 'steal' an object/money." },
-            { id: 14, pair: "advise / warn", sentence: "The meteorologist _______ residents about the upcoming severe storm.", options: ["advise", "warn"], answer: "warn", exp: "'Warn' specifically alerts people to danger or problems." }
-        ];
-
-        // Task 3 Questions (Form/Tense Fill-in)
-        const task3Questions = [
-            { id: 1, pair: "steal / rob", sentence: "The thieves ________ (steal/rob) three valuable paintings from the gallery.", answer: "stole", exp: "Past simple of 'steal' (taking objects). The object is 'three valuable paintings'." },
-            { id: 2, pair: "lay / lie", sentence: "She ________ (lay/lie) the heavy baby gently into the crib.", answer: "laid", exp: "Past simple of 'lay' (put something down). Direct object is 'the baby'." },
-            { id: 3, pair: "raise / rise", sentence: "Prices have ________ (raise/rise) significantly over the last few months.", answer: "risen", exp: "Present Perfect form of 'rise' (go up by itself). No object." },
-            { id: 4, pair: "lend / borrow", sentence: "I ________ (lend/borrow) this book from the local library yesterday.", answer: "borrowed", exp: "Past simple of 'borrow' (take from someone/somewhere)." },
-            { id: 5, pair: "notice / realize", sentence: "At first I didn't see him, but then I ________ (notice/realize) he was standing in the shadow.", answer: "noticed", exp: "Past simple of 'notice' (detect with eyes/senses)." },
-            { id: 6, pair: "refuse / deny", sentence: "He ________ (refuse/deny) to answer any questions without his lawyer present.", answer: "refused", exp: "Past simple of 'refuse' (decline to do an action: refuse + to-infinitive)." },
-            { id: 7, pair: "remember / remind", sentence: "This song always ________ (remember/remind) me of my high school graduation.", answer: "reminds", exp: "Present simple of 'remind' (makes me remember)." },
-            { id: 8, pair: "beat / win", sentence: "Spain ________ (beat/win) the World Cup final in 2010.", answer: "won", exp: "Past simple of 'win' (achieve victory in a tournament/match)." }
-        ];
-
-        // Task 4 Questions (Error Spotting & Scenarios)
-        const task4Questions = [
-            {
-                id: 1,
-                title: "Scenario 1: Financial Help",
-                prompt: "Your friend says: <i>'Can you borrow me your car for the weekend?'</i> Is this sentence correct?",
-                options: [
-                    { text: "Correct", correct: false },
-                    { text: "Incorrect — should be 'Can you lend me your car...?'", correct: true },
-                    { text: "Incorrect — should be 'Can you mind me your car...?'", correct: false }
-                ],
-                explanation: "'Lend' means to give something temporarily. 'Borrow' means to receive/take."
-            },
-            {
-                id: 2,
-                title: "Scenario 2: Traffic Delay",
-                prompt: "You are stuck in traffic and call your colleague: <i>'I'm stuck in traffic, don't expect for me.'</i>",
-                options: [
-                    { text: "Correct", correct: false },
-                    { text: "Incorrect — should be 'don't wait for me.'", correct: true },
-                    { text: "Incorrect — should be 'don't prevent me.'", correct: false }
-                ],
-                explanation: "'Wait for someone' means staying until they arrive. 'Expect' means anticipating mentally."
-            },
-            {
-                id: 3,
-                title: "Scenario 3: Supermarket Incident",
-                prompt: "A man was caught taking a watch without paying. The news reports: <i>'A man robbed a watch from the department store.'</i>",
-                options: [
-                    { text: "Incorrect — should be 'stole a watch...'", correct: true },
-                    { text: "Incorrect — should be 'refused a watch...'", correct: false },
-                    { text: "Correct", correct: false }
-                ],
-                explanation: "You steal things (a watch, money), but you rob people or places (a store, a bank)."
-            },
-            {
-                id: 4,
-                title: "Scenario 4: Expressing a Wish",
-                prompt: "You want to speak fluent French right now, but you don't. How do you express this?",
-                options: [
-                    { text: "I hope I spoke fluent French.", correct: false },
-                    { text: "I wish I spoke fluent French.", correct: true },
-                    { text: "I expect I speak fluent French.", correct: false }
-                ],
-                explanation: "'Wish' + Past Simple expresses an unreal/hypothetical desire about the present."
-            }
-        ];
-
-        // App State
-        let selectedEnglish = null;
-        let selectedRussian = null;
-        let matchedPairs = 0;
-
-        // On Page Load
-        window.onload = function() {
-            initTask1();
-            initTask2();
-            initTask3();
-            initTask4();
-            populateCheatSheet();
-        };
-
-        // Navigation
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
-            document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
-
-            document.getElementById(tabId).classList.remove('hidden');
-            document.getElementById('tab-' + tabId).classList.add('active');
-        }
-
-        // Cheat Sheet Modal
-        function openCheatSheet() {
-            document.getElementById('cheat-sheet-modal').classList.remove('hidden');
-        }
-        function closeCheatSheet() {
-            document.getElementById('cheat-sheet-modal').classList.add('hidden');
-        }
-        function populateCheatSheet() {
-            const container = document.getElementById('cheat-sheet-content');
-            container.innerHTML = verbPairs.map(vp => `
-                <div class="py-2">
-                    <div class="flex items-center gap-2 mb-1">
-                        <span class="font-bold text-indigo-700 text-base">${vp.pair}</span>
-                    </div>
-                    <p class="text-xs text-slate-600 mb-1"><b>${vp.en1}</b>: ${vp.ru1} | <b>${vp.en2}</b>: ${vp.ru2}</p>
-                    <p class="text-xs bg-slate-100 text-slate-700 p-2 rounded-lg font-mono">💡 ${vp.rule}</p>
-                </div>
-            `).join('');
-        }
-
-        // ================= TASK 1 LOGIC =================
-        function initTask1() {
-            const enList = document.getElementById('t1-english-list');
-            const ruList = document.getElementById('t1-russian-list');
-
-            // Build single items list
-            let englishItems = [];
-            let russianItems = [];
-
-            verbPairs.forEach(vp => {
-                englishItems.push({ id: vp.id, type: '1', text: vp.en1, pairId: `${vp.id}-1` });
-                englishItems.push({ id: vp.id, type: '2', text: vp.en2, pairId: `${vp.id}-2` });
-
-                russianItems.push({ id: vp.id, type: '1', text: vp.ru1, pairId: `${vp.id}-1` });
-                russianItems.push({ id: vp.id, type: '2', text: vp.ru2, pairId: `${vp.id}-2` });
-            });
-
-            // Shuffle
-            englishItems.sort(() => Math.random() - 0.5);
-            russianItems.sort(() => Math.random() - 0.5);
-
-            enList.innerHTML = englishItems.map(item => `
-                <div onclick="selectMatch('en', '${item.pairId}', this)" id="en-${item.pairId}" class="match-card p-3 rounded-xl border border-slate-200 bg-white hover:border-indigo-300 cursor-pointer font-medium text-sm text-slate-800 flex justify-between items-center shadow-xs">
-                    <span>${item.text}</span>
-                    <span class="text-xs text-slate-400 font-normal">EN</span>
-                </div>
-            `).join('');
-
-            ruList.innerHTML = russianItems.map(item => `
-                <div onclick="selectMatch('ru', '${item.pairId}', this)" id="ru-${item.pairId}" class="match-card p-3 rounded-xl border border-slate-200 bg-white hover:border-indigo-300 cursor-pointer font-medium text-sm text-slate-800 flex justify-between items-center shadow-xs">
-                    <span>${item.text}</span>
-                    <span class="text-xs text-slate-400 font-normal">RU</span>
-                </div>
-            `).join('');
-
-            matchedPairs = 0;
-            updateT1Score();
-        }
-
-        function selectMatch(lang, pairId, element) {
-            if (element.classList.contains('matched')) return;
-
-            if (lang === 'en') {
-                if (selectedEnglish) selectedEnglish.element.classList.remove('selected');
-                selectedEnglish = { pairId, element };
-                element.classList.add('selected');
-            } else {
-                if (selectedRussian) selectedRussian.element.classList.remove('selected');
-                selectedRussian = { pairId, element };
-                element.classList.add('selected');
-            }
-
-            if (selectedEnglish && selectedRussian) {
-                if (selectedEnglish.pairId === selectedRussian.pairId) {
-                    // Match found
-                    selectedEnglish.element.classList.remove('selected');
-                    selectedRussian.element.classList.remove('selected');
-                    selectedEnglish.element.classList.add('matched');
-                    selectedRussian.element.classList.add('matched');
-                    selectedEnglish = null;
-                    selectedRussian = null;
-                    matchedPairs++;
-                    updateT1Score();
-                } else {
-                    // Error mismatch
-                    const el1 = selectedEnglish.element;
-                    const el2 = selectedRussian.element;
-                    el1.classList.add('error');
-                    el2.classList.add('error');
-                    setTimeout(() => {
-                        el1.classList.remove('error', 'selected');
-                        el2.classList.remove('error', 'selected');
-                    }, 400);
-                    selectedEnglish = null;
-                    selectedRussian = null;
-                }
-            }
-        }
-
-        function updateT1Score() {
-            document.getElementById('t1-score').innerText = `Matched: ${matchedPairs} / 28`;
-        }
-
-        function resetTask1() {
-            selectedEnglish = null;
-            selectedRussian = null;
-            initTask1();
-        }
-
-        // ================= TASK 2 LOGIC =================
-        function initTask2() {
-            const container = document.getElementById('t2-container');
-            container.innerHTML = task2Questions.map((q, idx) => `
-                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-3">
-                    <div class="flex items-start gap-2">
-                        <span class="font-bold text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded-md">${idx + 1}</span>
-                        <p class="text-sm font-semibold text-slate-800 leading-snug">${q.sentence.replace('_______', `<span id="t2-blank-${q.id}" class="inline-block px-3 py-0.5 bg-white border border-slate-300 rounded text-indigo-600 font-bold min-w-[80px] text-center">?</span>`)}</p>
-                    </div>
-                    <div class="flex flex-wrap gap-2 ml-7">
-                        ${q.options.map(opt => `
-                            <button onclick="selectTask2Option(${q.id}, '${opt}')" id="t2-opt-${q.id}-${opt}" class="t2-btn-${q.id} px-3.5 py-1.5 bg-white border border-slate-200 hover:border-indigo-400 text-slate-700 text-xs font-semibold rounded-lg transition-all">
-                                ${opt}
-                            </button>
-                        `).join('')}
-                    </div>
-                    <div id="t2-feedback-${q.id}" class="hidden text-xs p-2.5 rounded-lg ml-7 font-medium"></div>
-                </div>
-            `).join('');
-        }
-
-        const t2Answers = {};
-
-        function selectTask2Option(qId, val) {
-            t2Answers[qId] = val;
-            document.querySelectorAll(`.t2-btn-${qId}`).forEach(btn => {
-                btn.classList.remove('bg-indigo-600', 'text-white', 'border-indigo-600');
-                btn.classList.add('bg-white', 'text-slate-700');
-            });
-            const activeBtn = document.getElementById(`t2-opt-${qId}-${val}`);
-            activeBtn.classList.remove('bg-white', 'text-slate-700');
-            activeBtn.classList.add('bg-indigo-600', 'text-white', 'border-indigo-600');
-
-            document.getElementById(`t2-blank-${qId}`).innerText = val;
-        }
-
-        function checkTask2() {
-            task2Questions.forEach(q => {
-                const userAns = t2Answers[q.id];
-                const fb = document.getElementById(`t2-feedback-${q.id}`);
-                fb.classList.remove('hidden', 'bg-emerald-50', 'text-emerald-800', 'bg-rose-50', 'text-rose-800', 'border', 'border-emerald-200', 'border-rose-200');
-
-                if (userAns === q.answer) {
-                    fb.classList.add('bg-emerald-50', 'text-emerald-800', 'border', 'border-emerald-200');
-                    fb.innerHTML = `✓ <b>Correct!</b> ${q.exp}`;
-                } else {
-                    fb.classList.add('bg-rose-50', 'text-rose-800', 'border', 'border-rose-200');
-                    fb.innerHTML = `✗ <b>Incorrect.</b> Correct answer: <b>${q.answer}</b>. ${q.exp}`;
-                }
-            });
-        }
-
-        function resetTask2() {
-            Object.keys(t2Answers).forEach(k => delete t2Answers[k]);
-            initTask2();
-        }
-
-        // ================= TASK 3 LOGIC =================
-        function initTask3() {
-            const container = document.getElementById('t3-container');
-            container.innerHTML = task3Questions.map((q, idx) => `
-                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-3">
-                    <div class="flex items-start gap-2">
-                        <span class="font-bold text-xs bg-indigo-100 text-indigo-700 px-2 py-1 rounded-md">${idx + 1}</span>
-                        <div class="w-full">
-                            <p class="text-sm font-semibold text-slate-800 mb-2">
-                                ${q.sentence.replace('________', `<input type="text" id="t3-input-${q.id}" placeholder="type here..." class="px-2.5 py-1 border border-slate-300 rounded-lg text-indigo-700 font-bold text-sm w-36 focus:ring-2 focus:ring-indigo-400 focus:outline-none">`)}
-                            </p>
-                            <div id="t3-feedback-${q.id}" class="hidden text-xs p-2.5 rounded-lg font-medium mt-2"></div>
-                        </div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        function checkTask3() {
-            task3Questions.forEach(q => {
-                const input = document.getElementById(`t3-input-${q.id}`);
-                const userVal = input.value.trim().toLowerCase();
-                const fb = document.getElementById(`t3-feedback-${q.id}`);
-
-                fb.classList.remove('hidden', 'bg-emerald-50', 'text-emerald-800', 'bg-rose-50', 'text-rose-800', 'border', 'border-emerald-200', 'border-rose-200');
-
-                if (userVal === q.answer.toLowerCase()) {
-                    fb.classList.add('bg-emerald-50', 'text-emerald-800', 'border', 'border-emerald-200');
-                    fb.innerHTML = `✓ <b>Perfect!</b> ${q.exp}`;
-                    input.classList.add('border-emerald-500', 'bg-emerald-50');
-                } else {
-                    fb.classList.add('bg-rose-50', 'text-rose-800', 'border', 'border-rose-200');
-                    fb.innerHTML = `✗ <b>Expected:</b> "${q.answer}". ${q.exp}`;
-                    input.classList.add('border-rose-500', 'bg-rose-50');
-                }
-            });
-        }
-
-        function resetTask3() {
-            initTask3();
-        }
-
-        // ================= TASK 4 LOGIC =================
-        const t4Answers = {};
-
-        function initTask4() {
-            const container = document.getElementById('t4-container');
-            container.innerHTML = task4Questions.map((q, idx) => `
-                <div class="p-4 rounded-xl border border-slate-200 bg-slate-50/50 space-y-3">
-                    <h3 class="font-bold text-slate-900 text-sm flex items-center gap-2">
-                        <span class="w-2 h-2 rounded-full bg-indigo-600"></span>
-                        ${q.title}
-                    </h3>
-                    <p class="text-sm text-slate-700 bg-white p-3 rounded-lg border border-slate-200">${q.prompt}</p>
-                    <div class="space-y-2">
-                        ${q.options.map((opt, oIdx) => `
-                            <label class="flex items-start gap-2.5 p-2.5 rounded-lg border border-slate-200 bg-white hover:bg-slate-50 cursor-pointer text-xs font-medium text-slate-800">
-                                <input type="radio" name="t4-q-${q.id}" onclick="t4Answers[${q.id}] = ${opt.correct}" class="mt-0.5 text-indigo-600 focus:ring-indigo-500">
-                                <span>${opt.text}</span>
-                            </label>
-                        `).join('')}
-                    </div>
-                    <div id="t4-feedback-${q.id}" class="hidden text-xs p-2.5 rounded-lg font-medium"></div>
-                </div>
-            `).join('');
-        }
-
-        function checkTask4() {
-            task4Questions.forEach(q => {
-                const isCorrect = t4Answers[q.id];
-                const fb = document.getElementById(`t4-feedback-${q.id}`);
-                fb.classList.remove('hidden', 'bg-emerald-50', 'text-emerald-800', 'bg-rose-50', 'text-rose-800', 'border', 'border-emerald-200', 'border-rose-200');
-
-                if (isCorrect === true) {
-                    fb.classList.add('bg-emerald-50', 'text-emerald-800', 'border', 'border-emerald-200');
-                    fb.innerHTML = `✓ <b>Correct Analysis!</b> ${q.explanation}`;
-                } else {
-                    fb.classList.add('bg-rose-50', 'text-rose-800', 'border', 'border-rose-200');
-                    fb.innerHTML = `✗ <b>Not quite right.</b> ${q.explanation}`;
-                }
-            });
-        }
-
-        function resetTask4() {
-            Object.keys(t4Answers).forEach(k => delete t4Answers[k]);
-            initTask4();
-        }
-    </script>
+    <footer class="border-t border-slate-200 bg-white">
+        <div class="max-w-6xl mx-auto px-4 py-5 text-xs text-slate-500">English Lessons · Practice makes progress</div>
+    </footer>
 </body>
 </html>

@@ -1,0 +1,765 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Grammar Practice - Pronouns & Possessives</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .input-correct {
+            border-color: #22c55e !important;
+            background-color: #f0fdf4 !important;
+            color: #15803d !important;
+        }
+        .input-incorrect {
+            border-color: #ef4444 !important;
+            background-color: #fef2f2 !important;
+            color: #b91c1c !important;
+        }
+        .correct-badge {
+            display: inline-flex;
+            align-items: center;
+            color: #16a34a;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-left: 0.5rem;
+        }
+        .incorrect-badge {
+            display: inline-flex;
+            align-items: center;
+            color: #dc2626;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-left: 0.5rem;
+        }
+        .opt-btn {
+            transition: all 0.15s ease-in-out;
+        }
+        .opt-btn.selected {
+            border-color: #2563eb;
+            background-color: #eff6ff;
+            color: #1d4ed8;
+            font-weight: 700;
+        }
+        .opt-btn.correct-opt {
+            border-color: #22c55e !important;
+            background-color: #f0fdf4 !important;
+            color: #15803d !important;
+            font-weight: 700 !important;
+        }
+        .opt-btn.incorrect-opt {
+            border-color: #ef4444 !important;
+            background-color: #fef2f2 !important;
+            color: #b91c1c !important;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-slate-800 h-full flex flex-col selection:bg-brand-500 selection:text-white">
+
+    <!-- Sticky Header with Score Tracker -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
+                    <i class="fa-solid fa-graduation-cap text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg text-slate-900 leading-tight">Grammar Practice</h1>
+                    <p class="text-xs text-slate-500">Personal & Possessive Pronouns</p>
+                </div>
+            </div>
+
+            <!-- Global Score Board -->
+            <div class="flex items-center gap-4 bg-slate-100 p-2 sm:px-4 sm:py-2 rounded-2xl border border-slate-200/80">
+                <div class="text-right">
+                    <div class="text-xs font-medium text-slate-500">Результат</div>
+                    <div class="font-extrabold text-brand-600 text-sm sm:text-base"><span id="score-val">0</span> / <span id="total-val">33</span></div>
+                </div>
+                <div class="w-24 sm:w-32 bg-slate-200 h-3 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="bg-brand-600 h-full w-0 transition-all duration-500 ease-out"></div>
+                </div>
+                <div class="text-xs font-bold text-slate-700 w-9 text-right" id="percentage-val">0%</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-8 space-y-8">
+
+        <!-- Global Control Panel Top -->
+        <div class="flex items-center justify-between bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm">
+            <p class="text-sm text-slate-600 hidden sm:block">Выполняйте задания и проверяйте ответы в любое время.</p>
+            <div class="flex gap-2 w-full sm:w-auto justify-end">
+                <button onclick="checkAll()" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white font-semibold text-sm rounded-xl transition shadow-sm hover:shadow active:scale-95">
+                    <i class="fa-solid fa-check me-2"></i>Проверить всё
+                </button>
+                <button onclick="resetAll()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm rounded-xl transition active:scale-95">
+                    <i class="fa-solid fa-rotate-right me-2"></i>Сбросить всё
+                </button>
+            </div>
+        </div>
+
+        <!-- EXERCISE 37 -->
+        <section id="ex37-card" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm transition hover:shadow-md">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-slate-100">
+                <div>
+                    <span class="inline-block px-3 py-1 bg-brand-50 text-brand-700 rounded-lg text-xs font-bold tracking-wide uppercase mb-1">Упражнение 37</span>
+                    <h2 class="text-xl font-bold text-slate-900">Замени данные слова местоимениями.</h2>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="checkExercise('ex37')" class="px-3 py-1.5 bg-brand-50 text-brand-700 hover:bg-brand-100 font-semibold text-xs rounded-lg transition">Проверить</button>
+                    <button onclick="resetExercise('ex37')" class="px-3 py-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold text-xs rounded-lg transition">Сбросить</button>
+                </div>
+            </div>
+
+            <div class="space-y-4 text-base sm:text-lg">
+                <!-- Example -->
+                <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/60 grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <div class="text-slate-600">
+                        <span class="font-bold me-2 text-slate-400">1.</span> mum – <u class="font-semibold text-slate-800">she</u>
+                    </div>
+                    <div class="text-slate-600">
+                        mum's eyes – <u class="font-semibold text-slate-800">her</u> eyes <span class="text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full uppercase ml-2 font-bold">Пример</span>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="q-row-multi p-3 rounded-xl hover:bg-slate-50/70 transition grid grid-cols-1 md:grid-cols-2 gap-3 items-center" data-ex="ex37">
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-slate-400 w-6">2.</span>
+                        <span class="font-medium text-slate-700 w-24 sm:w-28">dad –</span>
+                        <input type="text" data-ans="he" class="ex-input w-24 sm:w-28 px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="he/she...">
+                    </div>
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <span class="font-medium text-slate-700 min-w-[100px]">dad's hair –</span>
+                        <input type="text" data-ans="his" class="ex-input w-24 sm:w-28 px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="his/her...">
+                        <span>hair</span>
+                        <span class="feedback"></span>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="q-row-multi p-3 rounded-xl hover:bg-slate-50/70 transition grid grid-cols-1 md:grid-cols-2 gap-3 items-center" data-ex="ex37">
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-slate-400 w-6">3.</span>
+                        <span class="font-medium text-slate-700 w-24 sm:w-28">mum and I –</span>
+                        <input type="text" data-ans="we" class="ex-input w-24 sm:w-28 px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="we/they...">
+                    </div>
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <span class="font-medium text-slate-700 min-w-[100px]">mum's and my pen –</span>
+                        <input type="text" data-ans="our" class="ex-input w-24 sm:w-28 px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="our/their...">
+                        <span>pen</span>
+                        <span class="feedback"></span>
+                    </div>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="q-row-multi p-3 rounded-xl hover:bg-slate-50/70 transition grid grid-cols-1 md:grid-cols-2 gap-3 items-center" data-ex="ex37">
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-slate-400 w-6">4.</span>
+                        <span class="font-medium text-slate-700 w-24 sm:w-28">mum and dad –</span>
+                        <input type="text" data-ans="they" class="ex-input w-24 sm:w-28 px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="they/we...">
+                    </div>
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <span class="font-medium text-slate-700 min-w-[100px]">mum and dad's room –</span>
+                        <input type="text" data-ans="their" class="ex-input w-24 sm:w-28 px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="their/our...">
+                        <span>room</span>
+                        <span class="feedback"></span>
+                    </div>
+                </div>
+
+                <!-- Item 5 -->
+                <div class="q-row-multi p-3 rounded-xl hover:bg-slate-50/70 transition grid grid-cols-1 md:grid-cols-2 gap-3 items-center" data-ex="ex37">
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-slate-400 w-6">5.</span>
+                        <span class="font-medium text-slate-700 w-24 sm:w-28">Polly –</span>
+                        <input type="text" data-ans="she" class="ex-input w-24 sm:w-28 px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="he/she...">
+                    </div>
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <span class="font-medium text-slate-700 min-w-[100px]">Polly's doll –</span>
+                        <input type="text" data-ans="her" class="ex-input w-24 sm:w-28 px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="her/his...">
+                        <span>doll</span>
+                        <span class="feedback"></span>
+                    </div>
+                </div>
+
+                <!-- Item 6 -->
+                <div class="q-row-multi p-3 rounded-xl hover:bg-slate-50/70 transition grid grid-cols-1 md:grid-cols-2 gap-3 items-center" data-ex="ex37">
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-slate-400 w-6">6.</span>
+                        <span class="font-medium text-slate-700 w-24 sm:w-28">Tom –</span>
+                        <input type="text" data-ans="he" class="ex-input w-24 sm:w-28 px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="he/she...">
+                    </div>
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <span class="font-medium text-slate-700 min-w-[100px]">Tom's bag –</span>
+                        <input type="text" data-ans="his" class="ex-input w-24 sm:w-28 px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="his/her...">
+                        <span>bag</span>
+                        <span class="feedback"></span>
+                    </div>
+                </div>
+
+                <!-- Item 7 -->
+                <div class="q-row-multi p-3 rounded-xl hover:bg-slate-50/70 transition grid grid-cols-1 md:grid-cols-2 gap-3 items-center" data-ex="ex37">
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-slate-400 w-6">7.</span>
+                        <span class="font-medium text-slate-700 w-24 sm:w-28">cat –</span>
+                        <input type="text" data-ans="it" class="ex-input w-24 sm:w-28 px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="it/he...">
+                    </div>
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <span class="font-medium text-slate-700 min-w-[100px]">cat's ball –</span>
+                        <input type="text" data-ans="its" class="ex-input w-24 sm:w-28 px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="its/his...">
+                        <span>ball</span>
+                        <span class="feedback"></span>
+                    </div>
+                </div>
+
+                <!-- Item 8 -->
+                <div class="q-row-multi p-3 rounded-xl hover:bg-slate-50/70 transition grid grid-cols-1 md:grid-cols-2 gap-3 items-center" data-ex="ex37">
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-slate-400 w-6">8.</span>
+                        <span class="font-medium text-slate-700 w-24 sm:w-28">girls –</span>
+                        <input type="text" data-ans="they" class="ex-input w-24 sm:w-28 px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="they/she...">
+                    </div>
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <span class="font-medium text-slate-700 min-w-[100px]">girls' mirror –</span>
+                        <input type="text" data-ans="their" class="ex-input w-24 sm:w-28 px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="their/her...">
+                        <span>mirror</span>
+                        <span class="feedback"></span>
+                    </div>
+                </div>
+
+                <!-- Item 9 -->
+                <div class="q-row-multi p-3 rounded-xl hover:bg-slate-50/70 transition grid grid-cols-1 md:grid-cols-2 gap-3 items-center" data-ex="ex37">
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-slate-400 w-6">9.</span>
+                        <span class="font-medium text-slate-700 w-24 sm:w-28">Ann and I –</span>
+                        <input type="text" data-ans="we" class="ex-input w-24 sm:w-28 px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="we/they...">
+                    </div>
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <span class="font-medium text-slate-700 min-w-[100px]">Ann's and my granny –</span>
+                        <input type="text" data-ans="our" class="ex-input w-24 sm:w-28 px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="our/their...">
+                        <span>granny</span>
+                        <span class="feedback"></span>
+                    </div>
+                </div>
+
+                <!-- Item 10 -->
+                <div class="q-row-multi p-3 rounded-xl hover:bg-slate-50/70 transition grid grid-cols-1 md:grid-cols-2 gap-3 items-center" data-ex="ex37">
+                    <div class="flex items-center gap-2">
+                        <span class="font-bold text-slate-400 w-6">10.</span>
+                        <span class="font-medium text-slate-700 w-24 sm:w-28">Bob and Steve –</span>
+                        <input type="text" data-ans="they" class="ex-input w-24 sm:w-28 px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="they/we...">
+                    </div>
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <span class="font-medium text-slate-700 min-w-[100px]">Bob and Steve's desk –</span>
+                        <input type="text" data-ans="their" class="ex-input w-24 sm:w-28 px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="their/our...">
+                        <span>desk</span>
+                        <span class="feedback"></span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXERCISE 38 -->
+        <section id="ex38-card" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm transition hover:shadow-md">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-slate-100">
+                <div>
+                    <span class="inline-block px-3 py-1 bg-brand-50 text-brand-700 rounded-lg text-xs font-bold tracking-wide uppercase mb-1">Упражнение 38</span>
+                    <h2 class="text-xl font-bold text-slate-900">Обведи правильные слова (выбери подходящее местоимение).</h2>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="checkExercise('ex38')" class="px-3 py-1.5 bg-brand-50 text-brand-700 hover:bg-brand-100 font-semibold text-xs rounded-lg transition">Проверить</button>
+                    <button onclick="resetExercise('ex38')" class="px-3 py-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold text-xs rounded-lg transition">Сбросить</button>
+                </div>
+            </div>
+
+            <div class="space-y-4 text-base sm:text-lg">
+                <!-- Example -->
+                <div class="p-3 rounded-xl bg-slate-50 text-slate-600">
+                    <span class="font-bold me-2 text-slate-400">1.</span> Nick has got a wife. <span class="inline-block px-2 py-0.5 rounded-lg border-2 border-brand-500 bg-brand-50 text-brand-700 font-bold">His</span> / Her wife is kind. <span class="text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full uppercase ml-2 font-bold">Пример</span>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="q-select-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="ex38" data-ans="Their">
+                    <span class="font-bold text-slate-400 me-1">2.</span>
+                    <span>These children have got a dog.</span>
+                    <div class="inline-flex gap-1 border border-slate-300 rounded-xl p-1 bg-white">
+                        <button type="button" onclick="selectOption(this, 'ex38')" data-val="Our" class="opt-btn px-3 py-1 rounded-lg border border-transparent font-medium text-slate-700 hover:bg-slate-100">Our</button>
+                        <span class="self-center text-slate-300">/</span>
+                        <button type="button" onclick="selectOption(this, 'ex38')" data-val="Their" class="opt-btn px-3 py-1 rounded-lg border border-transparent font-medium text-slate-700 hover:bg-slate-100">Their</button>
+                    </div>
+                    <span>dog is funny.</span>
+                    <span class="feedback"></span>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="q-select-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="ex38" data-ans="Her">
+                    <span class="font-bold text-slate-400 me-1">3.</span>
+                    <span>Maggie has got many friends.</span>
+                    <div class="inline-flex gap-1 border border-slate-300 rounded-xl p-1 bg-white">
+                        <button type="button" onclick="selectOption(this, 'ex38')" data-val="His" class="opt-btn px-3 py-1 rounded-lg border border-transparent font-medium text-slate-700 hover:bg-slate-100">His</button>
+                        <span class="self-center text-slate-300">/</span>
+                        <button type="button" onclick="selectOption(this, 'ex38')" data-val="Her" class="opt-btn px-3 py-1 rounded-lg border border-transparent font-medium text-slate-700 hover:bg-slate-100">Her</button>
+                    </div>
+                    <span>friends are naughty.</span>
+                    <span class="feedback"></span>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="q-select-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="ex38" data-ans="His">
+                    <span class="font-bold text-slate-400 me-1">4.</span>
+                    <span>This boy has got a ball.</span>
+                    <div class="inline-flex gap-1 border border-slate-300 rounded-xl p-1 bg-white">
+                        <button type="button" onclick="selectOption(this, 'ex38')" data-val="His" class="opt-btn px-3 py-1 rounded-lg border border-transparent font-medium text-slate-700 hover:bg-slate-100">His</button>
+                        <span class="self-center text-slate-300">/</span>
+                        <button type="button" onclick="selectOption(this, 'ex38')" data-val="Her" class="opt-btn px-3 py-1 rounded-lg border border-transparent font-medium text-slate-700 hover:bg-slate-100">Her</button>
+                    </div>
+                    <span>ball is yellow.</span>
+                    <span class="feedback"></span>
+                </div>
+
+                <!-- Item 5 -->
+                <div class="q-select-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="ex38" data-ans="Their">
+                    <span class="font-bold text-slate-400 me-1">5.</span>
+                    <span>These are Dominic and Victor.</span>
+                    <div class="inline-flex gap-1 border border-slate-300 rounded-xl p-1 bg-white">
+                        <button type="button" onclick="selectOption(this, 'ex38')" data-val="His" class="opt-btn px-3 py-1 rounded-lg border border-transparent font-medium text-slate-700 hover:bg-slate-100">His</button>
+                        <span class="self-center text-slate-300">/</span>
+                        <button type="button" onclick="selectOption(this, 'ex38')" data-val="Their" class="opt-btn px-3 py-1 rounded-lg border border-transparent font-medium text-slate-700 hover:bg-slate-100">Their</button>
+                    </div>
+                    <span>mum is a cook.</span>
+                    <span class="feedback"></span>
+                </div>
+
+                <!-- Item 6 -->
+                <div class="q-select-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="ex38" data-ans="My">
+                    <span class="font-bold text-slate-400 me-1">6.</span>
+                    <span>I have got a sister.</span>
+                    <div class="inline-flex gap-1 border border-slate-300 rounded-xl p-1 bg-white">
+                        <button type="button" onclick="selectOption(this, 'ex38')" data-val="Our" class="opt-btn px-3 py-1 rounded-lg border border-transparent font-medium text-slate-700 hover:bg-slate-100">Our</button>
+                        <span class="self-center text-slate-300">/</span>
+                        <button type="button" onclick="selectOption(this, 'ex38')" data-val="My" class="opt-btn px-3 py-1 rounded-lg border border-transparent font-medium text-slate-700 hover:bg-slate-100">My</button>
+                    </div>
+                    <span>sister is a student.</span>
+                    <span class="feedback"></span>
+                </div>
+
+                <!-- Item 7 -->
+                <div class="q-select-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="ex38" data-ans="Our">
+                    <span class="font-bold text-slate-400 me-1">7.</span>
+                    <span>My sister and I have got a father.</span>
+                    <div class="inline-flex gap-1 border border-slate-300 rounded-xl p-1 bg-white">
+                        <button type="button" onclick="selectOption(this, 'ex38')" data-val="Our" class="opt-btn px-3 py-1 rounded-lg border border-transparent font-medium text-slate-700 hover:bg-slate-100">Our</button>
+                        <span class="self-center text-slate-300">/</span>
+                        <button type="button" onclick="selectOption(this, 'ex38')" data-val="My" class="opt-btn px-3 py-1 rounded-lg border border-transparent font-medium text-slate-700 hover:bg-slate-100">My</button>
+                    </div>
+                    <span>father is clever.</span>
+                    <span class="feedback"></span>
+                </div>
+
+                <!-- Item 8 -->
+                <div class="q-select-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="ex38" data-ans="your">
+                    <span class="font-bold text-slate-400 me-1">8.</span>
+                    <span>You are pupils. Are</span>
+                    <div class="inline-flex gap-1 border border-slate-300 rounded-xl p-1 bg-white">
+                        <button type="button" onclick="selectOption(this, 'ex38')" data-val="your" class="opt-btn px-3 py-1 rounded-lg border border-transparent font-medium text-slate-700 hover:bg-slate-100">your</button>
+                        <span class="self-center text-slate-300">/</span>
+                        <button type="button" onclick="selectOption(this, 'ex38')" data-val="our" class="opt-btn px-3 py-1 rounded-lg border border-transparent font-medium text-slate-700 hover:bg-slate-100">our</button>
+                    </div>
+                    <span>friends pupils?</span>
+                    <span class="feedback"></span>
+                </div>
+
+                <!-- Item 9 -->
+                <div class="q-select-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="ex38" data-ans="Our">
+                    <span class="font-bold text-slate-400 me-1">9.</span>
+                    <span>We go to school 30.</span>
+                    <div class="inline-flex gap-1 border border-slate-300 rounded-xl p-1 bg-white">
+                        <button type="button" onclick="selectOption(this, 'ex38')" data-val="Our" class="opt-btn px-3 py-1 rounded-lg border border-transparent font-medium text-slate-700 hover:bg-slate-100">Our</button>
+                        <span class="self-center text-slate-300">/</span>
+                        <button type="button" onclick="selectOption(this, 'ex38')" data-val="Their" class="opt-btn px-3 py-1 rounded-lg border border-transparent font-medium text-slate-700 hover:bg-slate-100">Their</button>
+                    </div>
+                    <span>school is big and nice.</span>
+                    <span class="feedback"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- EXERCISE 40 -->
+        <section id="ex40-card" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm transition hover:shadow-md">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-slate-100">
+                <div>
+                    <span class="inline-block px-3 py-1 bg-brand-50 text-brand-700 rounded-lg text-xs font-bold tracking-wide uppercase mb-1">Упражнение 40</span>
+                    <h2 class="text-xl font-bold text-slate-900">Вставь <span class="text-brand-600">My, His, Her, Your, Their, Our, Its</span>.</h2>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="checkExercise('ex40')" class="px-3 py-1.5 bg-brand-50 text-brand-700 hover:bg-brand-100 font-semibold text-xs rounded-lg transition">Проверить</button>
+                    <button onclick="resetExercise('ex40')" class="px-3 py-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold text-xs rounded-lg transition">Сбросить</button>
+                </div>
+            </div>
+
+            <div class="space-y-4 text-base sm:text-lg">
+                <div class="p-3 rounded-xl bg-slate-50 text-slate-600">
+                    <span class="font-bold me-2 text-slate-400">1.</span> You have got many friends. <u class="font-semibold text-slate-800">Your</u> friends are from Belarus. <span class="text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full uppercase ml-2 font-bold">Пример</span>
+                </div>
+
+                <div class="q-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="ex40" data-ans="Her">
+                    <span class="font-bold me-2 text-slate-400">2.</span>
+                    <span>Mary has got a daughter.</span>
+                    <input type="text" class="ex-input w-28 sm:w-36 px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Местоимение">
+                    <span>daughter is a nice girl.</span>
+                    <span class="feedback"></span>
+                </div>
+
+                <div class="q-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="ex40" data-ans="His">
+                    <span class="font-bold me-2 text-slate-400">3.</span>
+                    <span>This is my uncle.</span>
+                    <input type="text" class="ex-input w-28 sm:w-36 px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Местоимение">
+                    <span>name is John.</span>
+                    <span class="feedback"></span>
+                </div>
+
+                <div class="q-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="ex40" data-ans="My">
+                    <span class="font-bold me-2 text-slate-400">4.</span>
+                    <span>I am a pupil.</span>
+                    <input type="text" class="ex-input w-28 sm:w-36 px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Местоимение">
+                    <span>cousin is a pupil, too.</span>
+                    <span class="feedback"></span>
+                </div>
+
+                <div class="q-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="ex40" data-ans="Our">
+                    <span class="font-bold me-2 text-slate-400">5.</span>
+                    <span>We are from Minsk.</span>
+                    <input type="text" class="ex-input w-28 sm:w-36 px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Местоимение">
+                    <span>family is big and happy.</span>
+                    <span class="feedback"></span>
+                </div>
+
+                <div class="q-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="ex40" data-ans="Their">
+                    <span class="font-bold me-2 text-slate-400">6.</span>
+                    <span>Pavel and Dima are brothers.</span>
+                    <input type="text" class="ex-input w-28 sm:w-36 px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Местоимение">
+                    <span>parents are kind.</span>
+                    <span class="feedback"></span>
+                </div>
+
+                <div class="q-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="ex40" data-ans="Your mother">
+                    <span class="font-bold me-2 text-slate-400">7.</span>
+                    <span>You have got a mother.</span>
+                    <input type="text" class="ex-input w-36 sm:w-44 px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Your / Your mother">
+                    <span>isn't a teacher.</span>
+                    <span class="feedback"></span>
+                </div>
+
+                <div class="q-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="ex40" data-ans="Its">
+                    <span class="font-bold me-2 text-slate-400">8.</span>
+                    <span>This is my dog.</span>
+                    <input type="text" class="ex-input w-28 sm:w-36 px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Местоимение">
+                    <span>name is Rex.</span>
+                    <span class="feedback"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Global Action Bottom -->
+        <div class="flex justify-center gap-4 py-4">
+            <button onclick="checkAll()" class="px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold text-base rounded-2xl shadow-lg shadow-brand-500/30 transition hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0">
+                <i class="fa-solid fa-check-circle me-2"></i>Проверить все ответы
+            </button>
+            <button onclick="resetAll()" class="px-6 py-3 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-base rounded-2xl transition active:scale-95">
+                <i class="fa-solid fa-rotate-right me-2"></i>Сбросить всё
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-400 mt-auto">
+        <p>Интерактивный тренажер по грамматике английского языка</p>
+    </footer>
+
+    <!-- Logic Script -->
+    <script>
+        // Clean text string for easy comparison (strip extra spaces & punctuation)
+        function cleanStr(str) {
+            return str.trim()
+                .replace(/\s+/g, ' ')
+                .replace(/[.,!?]/g, '')
+                .toLowerCase();
+        }
+
+        // Click selection option for Exercise 38
+        function selectOption(btn, exId) {
+            const container = btn.closest('.q-select-row');
+            const buttons = container.querySelectorAll('.opt-btn');
+            
+            buttons.forEach(b => {
+                b.classList.remove('selected', 'correct-opt', 'incorrect-opt');
+            });
+            
+            btn.classList.add('selected');
+            
+            // Live check row on select
+            checkSelectRow(container);
+            updateOverallScore();
+        }
+
+        // Evaluate single input element
+        function evaluateInput(input, targetAnswer) {
+            const userVal = input.value;
+
+            if (!userVal.trim()) {
+                input.classList.remove('input-correct', 'input-incorrect');
+                return null;
+            }
+
+            // Accept alternative options for special item 7 in Ex 40 ("Your" or "Your mother")
+            let isCorrect = cleanStr(userVal) === cleanStr(targetAnswer);
+            if (!isCorrect && targetAnswer === 'Your mother' && cleanStr(userVal) === 'your') {
+                isCorrect = true;
+            }
+            
+            if (isCorrect) {
+                input.classList.add('input-correct');
+                input.classList.remove('input-incorrect');
+            } else {
+                input.classList.add('input-incorrect');
+                input.classList.remove('input-correct');
+            }
+
+            return isCorrect;
+        }
+
+        // Check single input row
+        function checkRow(row) {
+            const input = row.querySelector('.ex-input');
+            const targetAns = row.dataset.ans;
+            const feedback = row.querySelector('.feedback');
+            
+            const result = evaluateInput(input, targetAns);
+
+            if (result === true) {
+                feedback.innerHTML = `<span class="correct-badge"><i class="fa-solid fa-check me-1"></i> Верно</span>`;
+            } else if (result === false) {
+                feedback.innerHTML = `<span class="incorrect-badge"><i class="fa-solid fa-xmark me-1"></i> (Правильно: ${targetAns})</span>`;
+            } else {
+                feedback.innerHTML = '';
+            }
+
+            return result;
+        }
+
+        // Check multi-input row (Exercise 37)
+        function checkRowMulti(row) {
+            const inputs = row.querySelectorAll('.ex-input');
+            const feedback = row.querySelector('.feedback');
+            
+            let allFilled = true;
+            let allCorrect = true;
+
+            inputs.forEach(input => {
+                const targetAns = input.dataset.ans;
+                const res = evaluateInput(input, targetAns);
+                if (res === null) allFilled = false;
+                if (res !== true) allCorrect = false;
+            });
+
+            if (!allFilled) {
+                if (Array.from(inputs).some(i => i.value.trim() !== '')) {
+                    const correctStr = Array.from(inputs).map(i => i.dataset.ans).join(' / ');
+                    feedback.innerHTML = `<span class="incorrect-badge"><i class="fa-solid fa-triangle-exclamation me-1"></i> (Ответы: ${correctStr})</span>`;
+                } else {
+                    feedback.innerHTML = '';
+                }
+                return false;
+            }
+
+            if (allCorrect) {
+                feedback.innerHTML = `<span class="correct-badge"><i class="fa-solid fa-check me-1"></i> Верно</span>`;
+                return true;
+            } else {
+                const correctStr = Array.from(inputs).map(i => i.dataset.ans).join(' / ');
+                feedback.innerHTML = `<span class="incorrect-badge"><i class="fa-solid fa-xmark me-1"></i> (Правильно: ${correctStr})</span>`;
+                return false;
+            }
+        }
+
+        // Check select option row (Exercise 38)
+        function checkSelectRow(row) {
+            const selectedBtn = row.querySelector('.opt-btn.selected');
+            const targetAns = row.dataset.ans;
+            const feedback = row.querySelector('.feedback');
+            const buttons = row.querySelectorAll('.opt-btn');
+
+            buttons.forEach(b => b.classList.remove('correct-opt', 'incorrect-opt'));
+
+            if (!selectedBtn) {
+                feedback.innerHTML = '';
+                return null;
+            }
+
+            const isCorrect = cleanStr(selectedBtn.dataset.val) === cleanStr(targetAns);
+
+            if (isCorrect) {
+                selectedBtn.classList.add('correct-opt');
+                feedback.innerHTML = `<span class="correct-badge"><i class="fa-solid fa-check me-1"></i> Верно</span>`;
+            } else {
+                selectedBtn.classList.add('incorrect-opt');
+                buttons.forEach(b => {
+                    if (cleanStr(b.dataset.val) === cleanStr(targetAns)) {
+                        b.classList.add('correct-opt');
+                    }
+                });
+                feedback.innerHTML = `<span class="incorrect-badge"><i class="fa-solid fa-xmark me-1"></i> (Правильно: ${targetAns})</span>`;
+            }
+
+            return isCorrect;
+        }
+
+        // Check specific exercise
+        function checkExercise(exId) {
+            const singleRows = document.querySelectorAll(`.q-row[data-ex="${exId}"]`);
+            const multiRows = document.querySelectorAll(`.q-row-multi[data-ex="${exId}"]`);
+            const selectRows = document.querySelectorAll(`.q-select-row[data-ex="${exId}"]`);
+
+            singleRows.forEach(row => checkRow(row));
+            multiRows.forEach(row => checkRowMulti(row));
+            selectRows.forEach(row => checkSelectRow(row));
+
+            updateOverallScore();
+        }
+
+        // Reset specific exercise
+        function resetExercise(exId) {
+            const singleRows = document.querySelectorAll(`.q-row[data-ex="${exId}"]`);
+            const multiRows = document.querySelectorAll(`.q-row-multi[data-ex="${exId}"]`);
+            const selectRows = document.querySelectorAll(`.q-select-row[data-ex="${exId}"]`);
+
+            const resetRow = (row) => {
+                const inputs = row.querySelectorAll('.ex-input');
+                inputs.forEach(input => {
+                    input.value = '';
+                    input.classList.remove('input-correct', 'input-incorrect');
+                });
+                const feedback = row.querySelector('.feedback');
+                if (feedback) feedback.innerHTML = '';
+            };
+
+            singleRows.forEach(resetRow);
+            multiRows.forEach(resetRow);
+
+            selectRows.forEach(row => {
+                const buttons = row.querySelectorAll('.opt-btn');
+                buttons.forEach(b => b.classList.remove('selected', 'correct-opt', 'incorrect-opt'));
+                const feedback = row.querySelector('.feedback');
+                if (feedback) feedback.innerHTML = '';
+            });
+
+            updateOverallScore();
+        }
+
+        // Check all exercises
+        function checkAll() {
+            ['ex37', 'ex38', 'ex40'].forEach(exId => checkExercise(exId));
+        }
+
+        // Reset all exercises
+        function resetAll() {
+            ['ex37', 'ex38', 'ex40'].forEach(exId => resetExercise(exId));
+        }
+
+        // Calculate and update global score
+        function updateOverallScore() {
+            const multiRows37 = document.querySelectorAll('.q-row-multi[data-ex="ex37"]');
+            const selectRows38 = document.querySelectorAll('.q-select-row[data-ex="ex38"]');
+            const singleRows40 = document.querySelectorAll('.q-row[data-ex="ex40"]');
+
+            // 18 items in Ex 37 (9 pairs) + 8 items in Ex 38 + 7 items in Ex 40 = 33 total checkable items
+            let totalPoints = 33;
+            let currentScore = 0;
+
+            // Ex 37 calculation per input
+            multiRows37.forEach(row => {
+                const inputs = row.querySelectorAll('.ex-input');
+                inputs.forEach(input => {
+                    if (input.value.trim() && cleanStr(input.value) === cleanStr(input.dataset.ans)) {
+                        currentScore++;
+                    }
+                });
+            });
+
+            // Ex 38 calculation
+            selectRows38.forEach(row => {
+                const selectedBtn = row.querySelector('.opt-btn.selected');
+                if (selectedBtn && cleanStr(selectedBtn.dataset.val) === cleanStr(row.dataset.ans)) {
+                    currentScore++;
+                }
+            });
+
+            // Ex 40 calculation
+            singleRows40.forEach(row => {
+                const input = row.querySelector('.ex-input');
+                const targetAns = row.dataset.ans;
+                if (input.value.trim()) {
+                    let isCorrect = cleanStr(input.value) === cleanStr(targetAns);
+                    if (!isCorrect && targetAns === 'Your mother' && cleanStr(input.value) === 'your') {
+                        isCorrect = true;
+                    }
+                    if (isCorrect) currentScore++;
+                }
+            });
+
+            // Update DOM UI
+            document.getElementById('score-val').textContent = currentScore;
+            document.getElementById('total-val').textContent = totalPoints;
+            const percentage = Math.round((currentScore / totalPoints) * 100);
+            document.getElementById('percentage-val').textContent = `${percentage}%`;
+            document.getElementById('progress-bar').style.width = `${percentage}%`;
+        }
+
+        // Auto-check text inputs on typing
+        document.addEventListener('input', (e) => {
+            if (e.target.classList.contains('ex-input')) {
+                const row = e.target.closest('.q-row') || e.target.closest('.q-row-multi');
+                if (row) {
+                    if (row.classList.contains('q-row')) {
+                        checkRow(row);
+                    } else {
+                        checkRowMulti(row);
+                    }
+                }
+                updateOverallScore();
+            }
+        });
+    </script>
+</body>
+</html>
