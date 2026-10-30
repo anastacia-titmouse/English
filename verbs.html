@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Irregular Verbs Trainer - Карточки</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .card-scene {
+            perspective: 1200px;
+        }
+        .card-inner {
+            transform-style: preserve-3d;
+            transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1);
+        }
+        .card-inner.flipped {
+            transform: rotateY(180deg);
+        }
+        .card-face {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .card-back {
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-slate-800 h-full flex flex-col selection:bg-brand-500 selection:text-white">
+
+    <!-- Sticky Header with Score Tracker -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
+                    <i class="fa-solid fa-layer-group text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg text-slate-900 leading-tight">Irregular Verbs</h1>
+                    <p class="text-xs text-slate-500">Карточки: назови инфинитив и Past Simple</p>
+                </div>
+            </div>
+
+            <!-- Score Board -->
+            <div class="flex items-center gap-3 sm:gap-4">
+                <div class="flex items-center gap-2 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-xl">
+                    <i class="fa-solid fa-check text-emerald-600"></i>
+                    <span class="font-extrabold text-emerald-700" id="known-val">0</span>
+                </div>
+                <div class="flex items-center gap-2 bg-rose-50 border border-rose-200 px-3 py-1.5 rounded-xl">
+                    <i class="fa-solid fa-xmark text-rose-600"></i>
+                    <span class="font-extrabold text-rose-700" id="wrong-val">0</span>
+                </div>
+                <div class="flex items-center gap-2 bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-xl">
+                    <i class="fa-solid fa-cards-blank text-slate-500"></i>
+                    <span class="font-extrabold text-slate-700" id="left-val">50</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-8 flex flex-col items-center justify-center gap-8">
+
+        <!-- Card -->
+        <div id="card-zone" class="w-full max-w-lg">
+            <div class="card-scene w-full h-80 sm:h-96 cursor-pointer select-none" id="card-scene" title="Нажми, чтобы перевернуть">
+                <div class="card-inner relative w-full h-full" id="card-inner">
+
+                    <!-- Front: Russian word -->
+                    <div class="card-face absolute inset-0 bg-white rounded-3xl border border-slate-200 shadow-lg flex flex-col items-center justify-center gap-4 p-8">
+                        <span class="text-xs font-bold uppercase tracking-widest text-slate-400">Переведи и назови 2 формы</span>
+                        <div class="text-4xl sm:text-5xl font-extrabold text-slate-900 text-center" id="front-word">идти</div>
+                        <div class="flex items-center gap-2 text-sm text-slate-400 font-medium">
+                            <i class="fa-solid fa-hand-pointer"></i>
+                            <span>Нажми на карточку, чтобы проверить себя</span>
+                        </div>
+                    </div>
+
+                    <!-- Back: English forms -->
+                    <div class="card-face card-back absolute inset-0 bg-gradient-to-br from-brand-600 to-indigo-700 rounded-3xl shadow-lg flex flex-col items-center justify-center gap-5 p-8 text-white">
+                        <div class="text-center">
+                            <div class="text-xs font-bold uppercase tracking-widest text-brand-100 mb-1">1 форма · инфинитив</div>
+                            <div class="text-4xl sm:text-5xl font-extrabold" id="back-v1">go</div>
+                            <div class="text-sm text-brand-100 font-medium" id="back-p1">[ɡəʊ]</div>
+                        </div>
+                        <div class="w-16 border-t-2 border-white/30"></div>
+                        <div class="text-center">
+                            <div class="text-xs font-bold uppercase tracking-widest text-brand-100 mb-1">2 форма · Past Simple</div>
+                            <div class="text-4xl sm:text-5xl font-extrabold" id="back-v2">went</div>
+                            <div class="text-sm text-brand-100 font-medium" id="back-p2">[went]</div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls: front state -->
+        <div id="controls-front" class="flex flex-col items-center gap-3">
+            <button onclick="flipCard()" class="px-8 py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-base rounded-2xl shadow-lg shadow-brand-500/30 transition hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0">
+                <i class="fa-solid fa-rotate me-2"></i>Показать ответ
+            </button>
+            <p class="text-xs text-slate-400">или нажми <b>Пробел</b></p>
+        </div>
+
+        <!-- Controls: back state (self-check) -->
+        <div id="controls-back" class="hidden flex-col items-center gap-3">
+            <p class="text-sm font-semibold text-slate-600">Ты назвал обе формы правильно?</p>
+            <div class="flex gap-4">
+                <button onclick="markWrong()" class="px-6 py-3.5 bg-rose-500 hover:bg-rose-600 text-white font-bold text-base rounded-2xl shadow-lg shadow-rose-500/30 transition hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0">
+                    <i class="fa-solid fa-xmark me-2"></i>Не знал
+                </button>
+                <button onclick="markKnown()" class="px-6 py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-base rounded-2xl shadow-lg shadow-emerald-500/30 transition hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0">
+                    <i class="fa-solid fa-check me-2"></i>Знал!
+                </button>
+            </div>
+            <p class="text-xs text-slate-400"><b>←</b> не знал · <b>→</b> знал</p>
+        </div>
+
+        <!-- Summary -->
+        <div id="summary" class="hidden w-full max-w-lg bg-white rounded-3xl border border-slate-200 shadow-lg p-8 text-center">
+            <div class="w-16 h-16 mx-auto rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mb-4">
+                <i class="fa-solid fa-trophy"></i>
+            </div>
+            <h2 class="text-2xl font-extrabold text-slate-900 mb-2">Колода пройдена!</h2>
+            <p class="text-slate-600 mb-6" id="summary-text"></p>
+            <button onclick="restart()" class="px-8 py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-base rounded-2xl shadow-lg shadow-brand-500/30 transition hover:shadow-xl active:translate-y-0">
+                <i class="fa-solid fa-rotate-right me-2"></i>Начать заново
+            </button>
+        </div>
+
+        <!-- Bottom controls -->
+        <div class="flex gap-3">
+            <button onclick="restart()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm rounded-xl transition active:scale-95">
+                <i class="fa-solid fa-shuffle me-2"></i>Перемешать заново
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-400 mt-auto">
+        <p>Интерактивный тренажер по грамматике английского языка</p>
+    </footer>
+
+    <!-- Logic Script -->
+    <script>
+        // Deck: Russian prompt -> infinitive + Past Simple (with transcription)
+        const VERBS = [
+            { ru: 'идти', v1: 'go', p1: '[ɡəʊ]', v2: 'went', p2: '[went]' },
+            { ru: 'видеть', v1: 'see', p1: '[siː]', v2: 'saw', p2: '[sɔː]' },
+            { ru: 'есть (кушать)', v1: 'eat', p1: '[iːt]', v2: 'ate', p2: '[eɪt]' },
+            { ru: 'пить', v1: 'drink', p1: '[drɪŋk]', v2: 'drank', p2: '[dræŋk]' },
+            { ru: 'приходить', v1: 'come', p1: '[kʌm]', v2: 'came', p2: '[keɪm]' },
+            { ru: 'бежать', v1: 'run', p1: '[rʌn]', v2: 'ran', p2: '[ræn]' },
+            { ru: 'плавать', v1: 'swim', p1: '[swɪm]', v2: 'swam', p2: '[swæm]' },
+            { ru: 'брать', v1: 'take', p1: '[teɪk]', v2: 'took', p2: '[tʊk]' },
+            { ru: 'давать', v1: 'give', p1: '[ɡɪv]', v2: 'gave', p2: '[ɡeɪv]' },
+            { ru: 'писать', v1: 'write', p1: '[raɪt]', v2: 'wrote', p2: '[rəʊt]' },
+            { ru: 'читать', v1: 'read', p1: '[riːd]', v2: 'read', p2: '[red]' },
+            { ru: 'ездить (на велосипеде, верхом)', v1: 'ride', p1: '[raɪd]', v2: 'rode', p2: '[rəʊd]' },
+            { ru: 'делать', v1: 'do', p1: '[duː]', v2: 'did', p2: '[dɪd]' },
+            { ru: 'иметь', v1: 'have', p1: '[hæv]', v2: 'had', p2: '[hæd]' },
+            { ru: 'создавать, мастерить', v1: 'make', p1: '[meɪk]', v2: 'made', p2: '[meɪd]' },
+            { ru: 'сказать', v1: 'say', p1: '[seɪ]', v2: 'said', p2: '[sed]' },
+            { ru: 'получать', v1: 'get', p1: '[ɡet]', v2: 'got', p2: '[ɡɒt]' },
+            { ru: 'класть, ставить', v1: 'put', p1: '[pʊt]', v2: 'put', p2: '[pʊt]' },
+            { ru: 'сидеть', v1: 'sit', p1: '[sɪt]', v2: 'sat', p2: '[sæt]' },
+            { ru: 'стоять', v1: 'stand', p1: '[stænd]', v2: 'stood', p2: '[stʊd]' },
+            { ru: 'покупать', v1: 'buy', p1: '[baɪ]', v2: 'bought', p2: '[bɔːt]' },
+            { ru: 'приносить', v1: 'bring', p1: '[brɪŋ]', v2: 'brought', p2: '[brɔːt]' },
+            { ru: 'думать', v1: 'think', p1: '[θɪŋk]', v2: 'thought', p2: '[θɔːt]' },
+            { ru: 'учить (кого-то)', v1: 'teach', p1: '[tiːtʃ]', v2: 'taught', p2: '[tɔːt]' },
+            { ru: 'ловить', v1: 'catch', p1: '[kætʃ]', v2: 'caught', p2: '[kɔːt]' },
+            { ru: 'спать', v1: 'sleep', p1: '[sliːp]', v2: 'slept', p2: '[slept]' },
+            { ru: 'уходить, оставлять', v1: 'leave', p1: '[liːv]', v2: 'left', p2: '[left]' },
+            { ru: 'чувствовать', v1: 'feel', p1: '[fiːl]', v2: 'felt', p2: '[felt]' },
+            { ru: 'встречать', v1: 'meet', p1: '[miːt]', v2: 'met', p2: '[met]' },
+            { ru: 'летать, лететь', v1: 'fly', p1: '[flaɪ]', v2: 'flew', p2: '[fluː]' },
+            { ru: 'рисовать', v1: 'draw', p1: '[drɔː]', v2: 'drew', p2: '[druː]' },
+            { ru: 'знать', v1: 'know', p1: '[nəʊ]', v2: 'knew', p2: '[njuː]' },
+            { ru: 'расти, выращивать', v1: 'grow', p1: '[ɡrəʊ]', v2: 'grew', p2: '[ɡruː]' },
+            { ru: 'бросать', v1: 'throw', p1: '[θrəʊ]', v2: 'threw', p2: '[θruː]' },
+            { ru: 'носить (одежду)', v1: 'wear', p1: '[weə]', v2: 'wore', p2: '[wɔː]' },
+            { ru: 'говорить, разговаривать', v1: 'speak', p1: '[spiːk]', v2: 'spoke', p2: '[spəʊk]' },
+            { ru: 'ломать', v1: 'break', p1: '[breɪk]', v2: 'broke', p2: '[brəʊk]' },
+            { ru: 'начинать', v1: 'begin', p1: '[bɪˈɡɪn]', v2: 'began', p2: '[bɪˈɡæn]' },
+            { ru: 'петь', v1: 'sing', p1: '[sɪŋ]', v2: 'sang', p2: '[sæŋ]' },
+            { ru: 'резать', v1: 'cut', p1: '[kʌt]', v2: 'cut', p2: '[kʌt]' },
+            { ru: 'терять', v1: 'lose', p1: '[luːz]', v2: 'lost', p2: '[lɒst]' },
+            { ru: 'находить', v1: 'find', p1: '[faɪnd]', v2: 'found', p2: '[faʊnd]' },
+            { ru: 'прятать', v1: 'hide', p1: '[haɪd]', v2: 'hid', p2: '[hɪd]' },
+            { ru: 'кормить', v1: 'feed', p1: '[fiːd]', v2: 'fed', p2: '[fed]' },
+            { ru: 'водить машину', v1: 'drive', p1: '[draɪv]', v2: 'drove', p2: '[drəʊv]' },
+            { ru: 'падать', v1: 'fall', p1: '[fɔːl]', v2: 'fell', p2: '[fel]' },
+            { ru: 'забывать', v1: 'forget', p1: '[fəˈɡet]', v2: 'forgot', p2: '[fəˈɡɒt]' },
+            { ru: 'держать', v1: 'hold', p1: '[həʊld]', v2: 'held', p2: '[held]' },
+            { ru: 'строить', v1: 'build', p1: '[bɪld]', v2: 'built', p2: '[bɪlt]' },
+            { ru: 'платить', v1: 'pay', p1: '[peɪ]', v2: 'paid', p2: '[peɪd]' },
+        ];
+
+        let deck = [];
+        let idx = 0;
+        let known = 0;
+        let wrong = 0;
+        let flipped = false;
+
+        function shuffle(arr) {
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function render() {
+            const card = deck[idx];
+            document.getElementById('front-word').textContent = card.ru;
+            document.getElementById('back-v1').textContent = card.v1;
+            document.getElementById('back-p1').textContent = card.p1;
+            document.getElementById('back-v2').textContent = card.v2;
+            document.getElementById('back-p2').textContent = card.p2;
+            document.getElementById('known-val').textContent = known;
+            document.getElementById('wrong-val').textContent = wrong;
+            document.getElementById('left-val').textContent = deck.length - idx;
+        }
+
+        function flipCard() {
+            if (flipped) return;
+            flipped = true;
+            document.getElementById('card-inner').classList.add('flipped');
+            document.getElementById('controls-front').classList.add('hidden');
+            document.getElementById('controls-back').classList.remove('hidden');
+        }
+
+        function unflipAndRender() {
+            flipped = false;
+            document.getElementById('card-inner').classList.remove('flipped');
+            document.getElementById('controls-front').classList.remove('hidden');
+            document.getElementById('controls-back').classList.add('hidden');
+            // Update the card text only after it has turned away, so the answer is not visible
+            setTimeout(render, 300);
+        }
+
+        function nextCard() {
+            idx++;
+            if (idx >= deck.length) {
+                showSummary();
+            } else {
+                unflipAndRender();
+            }
+        }
+
+        function markKnown() {
+            if (!flipped) return;
+            known++;
+            nextCard();
+        }
+
+        function markWrong() {
+            if (!flipped) return;
+            wrong++;
+            // The card goes back to the end of the deck so it will be asked again
+            deck.push(deck[idx]);
+            nextCard();
+        }
+
+        function showSummary() {
+            document.getElementById('card-zone').classList.add('hidden');
+            document.getElementById('controls-front').classList.add('hidden');
+            document.getElementById('controls-back').classList.add('hidden');
+            const summary = document.getElementById('summary');
+            summary.classList.remove('hidden');
+            document.getElementById('summary-text').textContent =
+                `Знаешь с первого раза: ${known} из ${VERBS.length}. Ошибок по пути: ${wrong}.`;
+            document.getElementById('left-val').textContent = 0;
+        }
+
+        function restart() {
+            deck = shuffle([...VERBS]);
+            idx = 0;
+            known = 0;
+            wrong = 0;
+            flipped = false;
+            document.getElementById('card-inner').classList.remove('flipped');
+            document.getElementById('summary').classList.add('hidden');
+            document.getElementById('card-zone').classList.remove('hidden');
+            document.getElementById('controls-front').classList.remove('hidden');
+            document.getElementById('controls-back').classList.add('hidden');
+            render();
+        }
+
+        // Click on the card flips it
+        document.getElementById('card-scene').addEventListener('click', flipCard);
+
+        // Keyboard: Space = flip, ArrowRight = knew it, ArrowLeft = did not know
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                flipCard();
+            } else if (e.code === 'ArrowRight' && flipped) {
+                markKnown();
+            } else if (e.code === 'ArrowLeft' && flipped) {
+                markWrong();
+            }
+        });
+
+        restart();
+    </script>
+</body>
+</html>
