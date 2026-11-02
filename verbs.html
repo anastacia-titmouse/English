@@ -812,6 +812,296 @@
                     </div>
                 </section>
 
+                <!-- EX M: Past Simple spelling rules — sort into columns -->
+                <section id="exM-card" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm transition hover:shadow-md">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-slate-100">
+                        <div>
+                            <span class="inline-block px-3 py-1 bg-brand-50 text-brand-700 rounded-lg text-xs font-bold tracking-wide uppercase mb-1">Упражнение 13</span>
+                            <h2 class="text-xl font-bold text-slate-900">Впиши Past Simple этих глаголов в соответствующую графу.</h2>
+                            <p class="text-xs text-slate-400 mt-1">Напиши форму Past Simple и выбери правило написания</p>
+                        </div>
+                        <div class="flex gap-2">
+                            <button onclick="checkExercise('exM')" class="px-3 py-1.5 bg-brand-50 text-brand-700 hover:bg-brand-100 font-semibold text-xs rounded-lg transition">Проверить</button>
+                            <button onclick="resetExercise('exM')" class="px-3 py-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold text-xs rounded-lg transition">Сбросить</button>
+                        </div>
+                    </div>
+
+                    <!-- Rules legend -->
+                    <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mb-6 text-center">
+                        <div class="p-3 rounded-xl bg-brand-50 border border-brand-100">
+                            <div class="font-extrabold text-brand-700">+ ed</div>
+                            <div class="text-xs text-slate-500 mt-1">laugh → <i class="font-semibold text-slate-700">laughed</i> <span class="uppercase font-bold text-[10px] bg-brand-100 px-1.5 py-0.5 rounded-full">пример</span></div>
+                        </div>
+                        <div class="p-3 rounded-xl bg-brand-50 border border-brand-100">
+                            <div class="font-extrabold text-brand-700">+ d</div>
+                            <div class="text-xs text-slate-500 mt-1">глагол уже на -e</div>
+                        </div>
+                        <div class="p-3 rounded-xl bg-brand-50 border border-brand-100">
+                            <div class="font-extrabold text-brand-700">y → ied</div>
+                            <div class="text-xs text-slate-500 mt-1">согласная + y</div>
+                        </div>
+                        <div class="p-3 rounded-xl bg-brand-50 border border-brand-100">
+                            <div class="font-extrabold text-brand-700 text-sm leading-5">двойная согласная<br>+ ed</div>
+                            <div class="text-xs text-slate-500 mt-1">короткий гласный + согласная</div>
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                        <div class="q-sort-row p-3 rounded-xl bg-slate-50/60 border border-slate-100" data-ex="exM" data-ans="laughed" data-col="ed">
+                            <div class="font-bold text-slate-800 mb-2">laugh</div>
+                            <input type="text" class="ex-input w-full px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Past Simple">
+                            <select class="ex-select w-full mt-2 px-2 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-sm font-medium text-slate-700 bg-white">
+                                <option value="">Выбери графу…</option>
+                                <option value="ed">+ ed</option>
+                                <option value="d">+ d</option>
+                                <option value="ied">y → ied</option>
+                                <option value="double">двойная согласная + ed</option>
+                            </select>
+                            <span class="feedback"></span>
+                        </div>
+                        <div class="q-sort-row p-3 rounded-xl bg-slate-50/60 border border-slate-100" data-ex="exM" data-ans="tidied" data-col="ied">
+                            <div class="font-bold text-slate-800 mb-2">tidy</div>
+                            <input type="text" class="ex-input w-full px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Past Simple">
+                            <select class="ex-select w-full mt-2 px-2 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-sm font-medium text-slate-700 bg-white">
+                                <option value="">Выбери графу…</option>
+                                <option value="ed">+ ed</option>
+                                <option value="d">+ d</option>
+                                <option value="ied">y → ied</option>
+                                <option value="double">двойная согласная + ed</option>
+                            </select>
+                            <span class="feedback"></span>
+                        </div>
+                        <div class="q-sort-row p-3 rounded-xl bg-slate-50/60 border border-slate-100" data-ex="exM" data-ans="travelled|traveled" data-col="double">
+                            <div class="font-bold text-slate-800 mb-2">travel</div>
+                            <input type="text" class="ex-input w-full px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Past Simple">
+                            <select class="ex-select w-full mt-2 px-2 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-sm font-medium text-slate-700 bg-white">
+                                <option value="">Выбери графу…</option>
+                                <option value="ed">+ ed</option>
+                                <option value="d">+ d</option>
+                                <option value="ied">y → ied</option>
+                                <option value="double">двойная согласная + ed</option>
+                            </select>
+                            <span class="feedback"></span>
+                        </div>
+                        <div class="q-sort-row p-3 rounded-xl bg-slate-50/60 border border-slate-100" data-ex="exM" data-ans="stayed" data-col="ed">
+                            <div class="font-bold text-slate-800 mb-2">stay</div>
+                            <input type="text" class="ex-input w-full px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Past Simple">
+                            <select class="ex-select w-full mt-2 px-2 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-sm font-medium text-slate-700 bg-white">
+                                <option value="">Выбери графу…</option>
+                                <option value="ed">+ ed</option>
+                                <option value="d">+ d</option>
+                                <option value="ied">y → ied</option>
+                                <option value="double">двойная согласная + ed</option>
+                            </select>
+                            <span class="feedback"></span>
+                        </div>
+                        <div class="q-sort-row p-3 rounded-xl bg-slate-50/60 border border-slate-100" data-ex="exM" data-ans="planned" data-col="double">
+                            <div class="font-bold text-slate-800 mb-2">plan</div>
+                            <input type="text" class="ex-input w-full px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Past Simple">
+                            <select class="ex-select w-full mt-2 px-2 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-sm font-medium text-slate-700 bg-white">
+                                <option value="">Выбери графу…</option>
+                                <option value="ed">+ ed</option>
+                                <option value="d">+ d</option>
+                                <option value="ied">y → ied</option>
+                                <option value="double">двойная согласная + ed</option>
+                            </select>
+                            <span class="feedback"></span>
+                        </div>
+                        <div class="q-sort-row p-3 rounded-xl bg-slate-50/60 border border-slate-100" data-ex="exM" data-ans="hated" data-col="d">
+                            <div class="font-bold text-slate-800 mb-2">hate</div>
+                            <input type="text" class="ex-input w-full px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Past Simple">
+                            <select class="ex-select w-full mt-2 px-2 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-sm font-medium text-slate-700 bg-white">
+                                <option value="">Выбери графу…</option>
+                                <option value="ed">+ ed</option>
+                                <option value="d">+ d</option>
+                                <option value="ied">y → ied</option>
+                                <option value="double">двойная согласная + ed</option>
+                            </select>
+                            <span class="feedback"></span>
+                        </div>
+                        <div class="q-sort-row p-3 rounded-xl bg-slate-50/60 border border-slate-100" data-ex="exM" data-ans="cried" data-col="ied">
+                            <div class="font-bold text-slate-800 mb-2">cry</div>
+                            <input type="text" class="ex-input w-full px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Past Simple">
+                            <select class="ex-select w-full mt-2 px-2 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-sm font-medium text-slate-700 bg-white">
+                                <option value="">Выбери графу…</option>
+                                <option value="ed">+ ed</option>
+                                <option value="d">+ d</option>
+                                <option value="ied">y → ied</option>
+                                <option value="double">двойная согласная + ed</option>
+                            </select>
+                            <span class="feedback"></span>
+                        </div>
+                        <div class="q-sort-row p-3 rounded-xl bg-slate-50/60 border border-slate-100" data-ex="exM" data-ans="robbed" data-col="double">
+                            <div class="font-bold text-slate-800 mb-2">rob</div>
+                            <input type="text" class="ex-input w-full px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Past Simple">
+                            <select class="ex-select w-full mt-2 px-2 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-sm font-medium text-slate-700 bg-white">
+                                <option value="">Выбери графу…</option>
+                                <option value="ed">+ ed</option>
+                                <option value="d">+ d</option>
+                                <option value="ied">y → ied</option>
+                                <option value="double">двойная согласная + ed</option>
+                            </select>
+                            <span class="feedback"></span>
+                        </div>
+                        <div class="q-sort-row p-3 rounded-xl bg-slate-50/60 border border-slate-100" data-ex="exM" data-ans="pulled" data-col="ed">
+                            <div class="font-bold text-slate-800 mb-2">pull</div>
+                            <input type="text" class="ex-input w-full px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Past Simple">
+                            <select class="ex-select w-full mt-2 px-2 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-sm font-medium text-slate-700 bg-white">
+                                <option value="">Выбери графу…</option>
+                                <option value="ed">+ ed</option>
+                                <option value="d">+ d</option>
+                                <option value="ied">y → ied</option>
+                                <option value="double">двойная согласная + ed</option>
+                            </select>
+                            <span class="feedback"></span>
+                        </div>
+                        <div class="q-sort-row p-3 rounded-xl bg-slate-50/60 border border-slate-100" data-ex="exM" data-ans="loved" data-col="d">
+                            <div class="font-bold text-slate-800 mb-2">love</div>
+                            <input type="text" class="ex-input w-full px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Past Simple">
+                            <select class="ex-select w-full mt-2 px-2 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-sm font-medium text-slate-700 bg-white">
+                                <option value="">Выбери графу…</option>
+                                <option value="ed">+ ed</option>
+                                <option value="d">+ d</option>
+                                <option value="ied">y → ied</option>
+                                <option value="double">двойная согласная + ed</option>
+                            </select>
+                            <span class="feedback"></span>
+                        </div>
+                        <div class="q-sort-row p-3 rounded-xl bg-slate-50/60 border border-slate-100" data-ex="exM" data-ans="studied" data-col="ied">
+                            <div class="font-bold text-slate-800 mb-2">study</div>
+                            <input type="text" class="ex-input w-full px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Past Simple">
+                            <select class="ex-select w-full mt-2 px-2 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-sm font-medium text-slate-700 bg-white">
+                                <option value="">Выбери графу…</option>
+                                <option value="ed">+ ed</option>
+                                <option value="d">+ d</option>
+                                <option value="ied">y → ied</option>
+                                <option value="double">двойная согласная + ed</option>
+                            </select>
+                            <span class="feedback"></span>
+                        </div>
+                        <div class="q-sort-row p-3 rounded-xl bg-slate-50/60 border border-slate-100" data-ex="exM" data-ans="danced" data-col="d">
+                            <div class="font-bold text-slate-800 mb-2">dance</div>
+                            <input type="text" class="ex-input w-full px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Past Simple">
+                            <select class="ex-select w-full mt-2 px-2 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-sm font-medium text-slate-700 bg-white">
+                                <option value="">Выбери графу…</option>
+                                <option value="ed">+ ed</option>
+                                <option value="d">+ d</option>
+                                <option value="ied">y → ied</option>
+                                <option value="double">двойная согласная + ed</option>
+                            </select>
+                            <span class="feedback"></span>
+                        </div>
+                        <div class="q-sort-row p-3 rounded-xl bg-slate-50/60 border border-slate-100" data-ex="exM" data-ans="kissed" data-col="ed">
+                            <div class="font-bold text-slate-800 mb-2">kiss</div>
+                            <input type="text" class="ex-input w-full px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Past Simple">
+                            <select class="ex-select w-full mt-2 px-2 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-sm font-medium text-slate-700 bg-white">
+                                <option value="">Выбери графу…</option>
+                                <option value="ed">+ ed</option>
+                                <option value="d">+ d</option>
+                                <option value="ied">y → ied</option>
+                                <option value="double">двойная согласная + ed</option>
+                            </select>
+                            <span class="feedback"></span>
+                        </div>
+                        <div class="q-sort-row p-3 rounded-xl bg-slate-50/60 border border-slate-100" data-ex="exM" data-ans="dropped" data-col="double">
+                            <div class="font-bold text-slate-800 mb-2">drop</div>
+                            <input type="text" class="ex-input w-full px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Past Simple">
+                            <select class="ex-select w-full mt-2 px-2 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-sm font-medium text-slate-700 bg-white">
+                                <option value="">Выбери графу…</option>
+                                <option value="ed">+ ed</option>
+                                <option value="d">+ d</option>
+                                <option value="ied">y → ied</option>
+                                <option value="double">двойная согласная + ed</option>
+                            </select>
+                            <span class="feedback"></span>
+                        </div>
+                        <div class="q-sort-row p-3 rounded-xl bg-slate-50/60 border border-slate-100" data-ex="exM" data-ans="changed" data-col="d">
+                            <div class="font-bold text-slate-800 mb-2">change</div>
+                            <input type="text" class="ex-input w-full px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Past Simple">
+                            <select class="ex-select w-full mt-2 px-2 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-sm font-medium text-slate-700 bg-white">
+                                <option value="">Выбери графу…</option>
+                                <option value="ed">+ ed</option>
+                                <option value="d">+ d</option>
+                                <option value="ied">y → ied</option>
+                                <option value="double">двойная согласная + ed</option>
+                            </select>
+                            <span class="feedback"></span>
+                        </div>
+                        <div class="q-sort-row p-3 rounded-xl bg-slate-50/60 border border-slate-100" data-ex="exM" data-ans="enjoyed" data-col="ed">
+                            <div class="font-bold text-slate-800 mb-2">enjoy</div>
+                            <input type="text" class="ex-input w-full px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Past Simple">
+                            <select class="ex-select w-full mt-2 px-2 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-sm font-medium text-slate-700 bg-white">
+                                <option value="">Выбери графу…</option>
+                                <option value="ed">+ ed</option>
+                                <option value="d">+ d</option>
+                                <option value="ied">y → ied</option>
+                                <option value="double">двойная согласная + ed</option>
+                            </select>
+                            <span class="feedback"></span>
+                        </div>
+                        <div class="q-sort-row p-3 rounded-xl bg-slate-50/60 border border-slate-100" data-ex="exM" data-ans="tried" data-col="ied">
+                            <div class="font-bold text-slate-800 mb-2">try</div>
+                            <input type="text" class="ex-input w-full px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Past Simple">
+                            <select class="ex-select w-full mt-2 px-2 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-sm font-medium text-slate-700 bg-white">
+                                <option value="">Выбери графу…</option>
+                                <option value="ed">+ ed</option>
+                                <option value="d">+ d</option>
+                                <option value="ied">y → ied</option>
+                                <option value="double">двойная согласная + ed</option>
+                            </select>
+                            <span class="feedback"></span>
+                        </div>
+                        <div class="q-sort-row p-3 rounded-xl bg-slate-50/60 border border-slate-100" data-ex="exM" data-ans="lived" data-col="d">
+                            <div class="font-bold text-slate-800 mb-2">live</div>
+                            <input type="text" class="ex-input w-full px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Past Simple">
+                            <select class="ex-select w-full mt-2 px-2 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-sm font-medium text-slate-700 bg-white">
+                                <option value="">Выбери графу…</option>
+                                <option value="ed">+ ed</option>
+                                <option value="d">+ d</option>
+                                <option value="ied">y → ied</option>
+                                <option value="double">двойная согласная + ed</option>
+                            </select>
+                            <span class="feedback"></span>
+                        </div>
+                        <div class="q-sort-row p-3 rounded-xl bg-slate-50/60 border border-slate-100" data-ex="exM" data-ans="preferred" data-col="double">
+                            <div class="font-bold text-slate-800 mb-2">prefer</div>
+                            <input type="text" class="ex-input w-full px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Past Simple">
+                            <select class="ex-select w-full mt-2 px-2 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-sm font-medium text-slate-700 bg-white">
+                                <option value="">Выбери графу…</option>
+                                <option value="ed">+ ed</option>
+                                <option value="d">+ d</option>
+                                <option value="ied">y → ied</option>
+                                <option value="double">двойная согласная + ed</option>
+                            </select>
+                            <span class="feedback"></span>
+                        </div>
+                        <div class="q-sort-row p-3 rounded-xl bg-slate-50/60 border border-slate-100" data-ex="exM" data-ans="cooked" data-col="ed">
+                            <div class="font-bold text-slate-800 mb-2">cook</div>
+                            <input type="text" class="ex-input w-full px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Past Simple">
+                            <select class="ex-select w-full mt-2 px-2 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-sm font-medium text-slate-700 bg-white">
+                                <option value="">Выбери графу…</option>
+                                <option value="ed">+ ed</option>
+                                <option value="d">+ d</option>
+                                <option value="ied">y → ied</option>
+                                <option value="double">двойная согласная + ed</option>
+                            </select>
+                            <span class="feedback"></span>
+                        </div>
+                        <div class="q-sort-row p-3 rounded-xl bg-slate-50/60 border border-slate-100" data-ex="exM" data-ans="hurried" data-col="ied">
+                            <div class="font-bold text-slate-800 mb-2">hurry</div>
+                            <input type="text" class="ex-input w-full px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Past Simple">
+                            <select class="ex-select w-full mt-2 px-2 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-sm font-medium text-slate-700 bg-white">
+                                <option value="">Выбери графу…</option>
+                                <option value="ed">+ ed</option>
+                                <option value="d">+ d</option>
+                                <option value="ied">y → ied</option>
+                                <option value="double">двойная согласная + ed</option>
+                            </select>
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+                </section>
+
                 <!-- Exercises global actions -->
                 <div class="flex justify-center gap-4 py-4">
                     <button onclick="checkAllExercises()" class="px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold text-base rounded-2xl shadow-lg shadow-brand-500/30 transition hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0">
@@ -1159,12 +1449,54 @@
             return isCorrect;
         }
 
+        // Human-readable column names for the spelling-rules sort exercise
+        const COL_NAMES = {
+            ed: '+ ed',
+            d: '+ d',
+            ied: 'y → ied',
+            double: 'двойная согласная + ed'
+        };
+
+        // Check sort row: past form input + spelling-rule column select
+        function checkSortRow(row) {
+            const input = row.querySelector('.ex-input');
+            const select = row.querySelector('.ex-select');
+            const feedback = row.querySelector('.feedback');
+            const targetCol = row.dataset.col;
+
+            const formResult = evaluateInput(input, row.dataset.ans);
+
+            let colResult = null;
+            if (!select.value) {
+                select.classList.remove('input-correct', 'input-incorrect');
+            } else {
+                colResult = select.value === targetCol;
+                select.classList.toggle('input-correct', colResult);
+                select.classList.toggle('input-incorrect', !colResult);
+            }
+
+            if (formResult === true && colResult === true) {
+                feedback.innerHTML = `<span class="correct-badge !ml-0 mt-1"><i class="fa-solid fa-check me-1"></i> Верно</span>`;
+                return true;
+            } else if (formResult === false || colResult === false) {
+                const parts = [];
+                if (formResult === false) parts.push(`форма: ${row.dataset.ans.split('|')[0]}`);
+                if (colResult === false) parts.push(`графа: ${COL_NAMES[targetCol]}`);
+                feedback.innerHTML = `<span class="incorrect-badge !ml-0 mt-1"><i class="fa-solid fa-xmark me-1"></i> (Правильно: ${parts.join(', ')})</span>`;
+                return false;
+            } else {
+                feedback.innerHTML = '';
+                return null;
+            }
+        }
+
         // Check specific exercise
         function checkExercise(exId) {
             document.querySelectorAll(`.q-row[data-ex="${exId}"]`).forEach(row => checkRow(row));
             document.querySelectorAll(`.q-multi[data-ex="${exId}"]`).forEach(box => checkMulti(box));
             document.querySelectorAll(`.q-select-row[data-ex="${exId}"]`).forEach(row => checkSelectRow(row));
             document.querySelectorAll(`.q-match-row[data-ex="${exId}"]`).forEach(row => checkMatchRow(row));
+            document.querySelectorAll(`.q-sort-row[data-ex="${exId}"]`).forEach(row => checkSortRow(row));
 
             updateExScore();
         }
@@ -1194,10 +1526,21 @@
                 if (feedback) feedback.innerHTML = '';
             });
 
+            document.querySelectorAll(`.q-sort-row[data-ex="${exId}"]`).forEach(row => {
+                const input = row.querySelector('.ex-input');
+                input.value = '';
+                input.classList.remove('input-correct', 'input-incorrect');
+                const select = row.querySelector('.ex-select');
+                select.value = '';
+                select.classList.remove('input-correct', 'input-incorrect');
+                const feedback = row.querySelector('.feedback');
+                if (feedback) feedback.innerHTML = '';
+            });
+
             updateExScore();
         }
 
-        const EXERCISES = ['exA', 'exB', 'exC', 'exD', 'exE', 'exF', 'exG', 'exH', 'exI', 'exJ', 'exK', 'exL'];
+        const EXERCISES = ['exA', 'exB', 'exC', 'exD', 'exE', 'exF', 'exG', 'exH', 'exI', 'exJ', 'exK', 'exL', 'exM'];
 
         function checkAllExercises() {
             EXERCISES.forEach(exId => checkExercise(exId));
@@ -1245,6 +1588,16 @@
                 }
             });
 
+            document.querySelectorAll('.q-sort-row').forEach(row => {
+                totalPoints++;
+                const input = row.querySelector('.ex-input');
+                const select = row.querySelector('.ex-select');
+                if (input.value.trim() && answersMatch(input.value, row.dataset.ans)
+                        && select.value && select.value === row.dataset.col) {
+                    currentScore++;
+                }
+            });
+
             document.getElementById('ex-score-val').textContent = currentScore;
             document.getElementById('ex-total-val').textContent = totalPoints;
             const percentage = totalPoints ? Math.round((currentScore / totalPoints) * 100) : 0;
@@ -1257,8 +1610,10 @@
             if (e.target.classList.contains('ex-input')) {
                 const row = e.target.closest('.q-row');
                 const multi = e.target.closest('.q-multi');
+                const sort = e.target.closest('.q-sort-row');
                 if (row) checkRow(row);
                 if (multi) checkMulti(multi);
+                if (sort) checkSortRow(sort);
                 updateExScore();
             }
         });
@@ -1267,7 +1622,9 @@
         document.addEventListener('change', (e) => {
             if (e.target.classList.contains('ex-select')) {
                 const row = e.target.closest('.q-match-row');
+                const sort = e.target.closest('.q-sort-row');
                 if (row) checkMatchRow(row);
+                if (sort) checkSortRow(sort);
                 updateExScore();
             }
         });
