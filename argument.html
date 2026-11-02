@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reading: How to Win an Online Argument</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .correct-badge {
+            display: inline-flex;
+            align-items: center;
+            color: #16a34a;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-left: 0.5rem;
+        }
+        .incorrect-badge {
+            display: inline-flex;
+            align-items: center;
+            color: #dc2626;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-left: 0.5rem;
+        }
+        .opt-btn {
+            transition: all 0.15s ease-in-out;
+        }
+        .opt-btn.selected {
+            border-color: #2563eb;
+            background-color: #eff6ff;
+            color: #1d4ed8;
+        }
+        .opt-btn.correct-opt {
+            border-color: #22c55e !important;
+            background-color: #f0fdf4 !important;
+            color: #15803d !important;
+        }
+        .opt-btn.incorrect-opt {
+            border-color: #ef4444 !important;
+            background-color: #fef2f2 !important;
+            color: #b91c1c !important;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-slate-800 h-full flex flex-col selection:bg-brand-500 selection:text-white">
+
+    <!-- Sticky Header with Score Tracker -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
+                    <i class="fa-solid fa-book-open text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg text-slate-900 leading-tight">Reading</h1>
+                    <p class="text-xs text-slate-500">How to Win an Online Argument</p>
+                </div>
+            </div>
+
+            <!-- Global Score Board -->
+            <div class="flex items-center gap-4 bg-slate-100 p-2 sm:px-4 sm:py-2 rounded-2xl border border-slate-200/80">
+                <div class="text-right">
+                    <div class="text-xs font-medium text-slate-500">Результат</div>
+                    <div class="font-extrabold text-brand-600 text-sm sm:text-base"><span id="score-val">0</span> / <span id="total-val">14</span></div>
+                </div>
+                <div class="w-24 sm:w-32 bg-slate-200 h-3 rounded-full overflow-hidden">
+                    <div id="progress-bar" class="bg-brand-600 h-full w-0 transition-all duration-500 ease-out"></div>
+                </div>
+                <div class="text-xs font-bold text-slate-700 w-9 text-right" id="percentage-val">0%</div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-8 space-y-8">
+
+        <!-- Global Control Panel Top -->
+        <div class="flex items-center justify-between bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm">
+            <p class="text-sm text-slate-600 hidden sm:block">Сначала прочитай текст, потом выполни задания.</p>
+            <div class="flex gap-2 w-full sm:w-auto justify-end">
+                <button onclick="checkAll()" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white font-semibold text-sm rounded-xl transition shadow-sm hover:shadow active:scale-95">
+                    <i class="fa-solid fa-check me-2"></i>Проверить всё
+                </button>
+                <button onclick="resetAll()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm rounded-xl transition active:scale-95">
+                    <i class="fa-solid fa-rotate-right me-2"></i>Сбросить всё
+                </button>
+            </div>
+        </div>
+
+        <!-- READING TEXT -->
+        <section class="bg-white rounded-3xl p-6 sm:p-10 border border-slate-200 shadow-sm">
+            <span class="inline-block px-3 py-1 bg-brand-50 text-brand-700 rounded-lg text-xs font-bold tracking-wide uppercase mb-4">Текст для чтения</span>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-1">How to win an <span class="text-brand-600">online argument</span></h2>
+            <p class="text-xs text-slate-400 mb-6">Adapted from the Daily Mail</p>
+
+            <div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-700">
+                <p>When it comes to arguing face-to-face, many people use persuasive intonation or facial expressions to help win the argument. However, these are no use when you want to argue your case online. A recent study of comment threads on online forums has found that some words are more effective than others and that using numbers makes you more persuasive. Lillian Lee and her PhD students at Cornell University analysed almost two years of posts made on the forum site ChangeMyView, a website where users invite others to challenge their views and present alternative opinions.</p>
+            </div>
+
+            <h3 class="text-lg font-extrabold text-brand-700 mt-8 mb-4">The best ways to win an argument</h3>
+            <div class="space-y-4 text-base sm:text-lg leading-relaxed text-slate-700">
+                <p><b class="text-slate-900">Get your timing right.</b> Typically, the first person to reply to the thread has a greater chance of changing the view of the original poster (OP) than someone who joins the debate later on.</p>
+                <p><b class="text-slate-900">Use alternative terminology.</b> Use words that are different from those used in the post. For example, if discussing climate change, describing it as <i>global warming</i> in a reply makes more of an impact than using the same terminology as the OP.</p>
+                <p><b class="text-slate-900">Be polite.</b> The study suggests that swearing or using aggressive terms instantly makes your argument less effective.</p>
+                <p><b class="text-slate-900">Think about length.</b> Longer replies in general tend to be seen as more persuasive.</p>
+                <p><b class="text-slate-900">Use evidence.</b> Using numbers, statistics, and examples to back up opinions makes people sound more convincing. The same is true of links to examples and outside sources.</p>
+                <p><b class="text-slate-900">Show consideration for other's opinions.</b> Phrases like «It could be the case that…» or «It may be true that…» show that you are open to other points of view. Although this sounds like it might signal a weaker argument, the researchers said it may make your argument easier to accept, by softening its tone.</p>
+                <p><b class="text-slate-900">Check the language in the original post.</b> Personal pronouns, such as <i>I</i>, suggest that a person is more open-minded to persuasion, whereas <i>we</i> and <i>us</i> suggest they are more stubborn. Stubborn people also use more emotive language and use decisive words such as <i>certain</i>, <i>nothing</i>, and <i>best</i>.</p>
+                <p><b class="text-slate-900">Know when to give up.</b> Finally, the researchers found that after four or five 'back-and-forth' posts have been made, the chances of changing someone's opinion significantly drops.</p>
+            </div>
+        </section>
+
+        <!-- MULTIPLE CHOICE -->
+        <section id="mcq-card" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm transition hover:shadow-md">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-slate-100">
+                <div>
+                    <span class="inline-block px-3 py-1 bg-brand-50 text-brand-700 rounded-lg text-xs font-bold tracking-wide uppercase mb-1">Упражнение 1 · Multiple choice</span>
+                    <h2 class="text-xl font-bold text-slate-900">Choose the correct answer.</h2>
+                    <p class="text-xs text-slate-400 mt-1">Выбери правильный вариант ответа по тексту</p>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="checkExercise('mcq')" class="px-3 py-1.5 bg-brand-50 text-brand-700 hover:bg-brand-100 font-semibold text-xs rounded-lg transition">Проверить</button>
+                    <button onclick="resetExercise('mcq')" class="px-3 py-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold text-xs rounded-lg transition">Сбросить</button>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Q1 -->
+                <div class="q-select-row" data-ex="mcq" data-ans="b">
+                    <p class="font-semibold text-slate-900 mb-3"><span class="font-bold text-slate-400 me-1">1.</span> Who carried out the study?</p>
+                    <div class="grid gap-2">
+                        <button type="button" onclick="selectOption(this)" data-val="a" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">a) journalists from the Daily Mail</button>
+                        <button type="button" onclick="selectOption(this)" data-val="b" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">b) Lillian Lee and her students at Cornell University</button>
+                        <button type="button" onclick="selectOption(this)" data-val="c" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">c) the creators of the ChangeMyView website</button>
+                        <button type="button" onclick="selectOption(this)" data-val="d" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">d) a group of online forum users</button>
+                    </div>
+                    <span class="feedback"></span>
+                </div>
+
+                <!-- Q2 -->
+                <div class="q-select-row" data-ex="mcq" data-ans="c">
+                    <p class="font-semibold text-slate-900 mb-3"><span class="font-bold text-slate-400 me-1">2.</span> ChangeMyView is a website where users…</p>
+                    <div class="grid gap-2">
+                        <button type="button" onclick="selectOption(this)" data-val="a" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">a) discuss the latest news</button>
+                        <button type="button" onclick="selectOption(this)" data-val="b" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">b) learn persuasive intonation</button>
+                        <button type="button" onclick="selectOption(this)" data-val="c" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">c) invite others to challenge their views</button>
+                        <button type="button" onclick="selectOption(this)" data-val="d" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">d) vote for the best argument</button>
+                    </div>
+                    <span class="feedback"></span>
+                </div>
+
+                <!-- Q3 -->
+                <div class="q-select-row" data-ex="mcq" data-ans="a">
+                    <p class="font-semibold text-slate-900 mb-3"><span class="font-bold text-slate-400 me-1">3.</span> Who has the greatest chance of changing the original poster's view?</p>
+                    <div class="grid gap-2">
+                        <button type="button" onclick="selectOption(this)" data-val="a" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">a) the first person to reply to the thread</button>
+                        <button type="button" onclick="selectOption(this)" data-val="b" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">b) the person who joins the debate later</button>
+                        <button type="button" onclick="selectOption(this)" data-val="c" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">c) the person with the longest reply</button>
+                        <button type="button" onclick="selectOption(this)" data-val="d" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">d) the person with the most links</button>
+                    </div>
+                    <span class="feedback"></span>
+                </div>
+
+                <!-- Q4 -->
+                <div class="q-select-row" data-ex="mcq" data-ans="b">
+                    <p class="font-semibold text-slate-900 mb-3"><span class="font-bold text-slate-400 me-1">4.</span> When discussing climate change, it makes more of an impact to…</p>
+                    <div class="grid gap-2">
+                        <button type="button" onclick="selectOption(this)" data-val="a" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">a) repeat the same terminology as the OP</button>
+                        <button type="button" onclick="selectOption(this)" data-val="b" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">b) describe it as «global warming»</button>
+                        <button type="button" onclick="selectOption(this)" data-val="c" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">c) avoid scientific words</button>
+                        <button type="button" onclick="selectOption(this)" data-val="d" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">d) ask the OP questions</button>
+                    </div>
+                    <span class="feedback"></span>
+                </div>
+
+                <!-- Q5 -->
+                <div class="q-select-row" data-ex="mcq" data-ans="c">
+                    <p class="font-semibold text-slate-900 mb-3"><span class="font-bold text-slate-400 me-1">5.</span> According to the study, swearing in an argument…</p>
+                    <div class="grid gap-2">
+                        <button type="button" onclick="selectOption(this)" data-val="a" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">a) makes your argument stronger</button>
+                        <button type="button" onclick="selectOption(this)" data-val="b" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">b) shows that you are confident</button>
+                        <button type="button" onclick="selectOption(this)" data-val="c" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">c) instantly makes your argument less effective</button>
+                        <button type="button" onclick="selectOption(this)" data-val="d" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">d) has no effect on the result</button>
+                    </div>
+                    <span class="feedback"></span>
+                </div>
+
+                <!-- Q6 -->
+                <div class="q-select-row" data-ex="mcq" data-ans="b">
+                    <p class="font-semibold text-slate-900 mb-3"><span class="font-bold text-slate-400 me-1">6.</span> The chances of changing someone's opinion drop significantly after…</p>
+                    <div class="grid gap-2">
+                        <button type="button" onclick="selectOption(this)" data-val="a" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">a) two or three 'back-and-forth' posts</button>
+                        <button type="button" onclick="selectOption(this)" data-val="b" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">b) four or five 'back-and-forth' posts</button>
+                        <button type="button" onclick="selectOption(this)" data-val="c" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">c) seven or eight 'back-and-forth' posts</button>
+                        <button type="button" onclick="selectOption(this)" data-val="d" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">d) ten 'back-and-forth' posts</button>
+                    </div>
+                    <span class="feedback"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- TRUE / FALSE -->
+        <section id="tf-card" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm transition hover:shadow-md">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-slate-100">
+                <div>
+                    <span class="inline-block px-3 py-1 bg-brand-50 text-brand-700 rounded-lg text-xs font-bold tracking-wide uppercase mb-1">Упражнение 2 · True / False</span>
+                    <h2 class="text-xl font-bold text-slate-900">Are the sentences true or false?</h2>
+                    <p class="text-xs text-slate-400 mt-1">Отметь, верно ли утверждение по тексту</p>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="checkExercise('tf')" class="px-3 py-1.5 bg-brand-50 text-brand-700 hover:bg-brand-100 font-semibold text-xs rounded-lg transition">Проверить</button>
+                    <button onclick="resetExercise('tf')" class="px-3 py-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold text-xs rounded-lg transition">Сбросить</button>
+                </div>
+            </div>
+
+            <div class="space-y-4 text-base sm:text-lg">
+                <div class="q-select-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="tf" data-ans="false">
+                    <span class="font-bold text-slate-400 me-1">1.</span>
+                    <span class="flex-1 min-w-[200px]">Intonation and facial expressions help you win an argument online.</span>
+                    <div class="inline-flex gap-1 border border-slate-300 rounded-xl p-1 bg-white">
+                        <button type="button" onclick="selectOption(this)" data-val="true" class="opt-btn px-4 py-1 rounded-lg border border-transparent font-bold text-slate-700 hover:bg-slate-100">True</button>
+                        <button type="button" onclick="selectOption(this)" data-val="false" class="opt-btn px-4 py-1 rounded-lg border border-transparent font-bold text-slate-700 hover:bg-slate-100">False</button>
+                    </div>
+                    <span class="feedback"></span>
+                </div>
+
+                <div class="q-select-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="tf" data-ans="true">
+                    <span class="font-bold text-slate-400 me-1">2.</span>
+                    <span class="flex-1 min-w-[200px]">Using numbers makes you more persuasive.</span>
+                    <div class="inline-flex gap-1 border border-slate-300 rounded-xl p-1 bg-white">
+                        <button type="button" onclick="selectOption(this)" data-val="true" class="opt-btn px-4 py-1 rounded-lg border border-transparent font-bold text-slate-700 hover:bg-slate-100">True</button>
+                        <button type="button" onclick="selectOption(this)" data-val="false" class="opt-btn px-4 py-1 rounded-lg border border-transparent font-bold text-slate-700 hover:bg-slate-100">False</button>
+                    </div>
+                    <span class="feedback"></span>
+                </div>
+
+                <div class="q-select-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="tf" data-ans="true">
+                    <span class="font-bold text-slate-400 me-1">3.</span>
+                    <span class="flex-1 min-w-[200px]">The researchers analysed almost two years of posts.</span>
+                    <div class="inline-flex gap-1 border border-slate-300 rounded-xl p-1 bg-white">
+                        <button type="button" onclick="selectOption(this)" data-val="true" class="opt-btn px-4 py-1 rounded-lg border border-transparent font-bold text-slate-700 hover:bg-slate-100">True</button>
+                        <button type="button" onclick="selectOption(this)" data-val="false" class="opt-btn px-4 py-1 rounded-lg border border-transparent font-bold text-slate-700 hover:bg-slate-100">False</button>
+                    </div>
+                    <span class="feedback"></span>
+                </div>
+
+                <div class="q-select-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="tf" data-ans="false">
+                    <span class="font-bold text-slate-400 me-1">4.</span>
+                    <span class="flex-1 min-w-[200px]">Short replies are usually seen as more persuasive.</span>
+                    <div class="inline-flex gap-1 border border-slate-300 rounded-xl p-1 bg-white">
+                        <button type="button" onclick="selectOption(this)" data-val="true" class="opt-btn px-4 py-1 rounded-lg border border-transparent font-bold text-slate-700 hover:bg-slate-100">True</button>
+                        <button type="button" onclick="selectOption(this)" data-val="false" class="opt-btn px-4 py-1 rounded-lg border border-transparent font-bold text-slate-700 hover:bg-slate-100">False</button>
+                    </div>
+                    <span class="feedback"></span>
+                </div>
+
+                <div class="q-select-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="tf" data-ans="true">
+                    <span class="font-bold text-slate-400 me-1">5.</span>
+                    <span class="flex-1 min-w-[200px]">Links to examples and outside sources make people sound more convincing.</span>
+                    <div class="inline-flex gap-1 border border-slate-300 rounded-xl p-1 bg-white">
+                        <button type="button" onclick="selectOption(this)" data-val="true" class="opt-btn px-4 py-1 rounded-lg border border-transparent font-bold text-slate-700 hover:bg-slate-100">True</button>
+                        <button type="button" onclick="selectOption(this)" data-val="false" class="opt-btn px-4 py-1 rounded-lg border border-transparent font-bold text-slate-700 hover:bg-slate-100">False</button>
+                    </div>
+                    <span class="feedback"></span>
+                </div>
+
+                <div class="q-select-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="tf" data-ans="false">
+                    <span class="font-bold text-slate-400 me-1">6.</span>
+                    <span class="flex-1 min-w-[200px]">Phrases like «It may be true that…» signal a strong argument.</span>
+                    <div class="inline-flex gap-1 border border-slate-300 rounded-xl p-1 bg-white">
+                        <button type="button" onclick="selectOption(this)" data-val="true" class="opt-btn px-4 py-1 rounded-lg border border-transparent font-bold text-slate-700 hover:bg-slate-100">True</button>
+                        <button type="button" onclick="selectOption(this)" data-val="false" class="opt-btn px-4 py-1 rounded-lg border border-transparent font-bold text-slate-700 hover:bg-slate-100">False</button>
+                    </div>
+                    <span class="feedback"></span>
+                </div>
+
+                <div class="q-select-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="tf" data-ans="false">
+                    <span class="font-bold text-slate-400 me-1">7.</span>
+                    <span class="flex-1 min-w-[200px]">People who write «we» and «us» are usually more open to persuasion.</span>
+                    <div class="inline-flex gap-1 border border-slate-300 rounded-xl p-1 bg-white">
+                        <button type="button" onclick="selectOption(this)" data-val="true" class="opt-btn px-4 py-1 rounded-lg border border-transparent font-bold text-slate-700 hover:bg-slate-100">True</button>
+                        <button type="button" onclick="selectOption(this)" data-val="false" class="opt-btn px-4 py-1 rounded-lg border border-transparent font-bold text-slate-700 hover:bg-slate-100">False</button>
+                    </div>
+                    <span class="feedback"></span>
+                </div>
+
+                <div class="q-select-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="tf" data-ans="false">
+                    <span class="font-bold text-slate-400 me-1">8.</span>
+                    <span class="flex-1 min-w-[200px]">The researchers advise never giving up in an online argument.</span>
+                    <div class="inline-flex gap-1 border border-slate-300 rounded-xl p-1 bg-white">
+                        <button type="button" onclick="selectOption(this)" data-val="true" class="opt-btn px-4 py-1 rounded-lg border border-transparent font-bold text-slate-700 hover:bg-slate-100">True</button>
+                        <button type="button" onclick="selectOption(this)" data-val="false" class="opt-btn px-4 py-1 rounded-lg border border-transparent font-bold text-slate-700 hover:bg-slate-100">False</button>
+                    </div>
+                    <span class="feedback"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Global Action Bottom -->
+        <div class="flex justify-center gap-4 py-4">
+            <button onclick="checkAll()" class="px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold text-base rounded-2xl shadow-lg shadow-brand-500/30 transition hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0">
+                <i class="fa-solid fa-check-circle me-2"></i>Проверить все ответы
+            </button>
+            <button onclick="resetAll()" class="px-6 py-3 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-base rounded-2xl transition active:scale-95">
+                <i class="fa-solid fa-rotate-right me-2"></i>Сбросить всё
+            </button>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-6 text-center text-xs text-slate-400 mt-auto">
+        <p>Интерактивный тренажер по грамматике английского языка</p>
+    </footer>
+
+    <!-- Logic Script -->
+    <script>
+        // Clean text string for easy comparison
+        function cleanStr(str) {
+            return str.trim()
+                .replace(/\s+/g, ' ')
+                .replace(/[.,!?«»"—–-]/g, '')
+                .toLowerCase();
+        }
+
+        // Click selection option
+        function selectOption(btn) {
+            const container = btn.closest('.q-select-row');
+            const buttons = container.querySelectorAll('.opt-btn');
+
+            buttons.forEach(b => {
+                b.classList.remove('selected', 'correct-opt', 'incorrect-opt');
+            });
+
+            btn.classList.add('selected');
+
+            checkSelectRow(container);
+            updateOverallScore();
+        }
+
+        // Check select option row
+        function checkSelectRow(row) {
+            const selectedBtn = row.querySelector('.opt-btn.selected');
+            const targetAns = row.dataset.ans;
+            const feedback = row.querySelector('.feedback');
+            const buttons = row.querySelectorAll('.opt-btn');
+
+            buttons.forEach(b => b.classList.remove('correct-opt', 'incorrect-opt'));
+
+            if (!selectedBtn) {
+                feedback.innerHTML = '';
+                return null;
+            }
+
+            const isCorrect = cleanStr(selectedBtn.dataset.val) === cleanStr(targetAns);
+
+            if (isCorrect) {
+                selectedBtn.classList.add('correct-opt');
+                feedback.innerHTML = `<span class="correct-badge"><i class="fa-solid fa-check me-1"></i> Верно</span>`;
+            } else {
+                selectedBtn.classList.add('incorrect-opt');
+                buttons.forEach(b => {
+                    if (cleanStr(b.dataset.val) === cleanStr(targetAns)) {
+                        b.classList.add('correct-opt');
+                    }
+                });
+                feedback.innerHTML = `<span class="incorrect-badge"><i class="fa-solid fa-xmark me-1"></i> Неверно</span>`;
+            }
+
+            return isCorrect;
+        }
+
+        // Check specific exercise
+        function checkExercise(exId) {
+            document.querySelectorAll(`.q-select-row[data-ex="${exId}"]`).forEach(row => checkSelectRow(row));
+            updateOverallScore();
+        }
+
+        // Reset specific exercise
+        function resetExercise(exId) {
+            document.querySelectorAll(`.q-select-row[data-ex="${exId}"]`).forEach(row => {
+                row.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected', 'correct-opt', 'incorrect-opt'));
+                const feedback = row.querySelector('.feedback');
+                if (feedback) feedback.innerHTML = '';
+            });
+            updateOverallScore();
+        }
+
+        const EXERCISES = ['mcq', 'tf'];
+
+        // Check all exercises
+        function checkAll() {
+            EXERCISES.forEach(exId => checkExercise(exId));
+        }
+
+        // Reset all exercises
+        function resetAll() {
+            EXERCISES.forEach(exId => resetExercise(exId));
+        }
+
+        // Calculate and update global score
+        function updateOverallScore() {
+            const selectRows = document.querySelectorAll('.q-select-row');
+
+            const totalPoints = selectRows.length;
+            let currentScore = 0;
+
+            selectRows.forEach(row => {
+                const selectedBtn = row.querySelector('.opt-btn.selected');
+                if (selectedBtn && cleanStr(selectedBtn.dataset.val) === cleanStr(row.dataset.ans)) {
+                    currentScore++;
+                }
+            });
+
+            document.getElementById('score-val').textContent = currentScore;
+            document.getElementById('total-val').textContent = totalPoints;
+            const percentage = Math.round((currentScore / totalPoints) * 100);
+            document.getElementById('percentage-val').textContent = `${percentage}%`;
+            document.getElementById('progress-bar').style.width = `${percentage}%`;
+        }
+
+        updateOverallScore();
+    </script>
+</body>
+</html>
