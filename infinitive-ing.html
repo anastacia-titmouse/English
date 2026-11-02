@@ -1,0 +1,575 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Infinitive or -ing — Упражнения</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .input-correct {
+            border-color: #22c55e !important;
+            background-color: #f0fdf4 !important;
+            color: #15803d !important;
+        }
+        .input-incorrect {
+            border-color: #ef4444 !important;
+            background-color: #fef2f2 !important;
+            color: #b91c1c !important;
+        }
+        .correct-badge {
+            display: inline-flex;
+            align-items: center;
+            color: #16a34a;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-left: 0.5rem;
+        }
+        .incorrect-badge {
+            display: inline-flex;
+            align-items: center;
+            color: #dc2626;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-left: 0.5rem;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-slate-800 h-full flex flex-col selection:bg-brand-500 selection:text-white">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
+                    <i class="fa-solid fa-pen-fancy text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg text-slate-900 leading-tight">Infinitive or -ing?</h1>
+                    <p class="text-xs text-slate-500">Инфинитив или герундий: выбери правильную форму</p>
+                </div>
+            </div>
+            <a href="index.html" class="text-sm font-semibold text-brand-600 hover:text-brand-700 transition">
+                <i class="fa-solid fa-house me-1"></i>На главную
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-8">
+
+        <!-- Intro -->
+        <div class="text-center mb-8">
+            <p class="text-sm font-bold text-brand-600 uppercase tracking-wider mb-2">Грамматика</p>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-3">Инфинитив или форма с -ing</h2>
+            <p class="text-slate-600 max-w-2xl mx-auto text-sm sm:text-base">
+                После одних глаголов ставится инфинитив с <b>to</b> (<i>decide <u>to go</u></i>),
+                после других — форма <b>-ing</b> (<i>enjoy <u>going</u></i>),
+                а после <i>can, must, let, had better, would rather</i> — глагол без <b>to</b> (<i>must <u>go</u></i>).
+            </p>
+        </div>
+
+        <!-- Control panel -->
+        <div class="flex flex-wrap items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm mb-8">
+            <div class="flex items-center gap-3 bg-slate-100 px-4 py-2 rounded-2xl border border-slate-200/80">
+                <div class="text-xs font-medium text-slate-500">Результат</div>
+                <div class="font-extrabold text-brand-600 text-sm"><span id="ex-score-val">0</span> / <span id="ex-total-val">0</span></div>
+                <div class="w-24 sm:w-32 bg-slate-200 h-3 rounded-full overflow-hidden">
+                    <div id="ex-progress-bar" class="bg-brand-600 h-full w-0 transition-all duration-500 ease-out"></div>
+                </div>
+                <div class="text-xs font-bold text-slate-700 w-9 text-right" id="ex-percentage-val">0%</div>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="checkAllExercises()" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white font-semibold text-sm rounded-xl transition shadow-sm hover:shadow active:scale-95">
+                    <i class="fa-solid fa-check me-2"></i>Проверить всё
+                </button>
+                <button onclick="resetAllExercises()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm rounded-xl transition active:scale-95">
+                    <i class="fa-solid fa-rotate-right me-2"></i>Сбросить всё
+                </button>
+            </div>
+        </div>
+
+        <div class="space-y-8">
+
+            <!-- EX A: Mr Mason -->
+            <section class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm transition hover:shadow-md">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-slate-100">
+                    <div>
+                        <span class="inline-block px-3 py-1 bg-brand-50 text-brand-700 rounded-lg text-xs font-bold tracking-wide uppercase mb-1">Упражнение 1 · текст</span>
+                        <h2 class="text-xl font-bold text-slate-900">Put the verbs in brackets into the correct infinitive form or the -ing form.</h2>
+                        <p class="text-xs text-slate-400 mt-1">Поставь глаголы в скобках в правильную форму: инфинитив или -ing</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="checkExercise('exA')" class="px-3 py-1.5 bg-brand-50 text-brand-700 hover:bg-brand-100 font-semibold text-xs rounded-lg transition">Проверить</button>
+                        <button onclick="resetExercise('exA')" class="px-3 py-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold text-xs rounded-lg transition">Сбросить</button>
+                    </div>
+                </div>
+                <div class="q-multi text-base sm:text-lg leading-loose" data-ex="exA">
+                    <p>
+                        My neighbour, Mr Mason, loves
+                        <input type="text" data-ans="spending|to spend" class="ex-input w-28 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="1">
+                        <b>(spend)</b> time in his garden. He would rather
+                        <input type="text" data-ans="work" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="2">
+                        <b>(work)</b> outside than stay indoors, even when it is snowing! Early in the morning, you can
+                        <input type="text" data-ans="see" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="3">
+                        <b>(see)</b> Mr Mason
+                        <input type="text" data-ans="eat|eating" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="4">
+                        <b>(eat)</b> breakfast in his garden, and late at night he is there again, with a cup of cocoa in his hand. I'd like
+                        <input type="text" data-ans="to help" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="5">
+                        <b>(help)</b> sometimes when there is lots of work to do, but Mr Mason prefers
+                        <input type="text" data-ans="doing|to do" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="6">
+                        <b>(do)</b> everything himself. He doesn't mind
+                        <input type="text" data-ans="getting" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="7">
+                        <b>(get)</b> cold and wet in the winter, and his wife says it's no use
+                        <input type="text" data-ans="trying" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="8">
+                        <b>(try)</b> to make him wear a waterproof jacket because he hates
+                        <input type="text" data-ans="wearing|to wear" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="9">
+                        <b>(wear)</b> them! Mr Mason says he will go on
+                        <input type="text" data-ans="gardening" class="ex-input w-28 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="10">
+                        <b>(garden)</b> until he is too old
+                        <input type="text" data-ans="to do" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="11">
+                        <b>(do)</b> it!
+                    </p>
+                    <div class="feedback mt-3"></div>
+                </div>
+            </section>
+
+            <!-- EX B: Letter to Jessica -->
+            <section class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm transition hover:shadow-md">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-slate-100">
+                    <div>
+                        <span class="inline-block px-3 py-1 bg-brand-50 text-brand-700 rounded-lg text-xs font-bold tracking-wide uppercase mb-1">Упражнение 2 · письмо</span>
+                        <h2 class="text-xl font-bold text-slate-900">Put the verbs in brackets into the correct infinitive form or the -ing form.</h2>
+                        <p class="text-xs text-slate-400 mt-1">Прочитай письмо и вставь глаголы в правильной форме</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="checkExercise('exB')" class="px-3 py-1.5 bg-brand-50 text-brand-700 hover:bg-brand-100 font-semibold text-xs rounded-lg transition">Проверить</button>
+                        <button onclick="resetExercise('exB')" class="px-3 py-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold text-xs rounded-lg transition">Сбросить</button>
+                    </div>
+                </div>
+                <div class="q-multi text-base sm:text-lg leading-loose" data-ex="exB">
+                    <p class="font-semibold">Dear Jessica,</p>
+                    <p>
+                        How are you? I'm busy
+                        <input type="text" data-ans="studying" class="ex-input w-28 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="1">
+                        <b>(study)</b> for my exam which is next week, but I've decided
+                        <input type="text" data-ans="to take" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="2">
+                        <b>(take)</b> a break and
+                        <input type="text" data-ans="write" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="3">
+                        <b>(write)</b> you a letter.
+                        <input type="text" data-ans="Reading" class="ex-input w-28 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="4">
+                        <b>(read)</b> so many notes and
+                        <input type="text" data-ans="learning" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="5">
+                        <b>(learn)</b> so many facts is making me very tired. I can't wait
+                        <input type="text" data-ans="to finish" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="6">
+                        <b>(finish)</b> my course! Then, I can start
+                        <input type="text" data-ans="looking|to look" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="7">
+                        <b>(look)</b> for a good job.
+                    </p>
+                    <p>
+                        Sophie started her new job last month.
+                        <input type="text" data-ans="Working" class="ex-input w-28 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="8">
+                        <b>(work)</b> at the hospital suits her — she loves
+                        <input type="text" data-ans="looking|to look" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="9">
+                        <b>(look)</b> after people. She hopes
+                        <input type="text" data-ans="to stay" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="10">
+                        <b>(stay)</b> in this job for a couple of years and then she intends
+                        <input type="text" data-ans="to try" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="11">
+                        <b>(try)</b> for a promotion.
+                    </p>
+                    <p>
+                        By the way, how are you getting on now that you are a manager? I forgot
+                        <input type="text" data-ans="to congratulate" class="ex-input w-36 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="12">
+                        <b>(congratulate)</b> you when I saw you.
+                    </p>
+                    <p>Anyway, I've got to go now. Write soon and tell me all your news, won't you?</p>
+                    <p class="text-right font-semibold">Best Wishes,<br>Maggie</p>
+                    <div class="feedback mt-3"></div>
+                </div>
+            </section>
+
+            <!-- EX C: Sentences 1-6 -->
+            <section class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm transition hover:shadow-md">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-slate-100">
+                    <div>
+                        <span class="inline-block px-3 py-1 bg-brand-50 text-brand-700 rounded-lg text-xs font-bold tracking-wide uppercase mb-1">Упражнение 3 · предложения</span>
+                        <h2 class="text-xl font-bold text-slate-900">Put the verbs in brackets into the correct infinitive form or the -ing form.</h2>
+                        <p class="text-xs text-slate-400 mt-1">В каждом блоке вставь глаголы в правильной форме</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="checkExercise('exC')" class="px-3 py-1.5 bg-brand-50 text-brand-700 hover:bg-brand-100 font-semibold text-xs rounded-lg transition">Проверить</button>
+                        <button onclick="resetExercise('exC')" class="px-3 py-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold text-xs rounded-lg transition">Сбросить</button>
+                    </div>
+                </div>
+                <div class="space-y-5">
+
+                    <div class="q-multi p-4 rounded-2xl bg-slate-50/60 border border-slate-100" data-ex="exC">
+                        <p class="text-base sm:text-lg leading-loose">
+                            <span class="font-extrabold text-brand-600 me-1">1.</span>
+                            I don't know what
+                            <input type="text" data-ans="to do" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="1">
+                            <b>(do)</b> at the weekend. I fancy
+                            <input type="text" data-ans="going" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="2">
+                            <b>(go)</b> to the cinema, but none of my friends enjoy
+                            <input type="text" data-ans="watching" class="ex-input w-28 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="3">
+                            <b>(watch)</b> films very much.
+                        </p>
+                        <div class="feedback mt-2"></div>
+                    </div>
+
+                    <div class="q-multi p-4 rounded-2xl bg-slate-50/60 border border-slate-100" data-ex="exC">
+                        <p class="text-base sm:text-lg leading-loose">
+                            <span class="font-extrabold text-brand-600 me-1">2.</span>
+                            Paul had his driving test today. He tried
+                            <input type="text" data-ans="not to make" class="ex-input w-32 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="1">
+                            <b>(not/make)</b> any mistakes, but he failed. He expects
+                            <input type="text" data-ans="to pass" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="2">
+                            <b>(pass)</b> the test the next time he takes it.
+                        </p>
+                        <div class="feedback mt-2"></div>
+                    </div>
+
+                    <div class="q-multi p-4 rounded-2xl bg-slate-50/60 border border-slate-100" data-ex="exC">
+                        <p class="text-base sm:text-lg leading-loose">
+                            <span class="font-extrabold text-brand-600 me-1">3.</span>
+                            Tom often goes
+                            <input type="text" data-ans="walking" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="1">
+                            <b>(walk)</b> at the weekends. He doesn't like
+                            <input type="text" data-ans="taking" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="2">
+                            <b>(take)</b> anyone with him because he prefers
+                            <input type="text" data-ans="to be|being" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="3">
+                            <b>(be)</b> alone while he walks.
+                        </p>
+                        <div class="feedback mt-2"></div>
+                    </div>
+
+                    <div class="q-multi p-4 rounded-2xl bg-slate-50/60 border border-slate-100" data-ex="exC">
+                        <p class="text-base sm:text-lg leading-loose">
+                            <span class="font-extrabold text-brand-600 me-1">4.</span>
+                            We had better
+                            <input type="text" data-ans="hurry" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="1">
+                            <b>(hurry)</b> home tonight because our parents have promised
+                            <input type="text" data-ans="to take" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="2">
+                            <b>(take)</b> us out for dinner. I don't know why they want
+                            <input type="text" data-ans="to eat" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="3">
+                            <b>(eat)</b> out, but we must
+                            <input type="text" data-ans="arrive" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="4">
+                            <b>(arrive)</b> home on time.
+                        </p>
+                        <div class="feedback mt-2"></div>
+                    </div>
+
+                    <div class="q-multi p-4 rounded-2xl bg-slate-50/60 border border-slate-100" data-ex="exC">
+                        <p class="text-base sm:text-lg leading-loose">
+                            <span class="font-extrabold text-brand-600 me-1">5.</span>
+                            James is rich and can afford
+                            <input type="text" data-ans="to buy" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="1">
+                            <b>(buy)</b> expensive things. He is always willing
+                            <input type="text" data-ans="to lend" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="2">
+                            <b>(lend)</b> money to people who need it, because he enjoys
+                            <input type="text" data-ans="helping" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="3">
+                            <b>(help)</b> others.
+                        </p>
+                        <div class="feedback mt-2"></div>
+                    </div>
+
+                    <div class="q-multi p-4 rounded-2xl bg-slate-50/60 border border-slate-100" data-ex="exC">
+                        <p class="text-base sm:text-lg leading-loose">
+                            <span class="font-extrabold text-brand-600 me-1">6.</span>
+                            My parents let me
+                            <input type="text" data-ans="stay" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="1">
+                            <b>(stay)</b> at my friend's house last weekend. They agreed
+                            <input type="text" data-ans="to take" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="2">
+                            <b>(take)</b> me in the car and they made me
+                            <input type="text" data-ans="promise" class="ex-input w-24 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="3">
+                            <b>(promise)</b> to behave myself. It was a great weekend!
+                        </p>
+                        <div class="feedback mt-2"></div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- EX D: Key word transformations -->
+            <section class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm transition hover:shadow-md">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-slate-100">
+                    <div>
+                        <span class="inline-block px-3 py-1 bg-brand-50 text-brand-700 rounded-lg text-xs font-bold tracking-wide uppercase mb-1">Упражнение 4 · перефразирование</span>
+                        <h2 class="text-xl font-bold text-slate-900">Complete each sentence with two to five words, including the word in bold.</h2>
+                        <p class="text-xs text-slate-400 mt-1">Допиши предложение двумя–пятью словами так, чтобы смысл не изменился. Используй слово, выделенное жирным</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="checkExercise('exD')" class="px-3 py-1.5 bg-brand-50 text-brand-700 hover:bg-brand-100 font-semibold text-xs rounded-lg transition">Проверить</button>
+                        <button onclick="resetExercise('exD')" class="px-3 py-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold text-xs rounded-lg transition">Сбросить</button>
+                    </div>
+                </div>
+                <div class="space-y-4">
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exD" data-ans="had better ask">
+                        <p class="text-slate-600 text-sm sm:text-base mb-2">You should ask someone to help you with your project.</p>
+                        <div class="flex flex-wrap items-center gap-2 text-base sm:text-lg">
+                            <span class="px-2.5 py-1 bg-amber-100 text-amber-800 rounded-lg text-sm font-extrabold">better</span>
+                            <span>You</span>
+                            <input type="text" class="ex-input w-44 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="...">
+                            <span>someone to help you with your project.</span>
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exD" data-ans="were you, I wouldn't|were you I wouldn't|were you, I would not|were you I would not">
+                        <p class="text-slate-600 text-sm sm:text-base mb-2">I don't think it's a good idea to invest all your money in stocks.</p>
+                        <div class="flex flex-wrap items-center gap-2 text-base sm:text-lg">
+                            <span class="px-2.5 py-1 bg-amber-100 text-amber-800 rounded-lg text-sm font-extrabold">were</span>
+                            <span>If I</span>
+                            <input type="text" class="ex-input w-56 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="...">
+                            <span>invest all my money in stocks.</span>
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exD" data-ans="wish I hadn't eaten|wish I had not eaten">
+                        <p class="text-slate-600 text-sm sm:text-base mb-2">I ate too much ice cream and now I don't feel well.</p>
+                        <div class="flex flex-wrap items-center gap-2 text-base sm:text-lg">
+                            <span class="px-2.5 py-1 bg-amber-100 text-amber-800 rounded-lg text-sm font-extrabold">wish</span>
+                            <span>I</span>
+                            <input type="text" class="ex-input w-52 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="...">
+                            <span>so much ice cream.</span>
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exD" data-ans="hadn't lied|had not lied">
+                        <p class="text-slate-600 text-sm sm:text-base mb-2">Tom wishes he hadn't lied to his parents; now they are angry with him.</p>
+                        <div class="flex flex-wrap items-center gap-2 text-base sm:text-lg">
+                            <span class="px-2.5 py-1 bg-amber-100 text-amber-800 rounded-lg text-sm font-extrabold">lied</span>
+                            <span>If Tom</span>
+                            <input type="text" class="ex-input w-40 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="...">
+                            <span>to his parents, they wouldn't be angry with him.</span>
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exD" data-ans="or else you'll fail|or else you will fail">
+                        <p class="text-slate-600 text-sm sm:text-base mb-2">If you don't start studying, you'll fail your exams.</p>
+                        <div class="flex flex-wrap items-center gap-2 text-base sm:text-lg">
+                            <span class="px-2.5 py-1 bg-amber-100 text-amber-800 rounded-lg text-sm font-extrabold">else</span>
+                            <span>Start studying,</span>
+                            <input type="text" class="ex-input w-48 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="...">
+                            <span>your exams.</span>
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exD" data-ans="would rather eat out">
+                        <p class="text-slate-600 text-sm sm:text-base mb-2">Tina would prefer to eat out rather than cook.</p>
+                        <div class="flex flex-wrap items-center gap-2 text-base sm:text-lg">
+                            <span class="px-2.5 py-1 bg-amber-100 text-amber-800 rounded-lg text-sm font-extrabold">rather</span>
+                            <span>Tina</span>
+                            <input type="text" class="ex-input w-52 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="...">
+                            <span>than cook.</span>
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="border-t border-slate-200 bg-white mt-10">
+        <div class="max-w-4xl mx-auto px-4 py-5 text-xs text-slate-500 flex items-center justify-between">
+            <span>English Lessons · Infinitive or -ing</span>
+            <a href="index.html" class="font-semibold text-brand-600 hover:text-brand-700 transition">На главную</a>
+        </div>
+    </footer>
+
+    <!-- Exercises Logic Script -->
+    <script>
+        // Clean text string for easy comparison (strip extra spaces & punctuation)
+        function cleanStr(str) {
+            return str.trim()
+                .replace(/\s+/g, ' ')
+                .replace(/[.,!?«»"'’—–-]/g, '')
+                .toLowerCase();
+        }
+
+        // Compare user answer with target; several correct variants are separated by '|'
+        function answersMatch(userVal, targetAns) {
+            return targetAns.split('|').some(ans => cleanStr(userVal) === cleanStr(ans));
+        }
+
+        // Evaluate single input element
+        function evaluateInput(input, targetAnswer) {
+            const userVal = input.value;
+
+            if (!userVal.trim()) {
+                input.classList.remove('input-correct', 'input-incorrect');
+                return null;
+            }
+
+            const isCorrect = answersMatch(userVal, targetAnswer);
+
+            if (isCorrect) {
+                input.classList.add('input-correct');
+                input.classList.remove('input-incorrect');
+            } else {
+                input.classList.add('input-incorrect');
+                input.classList.remove('input-correct');
+            }
+
+            return isCorrect;
+        }
+
+        // Check single input row
+        function checkRow(row) {
+            const input = row.querySelector('.ex-input');
+            const targetAns = row.dataset.ans;
+            const feedback = row.querySelector('.feedback');
+
+            const result = evaluateInput(input, targetAns);
+
+            if (result === true) {
+                feedback.innerHTML = `<span class="correct-badge"><i class="fa-solid fa-check me-1"></i> Верно</span>`;
+            } else if (result === false) {
+                feedback.innerHTML = `<span class="incorrect-badge"><i class="fa-solid fa-xmark me-1"></i> (Правильно: ${targetAns.split('|')[0]})</span>`;
+            } else {
+                feedback.innerHTML = '';
+            }
+
+            return result;
+        }
+
+        // Check multi-input text block
+        function checkMulti(box) {
+            const inputs = box.querySelectorAll('.ex-input');
+            const feedback = box.querySelector('.feedback');
+
+            let allFilled = true;
+            let allCorrect = true;
+            const wrongAnswers = [];
+
+            inputs.forEach(input => {
+                const res = evaluateInput(input, input.dataset.ans);
+                if (res === null) allFilled = false;
+                if (res === false) {
+                    allCorrect = false;
+                    wrongAnswers.push(input.dataset.ans.split('|')[0]);
+                }
+            });
+
+            if (allCorrect && allFilled) {
+                feedback.innerHTML = `<span class="correct-badge !ml-0"><i class="fa-solid fa-check me-1"></i> Всё верно, молодец!</span>`;
+                return true;
+            } else if (wrongAnswers.length > 0) {
+                feedback.innerHTML = `<span class="incorrect-badge !ml-0"><i class="fa-solid fa-xmark me-1"></i> (Правильно: ${wrongAnswers.join(' / ')})</span>`;
+                return false;
+            } else {
+                feedback.innerHTML = '';
+                return null;
+            }
+        }
+
+        // Check specific exercise
+        function checkExercise(exId) {
+            document.querySelectorAll(`.q-row[data-ex="${exId}"]`).forEach(row => checkRow(row));
+            document.querySelectorAll(`.q-multi[data-ex="${exId}"]`).forEach(box => checkMulti(box));
+
+            updateExScore();
+        }
+
+        // Reset specific exercise
+        function resetExercise(exId) {
+            document.querySelectorAll(`.q-row[data-ex="${exId}"], .q-multi[data-ex="${exId}"]`).forEach(box => {
+                box.querySelectorAll('.ex-input').forEach(input => {
+                    input.value = '';
+                    input.classList.remove('input-correct', 'input-incorrect');
+                });
+                const feedback = box.querySelector('.feedback');
+                if (feedback) feedback.innerHTML = '';
+            });
+
+            updateExScore();
+        }
+
+        const EXERCISES = ['exA', 'exB', 'exC', 'exD'];
+
+        function checkAllExercises() {
+            EXERCISES.forEach(exId => checkExercise(exId));
+        }
+
+        function resetAllExercises() {
+            EXERCISES.forEach(exId => resetExercise(exId));
+        }
+
+        // Calculate and update exercises score
+        function updateExScore() {
+            let totalPoints = 0;
+            let currentScore = 0;
+
+            document.querySelectorAll('.q-row').forEach(row => {
+                totalPoints++;
+                const input = row.querySelector('.ex-input');
+                if (input.value.trim() && answersMatch(input.value, row.dataset.ans)) {
+                    currentScore++;
+                }
+            });
+
+            document.querySelectorAll('.q-multi').forEach(box => {
+                box.querySelectorAll('.ex-input').forEach(input => {
+                    totalPoints++;
+                    if (input.value.trim() && answersMatch(input.value, input.dataset.ans)) {
+                        currentScore++;
+                    }
+                });
+            });
+
+            document.getElementById('ex-score-val').textContent = currentScore;
+            document.getElementById('ex-total-val').textContent = totalPoints;
+            const percentage = totalPoints ? Math.round((currentScore / totalPoints) * 100) : 0;
+            document.getElementById('ex-percentage-val').textContent = `${percentage}%`;
+            document.getElementById('ex-progress-bar').style.width = `${percentage}%`;
+        }
+
+        // Auto-check text inputs on typing
+        document.addEventListener('input', (e) => {
+            if (e.target.classList.contains('ex-input')) {
+                const row = e.target.closest('.q-row');
+                const multi = e.target.closest('.q-multi');
+                if (row) checkRow(row);
+                if (multi) checkMulti(multi);
+                updateExScore();
+            }
+        });
+
+        updateExScore();
+    </script>
+</body>
+</html>
