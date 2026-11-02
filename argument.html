@@ -34,6 +34,16 @@
         }
     </script>
     <style>
+        .input-correct {
+            border-color: #22c55e !important;
+            background-color: #f0fdf4 !important;
+            color: #15803d !important;
+        }
+        .input-incorrect {
+            border-color: #ef4444 !important;
+            background-color: #fef2f2 !important;
+            color: #b91c1c !important;
+        }
         .correct-badge {
             display: inline-flex;
             align-items: center;
@@ -90,7 +100,7 @@
             <div class="flex items-center gap-4 bg-slate-100 p-2 sm:px-4 sm:py-2 rounded-2xl border border-slate-200/80">
                 <div class="text-right">
                     <div class="text-xs font-medium text-slate-500">Результат</div>
-                    <div class="font-extrabold text-brand-600 text-sm sm:text-base"><span id="score-val">0</span> / <span id="total-val">14</span></div>
+                    <div class="font-extrabold text-brand-600 text-sm sm:text-base"><span id="score-val">0</span> / <span id="total-val">43</span></div>
                 </div>
                 <div class="w-24 sm:w-32 bg-slate-200 h-3 rounded-full overflow-hidden">
                     <div id="progress-bar" class="bg-brand-600 h-full w-0 transition-all duration-500 ease-out"></div>
@@ -325,6 +335,132 @@
             </div>
         </section>
 
+        <!-- VOCAB: GAP-FILL -->
+        <section id="vocab-fill-card" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm transition hover:shadow-md">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-slate-100">
+                <div>
+                    <span class="inline-block px-3 py-1 bg-brand-50 text-brand-700 rounded-lg text-xs font-bold tracking-wide uppercase mb-1">Упражнение 3 · Слова из текста</span>
+                    <h2 class="text-xl font-bold text-slate-900">Fill in the gaps with the words from the text.</h2>
+                    <p class="text-xs text-slate-400 mt-1">Вставь в пропуски слова из статьи: intonation, recent, alternative, terminology, impact, aggressive, persuasive, back up, emotive, significantly</p>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="checkExercise('vocab-fill')" class="px-3 py-1.5 bg-brand-50 text-brand-700 hover:bg-brand-100 font-semibold text-xs rounded-lg transition">Проверить</button>
+                    <button onclick="resetExercise('vocab-fill')" class="px-3 py-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold text-xs rounded-lg transition">Сбросить</button>
+                </div>
+            </div>
+            <div class="space-y-3 text-base sm:text-lg">
+                <div class="q-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="vocab-fill" data-ans="intonation"><span class="font-bold text-slate-400 me-1">1.</span><span>Many people use persuasive</span><input type="text" class="ex-input w-32 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="..."><span>or facial expressions to help win the argument.</span><span class="feedback"></span></div>
+                <div class="q-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="vocab-fill" data-ans="recent"><span class="font-bold text-slate-400 me-1">2.</span><span>A</span><input type="text" class="ex-input w-28 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="..."><span>study of comment threads on online forums found that some words are more effective than others.</span><span class="feedback"></span></div>
+                <div class="q-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="vocab-fill" data-ans="alternative"><span class="font-bold text-slate-400 me-1">3.</span><span>Users invite others to challenge their views and present</span><input type="text" class="ex-input w-32 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="..."><span>opinions.</span><span class="feedback"></span></div>
+                <div class="q-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="vocab-fill" data-ans="terminology"><span class="font-bold text-slate-400 me-1">4.</span><span>Describing climate change as «global warming» makes more of an impact than using the same</span><input type="text" class="ex-input w-32 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="..."><span>as the OP.</span><span class="feedback"></span></div>
+                <div class="q-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="vocab-fill" data-ans="impact"><span class="font-bold text-slate-400 me-1">5.</span><span>Using different words in a reply makes more of an</span><input type="text" class="ex-input w-28 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="..."><span>than repeating the OP's words.</span><span class="feedback"></span></div>
+                <div class="q-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="vocab-fill" data-ans="aggressive"><span class="font-bold text-slate-400 me-1">6.</span><span>Swearing or using</span><input type="text" class="ex-input w-32 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="..."><span>terms instantly makes your argument less effective.</span><span class="feedback"></span></div>
+                <div class="q-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="vocab-fill" data-ans="persuasive"><span class="font-bold text-slate-400 me-1">7.</span><span>Longer replies in general tend to be seen as more</span><input type="text" class="ex-input w-32 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="..."><span>.</span><span class="feedback"></span></div>
+                <div class="q-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="vocab-fill" data-ans="back up"><span class="font-bold text-slate-400 me-1">8.</span><span>Using numbers, statistics, and examples to</span><input type="text" class="ex-input w-28 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="..."><span>opinions makes people sound more convincing.</span><span class="feedback"></span></div>
+                <div class="q-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="vocab-fill" data-ans="emotive"><span class="font-bold text-slate-400 me-1">9.</span><span>Stubborn people also use more</span><input type="text" class="ex-input w-28 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="..."><span>language and decisive words such as «certain», «nothing», and «best».</span><span class="feedback"></span></div>
+                <div class="q-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="vocab-fill" data-ans="significantly"><span class="font-bold text-slate-400 me-1">10.</span><span>After four or five posts, the chances of changing someone's opinion</span><input type="text" class="ex-input w-32 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="..."><span>drop.</span><span class="feedback"></span></div>
+            </div>
+        </section>
+
+        <!-- VOCAB: MULTIPLE CHOICE (meaning) -->
+        <section id="vocab-mcq-card" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm transition hover:shadow-md">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-slate-100">
+                <div>
+                    <span class="inline-block px-3 py-1 bg-brand-50 text-brand-700 rounded-lg text-xs font-bold tracking-wide uppercase mb-1">Упражнение 4 · Multiple choice</span>
+                    <h2 class="text-xl font-bold text-slate-900">What do these words mean? Choose the correct answer.</h2>
+                    <p class="text-xs text-slate-400 mt-1">Выбери правильное объяснение слова из текста</p>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="checkExercise('vocab-mcq')" class="px-3 py-1.5 bg-brand-50 text-brand-700 hover:bg-brand-100 font-semibold text-xs rounded-lg transition">Проверить</button>
+                    <button onclick="resetExercise('vocab-mcq')" class="px-3 py-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold text-xs rounded-lg transition">Сбросить</button>
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="q-select-row" data-ex="vocab-mcq" data-ans="b">
+                    <p class="font-semibold text-slate-900 mb-3"><span class="font-bold text-slate-400 me-1">1.</span> A <b class="text-brand-600">recent</b> study is a study that happened…</p>
+                    <div class="grid gap-2">
+                        <button type="button" onclick="selectOption(this)" data-val="a" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">a) a long time ago</button>
+                        <button type="button" onclick="selectOption(this)" data-val="b" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">b) not long ago</button>
+                        <button type="button" onclick="selectOption(this)" data-val="c" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">c) in the future</button>
+                        <button type="button" onclick="selectOption(this)" data-val="d" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">d) every year</button>
+                    </div>
+                    <span class="feedback"></span>
+                </div>
+
+                <div class="q-select-row" data-ex="vocab-mcq" data-ans="c">
+                    <p class="font-semibold text-slate-900 mb-3"><span class="font-bold text-slate-400 me-1">2.</span> If you <b class="text-brand-600">back up</b> your opinion, you…</p>
+                    <div class="grid gap-2">
+                        <button type="button" onclick="selectOption(this)" data-val="a" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">a) delete it</button>
+                        <button type="button" onclick="selectOption(this)" data-val="b" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">b) change it</button>
+                        <button type="button" onclick="selectOption(this)" data-val="c" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">c) support it with facts and examples</button>
+                        <button type="button" onclick="selectOption(this)" data-val="d" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">d) keep it secret</button>
+                    </div>
+                    <span class="feedback"></span>
+                </div>
+
+                <div class="q-select-row" data-ex="vocab-mcq" data-ans="a">
+                    <p class="font-semibold text-slate-900 mb-3"><span class="font-bold text-slate-400 me-1">3.</span> <b class="text-brand-600">Emotive</b> language is language that…</p>
+                    <div class="grid gap-2">
+                        <button type="button" onclick="selectOption(this)" data-val="a" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">a) makes people feel strong emotions</button>
+                        <button type="button" onclick="selectOption(this)" data-val="b" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">b) is full of numbers</button>
+                        <button type="button" onclick="selectOption(this)" data-val="c" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">c) is very polite</button>
+                        <button type="button" onclick="selectOption(this)" data-val="d" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">d) nobody understands</button>
+                    </div>
+                    <span class="feedback"></span>
+                </div>
+
+                <div class="q-select-row" data-ex="vocab-mcq" data-ans="c">
+                    <p class="font-semibold text-slate-900 mb-3"><span class="font-bold text-slate-400 me-1">4.</span> If something drops <b class="text-brand-600">significantly</b>, it…</p>
+                    <div class="grid gap-2">
+                        <button type="button" onclick="selectOption(this)" data-val="a" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">a) grows slowly</button>
+                        <button type="button" onclick="selectOption(this)" data-val="b" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">b) stays the same</button>
+                        <button type="button" onclick="selectOption(this)" data-val="c" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">c) decreases a lot</button>
+                        <button type="button" onclick="selectOption(this)" data-val="d" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">d) disappears completely</button>
+                    </div>
+                    <span class="feedback"></span>
+                </div>
+
+                <div class="q-select-row" data-ex="vocab-mcq" data-ans="b">
+                    <p class="font-semibold text-slate-900 mb-3"><span class="font-bold text-slate-400 me-1">5.</span> <b class="text-brand-600">Alternative terminology</b> means…</p>
+                    <div class="grid gap-2">
+                        <button type="button" onclick="selectOption(this)" data-val="a" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">a) the same words</button>
+                        <button type="button" onclick="selectOption(this)" data-val="b" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">b) different words</button>
+                        <button type="button" onclick="selectOption(this)" data-val="c" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">c) rude words</button>
+                        <button type="button" onclick="selectOption(this)" data-val="d" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">d) very long words</button>
+                    </div>
+                    <span class="feedback"></span>
+                </div>
+
+                <div class="q-select-row" data-ex="vocab-mcq" data-ans="a">
+                    <p class="font-semibold text-slate-900 mb-3"><span class="font-bold text-slate-400 me-1">6.</span> If you <b class="text-brand-600">persuade</b> someone, you…</p>
+                    <div class="grid gap-2">
+                        <button type="button" onclick="selectOption(this)" data-val="a" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">a) make them agree with you</button>
+                        <button type="button" onclick="selectOption(this)" data-val="b" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">b) argue with them</button>
+                        <button type="button" onclick="selectOption(this)" data-val="c" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">c) ignore them</button>
+                        <button type="button" onclick="selectOption(this)" data-val="d" class="opt-btn w-full text-left px-4 py-2.5 rounded-xl border-2 border-slate-200 font-medium text-slate-700 hover:border-brand-300 hover:bg-slate-50">d) shout at them</button>
+                    </div>
+                    <span class="feedback"></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- VOCAB: TRANSLATION -->
+        <section id="vocab-tr-card" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm transition hover:shadow-md">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-slate-100">
+                <div>
+                    <span class="inline-block px-3 py-1 bg-brand-50 text-brand-700 rounded-lg text-xs font-bold tracking-wide uppercase mb-1">Упражнение 5 · Перевод</span>
+                    <h2 class="text-xl font-bold text-slate-900">Match the English words with their Russian translations.</h2>
+                    <p class="text-xs text-slate-400 mt-1">Подбери к каждому слову из текста русский перевод</p>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="checkExercise('vocab-tr')" class="px-3 py-1.5 bg-brand-50 text-brand-700 hover:bg-brand-100 font-semibold text-xs rounded-lg transition">Проверить</button>
+                    <button onclick="resetExercise('vocab-tr')" class="px-3 py-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold text-xs rounded-lg transition">Сбросить</button>
+                </div>
+            </div>
+            <div id="vocab-tr-rows" class="grid grid-cols-1 sm:grid-cols-2 gap-3"></div>
+        </section>
+
         <!-- Global Action Bottom -->
         <div class="flex justify-center gap-4 py-4">
             <button onclick="checkAll()" class="px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold text-base rounded-2xl shadow-lg shadow-brand-500/30 transition hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0">
@@ -348,8 +484,13 @@
         function cleanStr(str) {
             return str.trim()
                 .replace(/\s+/g, ' ')
-                .replace(/[.,!?«»"—–-]/g, '')
+                .replace(/[.,!?«»"'’—–-]/g, '')
                 .toLowerCase();
+        }
+
+        // Compare user answer with target; several correct variants are separated by '|'
+        function answersMatch(userVal, targetAns) {
+            return targetAns.split('|').some(ans => cleanStr(userVal) === cleanStr(ans));
         }
 
         // Click selection option
@@ -399,9 +540,79 @@
             return isCorrect;
         }
 
+        // Evaluate single input element
+        function evaluateInput(input, targetAnswer) {
+            const userVal = input.value;
+
+            if (!userVal.trim()) {
+                input.classList.remove('input-correct', 'input-incorrect');
+                return null;
+            }
+
+            const isCorrect = answersMatch(userVal, targetAnswer);
+
+            if (isCorrect) {
+                input.classList.add('input-correct');
+                input.classList.remove('input-incorrect');
+            } else {
+                input.classList.add('input-incorrect');
+                input.classList.remove('input-correct');
+            }
+
+            return isCorrect;
+        }
+
+        // Check single input row (gap-fill)
+        function checkRow(row) {
+            const input = row.querySelector('.ex-input');
+            const targetAns = row.dataset.ans;
+            const feedback = row.querySelector('.feedback');
+
+            const result = evaluateInput(input, targetAns);
+
+            if (result === true) {
+                feedback.innerHTML = `<span class="correct-badge"><i class="fa-solid fa-check me-1"></i> Верно</span>`;
+            } else if (result === false) {
+                feedback.innerHTML = `<span class="incorrect-badge"><i class="fa-solid fa-xmark me-1"></i> (Правильно: ${targetAns.split('|')[0]})</span>`;
+            } else {
+                feedback.innerHTML = '';
+            }
+
+            return result;
+        }
+
+        // Check translation dropdown row
+        function checkMatchRow(row) {
+            const select = row.querySelector('.ex-select');
+            const targetAns = row.dataset.ans;
+            const feedback = row.querySelector('.feedback');
+
+            if (!select.value) {
+                select.classList.remove('input-correct', 'input-incorrect');
+                feedback.innerHTML = '';
+                return null;
+            }
+
+            const isCorrect = select.value === targetAns;
+
+            if (isCorrect) {
+                select.classList.add('input-correct');
+                select.classList.remove('input-incorrect');
+                feedback.innerHTML = `<span class="correct-badge"><i class="fa-solid fa-check me-1"></i> Верно</span>`;
+            } else {
+                select.classList.add('input-incorrect');
+                select.classList.remove('input-correct');
+                feedback.innerHTML = `<span class="incorrect-badge"><i class="fa-solid fa-xmark me-1"></i> (Правильно: ${targetAns})</span>`;
+            }
+
+            return isCorrect;
+        }
+
         // Check specific exercise
         function checkExercise(exId) {
             document.querySelectorAll(`.q-select-row[data-ex="${exId}"]`).forEach(row => checkSelectRow(row));
+            document.querySelectorAll(`.q-row[data-ex="${exId}"]`).forEach(row => checkRow(row));
+            document.querySelectorAll(`.q-match-row[data-ex="${exId}"]`).forEach(row => checkMatchRow(row));
             updateOverallScore();
         }
 
@@ -412,10 +623,24 @@
                 const feedback = row.querySelector('.feedback');
                 if (feedback) feedback.innerHTML = '';
             });
+            document.querySelectorAll(`.q-row[data-ex="${exId}"]`).forEach(row => {
+                const input = row.querySelector('.ex-input');
+                input.value = '';
+                input.classList.remove('input-correct', 'input-incorrect');
+                const feedback = row.querySelector('.feedback');
+                if (feedback) feedback.innerHTML = '';
+            });
+            document.querySelectorAll(`.q-match-row[data-ex="${exId}"]`).forEach(row => {
+                const select = row.querySelector('.ex-select');
+                select.value = '';
+                select.classList.remove('input-correct', 'input-incorrect');
+                const feedback = row.querySelector('.feedback');
+                if (feedback) feedback.innerHTML = '';
+            });
             updateOverallScore();
         }
 
-        const EXERCISES = ['mcq', 'tf'];
+        const EXERCISES = ['mcq', 'tf', 'vocab-fill', 'vocab-mcq', 'vocab-tr'];
 
         // Check all exercises
         function checkAll() {
@@ -429,24 +654,113 @@
 
         // Calculate and update global score
         function updateOverallScore() {
-            const selectRows = document.querySelectorAll('.q-select-row');
-
-            const totalPoints = selectRows.length;
+            let totalPoints = 0;
             let currentScore = 0;
 
-            selectRows.forEach(row => {
+            document.querySelectorAll('.q-select-row').forEach(row => {
+                totalPoints++;
                 const selectedBtn = row.querySelector('.opt-btn.selected');
                 if (selectedBtn && cleanStr(selectedBtn.dataset.val) === cleanStr(row.dataset.ans)) {
                     currentScore++;
                 }
             });
 
+            document.querySelectorAll('.q-row').forEach(row => {
+                totalPoints++;
+                const input = row.querySelector('.ex-input');
+                if (input.value.trim() && answersMatch(input.value, row.dataset.ans)) {
+                    currentScore++;
+                }
+            });
+
+            document.querySelectorAll('.q-match-row').forEach(row => {
+                totalPoints++;
+                const select = row.querySelector('.ex-select');
+                if (select.value && select.value === row.dataset.ans) {
+                    currentScore++;
+                }
+            });
+
             document.getElementById('score-val').textContent = currentScore;
             document.getElementById('total-val').textContent = totalPoints;
-            const percentage = Math.round((currentScore / totalPoints) * 100);
+            const percentage = totalPoints ? Math.round((currentScore / totalPoints) * 100) : 0;
             document.getElementById('percentage-val').textContent = `${percentage}%`;
             document.getElementById('progress-bar').style.width = `${percentage}%`;
         }
+
+        // Translation exercise data: English word -> Russian translation
+        const VOCAB_TR = [
+            ['persuasive', 'убедительный'],
+            ['intonation', 'интонация'],
+            ['recent', 'недавний'],
+            ['study', 'исследование'],
+            ['to back up', 'подкреплять'],
+            ['alternative', 'альтернативный'],
+            ['terminology', 'терминология'],
+            ['aggressive', 'агрессивный'],
+            ['instantly', 'мгновенно'],
+            ['emotive', 'эмоциональный'],
+            ['to persuade', 'убеждать'],
+            ['significantly', 'значительно'],
+            ['impact', 'влияние'],
+        ];
+
+        // Shuffled list of translations for the dropdown options
+        const TR_OPTIONS = ['влияние', 'интонация', 'агрессивный', 'подкреплять', 'недавний', 'эмоциональный', 'терминология', 'убеждать', 'убедительный', 'значительно', 'исследование', 'альтернативный', 'мгновенно'];
+
+        // Render translation matching rows
+        (function renderTranslationRows() {
+            const container = document.getElementById('vocab-tr-rows');
+            VOCAB_TR.forEach(([en, ru], i) => {
+                const row = document.createElement('div');
+                row.className = 'q-match-row p-3 rounded-xl hover:bg-slate-50/70 transition flex items-center gap-3';
+                row.dataset.ex = 'vocab-tr';
+                row.dataset.ans = ru;
+
+                const word = document.createElement('span');
+                word.className = 'font-bold text-slate-800 min-w-24';
+                word.textContent = en;
+
+                const select = document.createElement('select');
+                select.className = 'ex-select flex-1 px-3 py-1.5 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-sm font-medium text-slate-700 bg-white';
+                const placeholder = document.createElement('option');
+                placeholder.value = '';
+                placeholder.textContent = 'перевод…';
+                select.appendChild(placeholder);
+                TR_OPTIONS.forEach(opt => {
+                    const option = document.createElement('option');
+                    option.value = opt;
+                    option.textContent = opt;
+                    select.appendChild(option);
+                });
+
+                const feedback = document.createElement('span');
+                feedback.className = 'feedback';
+
+                row.appendChild(word);
+                row.appendChild(select);
+                row.appendChild(feedback);
+                container.appendChild(row);
+            });
+        })();
+
+        // Auto-check text inputs on typing
+        document.addEventListener('input', (e) => {
+            if (e.target.classList.contains('ex-input')) {
+                const row = e.target.closest('.q-row');
+                if (row) checkRow(row);
+                updateOverallScore();
+            }
+        });
+
+        // Auto-check dropdowns on change
+        document.addEventListener('change', (e) => {
+            if (e.target.classList.contains('ex-select')) {
+                const row = e.target.closest('.q-match-row');
+                if (row) checkMatchRow(row);
+                updateOverallScore();
+            }
+        });
 
         updateOverallScore();
     </script>
