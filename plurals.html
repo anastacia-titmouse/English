@@ -102,7 +102,7 @@
             <div class="flex items-center gap-4 bg-slate-100 p-2 sm:px-4 sm:py-2 rounded-2xl border border-slate-200/80">
                 <div class="text-right">
                     <div class="text-xs font-medium text-slate-500">Результат</div>
-                    <div class="font-extrabold text-brand-600 text-sm sm:text-base"><span id="score-val">0</span> / <span id="total-val">20</span></div>
+                    <div class="font-extrabold text-brand-600 text-sm sm:text-base"><span id="score-val">0</span> / <span id="total-val">26</span></div>
                 </div>
                 <div class="w-24 sm:w-32 bg-slate-200 h-3 rounded-full overflow-hidden">
                     <div id="progress-bar" class="bg-brand-600 h-full w-0 transition-all duration-500 ease-out"></div>
@@ -396,6 +396,83 @@
             </div>
         </section>
 
+        <!-- EXERCISE 4: This is / These are -->
+        <section class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm transition hover:shadow-md">
+            <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-slate-100">
+                <div>
+                    <span class="inline-block px-3 py-1 bg-brand-50 text-brand-700 rounded-lg text-xs font-bold tracking-wide uppercase mb-1">Упражнение 4</span>
+                    <h2 class="text-xl font-bold text-slate-900">This is или These are?</h2>
+                    <p class="text-xs text-slate-400 mt-1">Один предмет — This is, много — These are</p>
+                </div>
+                <div class="flex gap-2">
+                    <button onclick="checkExercise('ex4')" class="px-3 py-1.5 bg-brand-50 text-brand-700 hover:bg-brand-100 font-semibold text-xs rounded-lg transition">Проверить</button>
+                    <button onclick="resetExercise('ex4')" class="px-3 py-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold text-xs rounded-lg transition">Сбросить</button>
+                </div>
+            </div>
+
+            <div class="p-3 rounded-xl bg-slate-50 text-slate-600 mb-4 text-base sm:text-lg">
+                <span class="font-bold text-slate-400 me-1">1.</span><u class="font-semibold text-slate-800">This is</u> my friend.
+                <span class="font-bold text-slate-400 ms-4 me-1">2.</span><u class="font-semibold text-slate-800">These are</u> our friends.
+                <span class="text-xs bg-slate-200 text-slate-700 px-2 py-0.5 rounded-full uppercase ml-2 font-bold">Пример</span>
+            </div>
+
+            <div class="space-y-3 text-base sm:text-lg">
+                <div class="q-select-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="ex4" data-ans="These are">
+                    <span class="font-bold me-1 text-slate-400">3.</span>
+                    <div class="inline-flex gap-1 border border-slate-300 rounded-xl p-1 bg-white">
+                        <button type="button" onclick="selectOption(this)" data-val="This is" class="opt-btn px-3 py-1 rounded-lg border border-transparent font-medium text-slate-700 hover:bg-slate-100">This is</button>
+                        <button type="button" onclick="selectOption(this)" data-val="These are" class="opt-btn px-3 py-1 rounded-lg border border-transparent font-medium text-slate-700 hover:bg-slate-100">These are</button>
+                    </div>
+                    <span>his parents.</span><span class="feedback"></span>
+                </div>
+
+                <div class="q-select-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="ex4" data-ans="This is">
+                    <span class="font-bold me-1 text-slate-400">4.</span>
+                    <div class="inline-flex gap-1 border border-slate-300 rounded-xl p-1 bg-white">
+                        <button type="button" onclick="selectOption(this)" data-val="This is" class="opt-btn px-3 py-1 rounded-lg border border-transparent font-medium text-slate-700 hover:bg-slate-100">This is</button>
+                        <button type="button" onclick="selectOption(this)" data-val="These are" class="opt-btn px-3 py-1 rounded-lg border border-transparent font-medium text-slate-700 hover:bg-slate-100">These are</button>
+                    </div>
+                    <span>their mother.</span><span class="feedback"></span>
+                </div>
+
+                <div class="q-select-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="ex4" data-ans="These are">
+                    <span class="font-bold me-1 text-slate-400">5.</span>
+                    <div class="inline-flex gap-1 border border-slate-300 rounded-xl p-1 bg-white">
+                        <button type="button" onclick="selectOption(this)" data-val="This is" class="opt-btn px-3 py-1 rounded-lg border border-transparent font-medium text-slate-700 hover:bg-slate-100">This is</button>
+                        <button type="button" onclick="selectOption(this)" data-val="These are" class="opt-btn px-3 py-1 rounded-lg border border-transparent font-medium text-slate-700 hover:bg-slate-100">These are</button>
+                    </div>
+                    <span>her cousins.</span><span class="feedback"></span>
+                </div>
+
+                <div class="q-select-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="ex4" data-ans="This is">
+                    <span class="font-bold me-1 text-slate-400">6.</span>
+                    <div class="inline-flex gap-1 border border-slate-300 rounded-xl p-1 bg-white">
+                        <button type="button" onclick="selectOption(this)" data-val="This is" class="opt-btn px-3 py-1 rounded-lg border border-transparent font-medium text-slate-700 hover:bg-slate-100">This is</button>
+                        <button type="button" onclick="selectOption(this)" data-val="These are" class="opt-btn px-3 py-1 rounded-lg border border-transparent font-medium text-slate-700 hover:bg-slate-100">These are</button>
+                    </div>
+                    <span>its ball.</span><span class="feedback"></span>
+                </div>
+
+                <div class="q-select-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="ex4" data-ans="This is">
+                    <span class="font-bold me-1 text-slate-400">7.</span>
+                    <div class="inline-flex gap-1 border border-slate-300 rounded-xl p-1 bg-white">
+                        <button type="button" onclick="selectOption(this)" data-val="This is" class="opt-btn px-3 py-1 rounded-lg border border-transparent font-medium text-slate-700 hover:bg-slate-100">This is</button>
+                        <button type="button" onclick="selectOption(this)" data-val="These are" class="opt-btn px-3 py-1 rounded-lg border border-transparent font-medium text-slate-700 hover:bg-slate-100">These are</button>
+                    </div>
+                    <span>Bob's bike.</span><span class="feedback"></span>
+                </div>
+
+                <div class="q-select-row p-3 rounded-xl hover:bg-slate-50/70 transition flex flex-wrap items-center gap-2" data-ex="ex4" data-ans="These are">
+                    <span class="font-bold me-1 text-slate-400">8.</span>
+                    <div class="inline-flex gap-1 border border-slate-300 rounded-xl p-1 bg-white">
+                        <button type="button" onclick="selectOption(this)" data-val="This is" class="opt-btn px-3 py-1 rounded-lg border border-transparent font-medium text-slate-700 hover:bg-slate-100">This is</button>
+                        <button type="button" onclick="selectOption(this)" data-val="These are" class="opt-btn px-3 py-1 rounded-lg border border-transparent font-medium text-slate-700 hover:bg-slate-100">These are</button>
+                    </div>
+                    <span>Helen's children.</span><span class="feedback"></span>
+                </div>
+            </div>
+        </section>
+
         <!-- Global Action Bottom -->
         <div class="flex justify-center gap-4 py-4">
             <button onclick="checkAll()" class="px-6 py-3 bg-brand-600 hover:bg-brand-700 text-white font-bold text-base rounded-2xl shadow-lg shadow-brand-500/30 transition hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0">
@@ -548,7 +625,7 @@
             updateOverallScore();
         }
 
-        const EXERCISES = ['ex1', 'ex2', 'ex3'];
+        const EXERCISES = ['ex1', 'ex2', 'ex3', 'ex4'];
 
         // Check all exercises
         function checkAll() {
