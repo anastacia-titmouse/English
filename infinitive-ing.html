@@ -558,13 +558,13 @@
             document.getElementById('ex-progress-bar').style.width = `${percentage}%`;
         }
 
-        // Auto-check text inputs on typing
+        // While typing, only clear stale feedback — answers are revealed by the check buttons
         document.addEventListener('input', (e) => {
             if (e.target.classList.contains('ex-input')) {
-                const row = e.target.closest('.q-row');
-                const multi = e.target.closest('.q-multi');
-                if (row) checkRow(row);
-                if (multi) checkMulti(multi);
+                e.target.classList.remove('input-correct', 'input-incorrect');
+                const holder = e.target.closest('.q-row') || e.target.closest('.q-multi');
+                const feedback = holder ? holder.querySelector('.feedback') : null;
+                if (feedback) feedback.innerHTML = '';
                 updateExScore();
             }
         });

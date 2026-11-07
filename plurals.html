@@ -511,8 +511,8 @@
 
             btn.classList.add('selected');
 
-            // Live check row on select
-            checkSelectRow(container);
+            const feedback = container.querySelector('.feedback');
+            if (feedback) feedback.innerHTML = '';
             updateOverallScore();
         }
 
@@ -667,13 +667,13 @@
             document.getElementById('progress-bar').style.width = `${percentage}%`;
         }
 
-        // Auto-check text inputs on typing
+        // While typing, only clear stale feedback — answers are revealed by the check buttons
         document.addEventListener('input', (e) => {
             if (e.target.classList.contains('ex-input')) {
-                const row = e.target.closest('.q-row');
-                if (row) {
-                    checkRow(row);
-                }
+                e.target.classList.remove('input-correct', 'input-incorrect');
+                const holder = e.target.closest('.q-row');
+                const feedback = holder ? holder.querySelector('.feedback') : null;
+                if (feedback) feedback.innerHTML = '';
                 updateOverallScore();
             }
         });

@@ -1302,7 +1302,8 @@
 
             btn.classList.add('selected');
 
-            checkSelectRow(container);
+            const feedback = container.querySelector('.feedback');
+            if (feedback) feedback.innerHTML = '';
             updateExScore();
         }
 
@@ -1592,26 +1593,24 @@
             document.getElementById('ex-progress-bar').style.width = `${percentage}%`;
         }
 
-        // Auto-check text inputs on typing
+        // While typing, only clear stale feedback — answers are revealed by the check buttons
         document.addEventListener('input', (e) => {
             if (e.target.classList.contains('ex-input')) {
-                const row = e.target.closest('.q-row');
-                const multi = e.target.closest('.q-multi');
-                const sort = e.target.closest('.q-sort-row');
-                if (row) checkRow(row);
-                if (multi) checkMulti(multi);
-                if (sort) checkSortRow(sort);
+                e.target.classList.remove('input-correct', 'input-incorrect');
+                const holder = e.target.closest('.q-row') || e.target.closest('.q-multi') || e.target.closest('.q-sort-row');
+                const feedback = holder ? holder.querySelector('.feedback') : null;
+                if (feedback) feedback.innerHTML = '';
                 updateExScore();
             }
         });
 
-        // Auto-check dropdowns on change
+        // Dropdowns: only clear stale feedback on change — answers are revealed by the check buttons
         document.addEventListener('change', (e) => {
             if (e.target.classList.contains('ex-select')) {
-                const row = e.target.closest('.q-match-row');
-                const sort = e.target.closest('.q-sort-row');
-                if (row) checkMatchRow(row);
-                if (sort) checkSortRow(sort);
+                e.target.classList.remove('input-correct', 'input-incorrect');
+                const holder = e.target.closest('.q-match-row') || e.target.closest('.q-sort-row');
+                const feedback = holder ? holder.querySelector('.feedback') : null;
+                if (feedback) feedback.innerHTML = '';
                 updateExScore();
             }
         });

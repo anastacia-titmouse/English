@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grammar Test — Gerunds, Past Modals, Preferences</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .input-correct {
+            border-color: #22c55e !important;
+            background-color: #f0fdf4 !important;
+            color: #15803d !important;
+        }
+        .input-incorrect {
+            border-color: #ef4444 !important;
+            background-color: #fef2f2 !important;
+            color: #b91c1c !important;
+        }
+        .correct-badge {
+            display: inline-flex;
+            align-items: center;
+            color: #16a34a;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-left: 0.5rem;
+        }
+        .incorrect-badge {
+            display: inline-flex;
+            align-items: center;
+            color: #dc2626;
+            font-weight: 600;
+            font-size: 0.875rem;
+            margin-left: 0.5rem;
+        }
+        .opt-btn {
+            transition: all 0.15s ease-in-out;
+        }
+        .opt-btn.selected {
+            border-color: #2563eb !important;
+            background-color: #eff6ff !important;
+            color: #1d4ed8 !important;
+            font-weight: 700;
+        }
+        .opt-btn.correct-opt {
+            border-color: #22c55e !important;
+            background-color: #f0fdf4 !important;
+            color: #15803d !important;
+            font-weight: 700 !important;
+        }
+        .opt-btn.incorrect-opt {
+            border-color: #ef4444 !important;
+            background-color: #fef2f2 !important;
+            color: #b91c1c !important;
+            text-decoration: line-through;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-slate-800 h-full flex flex-col selection:bg-brand-500 selection:text-white">
+
+    <!-- Header -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
+                    <i class="fa-solid fa-clipboard-check text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg text-slate-900 leading-tight">Grammar Test</h1>
+                    <p class="text-xs text-slate-500">Gerunds &amp; infinitives · Past modals · Would rather / Had better</p>
+                </div>
+            </div>
+            <a href="index.html" class="text-sm font-semibold text-brand-600 hover:text-brand-700 transition">
+                <i class="fa-solid fa-house me-1"></i>На главную
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-8">
+
+        <!-- Intro -->
+        <div class="text-center mb-8">
+            <p class="text-sm font-bold text-brand-600 uppercase tracking-wider mb-2">Итоговый тест</p>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight mb-3">Проверь себя по трём темам</h2>
+            <div class="text-slate-600 max-w-2xl mx-auto text-sm sm:text-base space-y-1">
+                <p><b>Gerund / Infinitive:</b> enjoy <u>doing</u> · want <u>to do</u> · make/let <u>do</u></p>
+                <p><b>Past modals:</b> must / might / can't <u>have done</u> · should <u>have done</u></p>
+                <p><b>Preferences:</b> I'd rather <u>stay</u> · I'd prefer <u>to stay</u> · You'd better <u>take</u></p>
+            </div>
+        </div>
+
+        <!-- Control panel -->
+        <div class="flex flex-wrap items-center justify-between gap-4 bg-white p-4 rounded-2xl border border-slate-200/80 shadow-sm mb-8">
+            <div class="flex items-center gap-3 bg-slate-100 px-4 py-2 rounded-2xl border border-slate-200/80">
+                <div class="text-xs font-medium text-slate-500">Результат</div>
+                <div class="font-extrabold text-brand-600 text-sm"><span id="ex-score-val">0</span> / <span id="ex-total-val">0</span></div>
+                <div class="w-24 sm:w-32 bg-slate-200 h-3 rounded-full overflow-hidden">
+                    <div id="ex-progress-bar" class="bg-brand-600 h-full w-0 transition-all duration-500 ease-out"></div>
+                </div>
+                <div class="text-xs font-bold text-slate-700 w-9 text-right" id="ex-percentage-val">0%</div>
+            </div>
+            <div class="flex gap-2">
+                <button onclick="checkAllExercises()" class="px-4 py-2 bg-brand-600 hover:bg-brand-700 text-white font-semibold text-sm rounded-xl transition shadow-sm hover:shadow active:scale-95">
+                    <i class="fa-solid fa-check me-2"></i>Проверить всё
+                </button>
+                <button onclick="resetAllExercises()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm rounded-xl transition active:scale-95">
+                    <i class="fa-solid fa-rotate-right me-2"></i>Сбросить всё
+                </button>
+            </div>
+        </div>
+
+        <div class="space-y-8">
+
+            <!-- EX A: Multiple choice -->
+            <section class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm transition hover:shadow-md">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-slate-100">
+                    <div>
+                        <span class="inline-block px-3 py-1 bg-brand-50 text-brand-700 rounded-lg text-xs font-bold tracking-wide uppercase mb-1">Задание A</span>
+                        <h2 class="text-xl font-bold text-slate-900">Выбери правильный вариант</h2>
+                        <p class="text-xs text-slate-400 mt-1">Нажми на правильный вариант ответа, потом — «Проверить»</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="checkExercise('exA')" class="px-3 py-1.5 bg-brand-50 text-brand-700 hover:bg-brand-100 font-semibold text-xs rounded-lg transition">Проверить</button>
+                        <button onclick="resetExercise('exA')" class="px-3 py-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold text-xs rounded-lg transition">Сбросить</button>
+                    </div>
+                </div>
+                <div class="space-y-4">
+
+                    <div class="q-select-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exA" data-ans="listening">
+                        <p class="text-slate-700 text-sm sm:text-base mb-2"><span class="font-extrabold text-brand-600 me-1">1.</span>I enjoy ___ to music when I'm sad.</p>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <button type="button" onclick="selectOption(this)" data-val="listening" class="opt-btn px-3 py-1 rounded-lg border-2 border-slate-200 font-medium text-slate-700 hover:bg-slate-100">listening</button>
+                            <button type="button" onclick="selectOption(this)" data-val="to listen" class="opt-btn px-3 py-1 rounded-lg border-2 border-slate-200 font-medium text-slate-700 hover:bg-slate-100">to listen</button>
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-select-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exA" data-ans="to buy">
+                        <p class="text-slate-700 text-sm sm:text-base mb-2"><span class="font-extrabold text-brand-600 me-1">2.</span>They can't afford ___ a new car this year.</p>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <button type="button" onclick="selectOption(this)" data-val="buying" class="opt-btn px-3 py-1 rounded-lg border-2 border-slate-200 font-medium text-slate-700 hover:bg-slate-100">buying</button>
+                            <button type="button" onclick="selectOption(this)" data-val="to buy" class="opt-btn px-3 py-1 rounded-lg border-2 border-slate-200 font-medium text-slate-700 hover:bg-slate-100">to buy</button>
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-select-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exA" data-ans="take">
+                        <p class="text-slate-700 text-sm sm:text-base mb-2"><span class="font-extrabold text-brand-600 me-1">3.</span>You'd better ___ an umbrella — it might rain.</p>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <button type="button" onclick="selectOption(this)" data-val="take" class="opt-btn px-3 py-1 rounded-lg border-2 border-slate-200 font-medium text-slate-700 hover:bg-slate-100">take</button>
+                            <button type="button" onclick="selectOption(this)" data-val="to take" class="opt-btn px-3 py-1 rounded-lg border-2 border-slate-200 font-medium text-slate-700 hover:bg-slate-100">to take</button>
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-select-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exA" data-ans="seeing">
+                        <p class="text-slate-700 text-sm sm:text-base mb-2"><span class="font-extrabold text-brand-600 me-1">4.</span>I'll never forget ___ the Grand Canyon for the first time.</p>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <button type="button" onclick="selectOption(this)" data-val="to see" class="opt-btn px-3 py-1 rounded-lg border-2 border-slate-200 font-medium text-slate-700 hover:bg-slate-100">to see</button>
+                            <button type="button" onclick="selectOption(this)" data-val="seeing" class="opt-btn px-3 py-1 rounded-lg border-2 border-slate-200 font-medium text-slate-700 hover:bg-slate-100">seeing</button>
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-select-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exA" data-ans="gone">
+                        <p class="text-slate-700 text-sm sm:text-base mb-2"><span class="font-extrabold text-brand-600 me-1">5.</span>She can't have ___ to work — her car is still here.</p>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <button type="button" onclick="selectOption(this)" data-val="went" class="opt-btn px-3 py-1 rounded-lg border-2 border-slate-200 font-medium text-slate-700 hover:bg-slate-100">went</button>
+                            <button type="button" onclick="selectOption(this)" data-val="gone" class="opt-btn px-3 py-1 rounded-lg border-2 border-slate-200 font-medium text-slate-700 hover:bg-slate-100">gone</button>
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-select-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exA" data-ans="stay">
+                        <p class="text-slate-700 text-sm sm:text-base mb-2"><span class="font-extrabold text-brand-600 me-1">6.</span>I'd rather ___ at home tonight.</p>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <button type="button" onclick="selectOption(this)" data-val="stay" class="opt-btn px-3 py-1 rounded-lg border-2 border-slate-200 font-medium text-slate-700 hover:bg-slate-100">stay</button>
+                            <button type="button" onclick="selectOption(this)" data-val="to stay" class="opt-btn px-3 py-1 rounded-lg border-2 border-slate-200 font-medium text-slate-700 hover:bg-slate-100">to stay</button>
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-select-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exA" data-ans="taking">
+                        <p class="text-slate-700 text-sm sm:text-base mb-2"><span class="font-extrabold text-brand-600 me-1">7.</span>We suggest ___ a taxi to the airport tomorrow.</p>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <button type="button" onclick="selectOption(this)" data-val="to take" class="opt-btn px-3 py-1 rounded-lg border-2 border-slate-200 font-medium text-slate-700 hover:bg-slate-100">to take</button>
+                            <button type="button" onclick="selectOption(this)" data-val="taking" class="opt-btn px-3 py-1 rounded-lg border-2 border-slate-200 font-medium text-slate-700 hover:bg-slate-100">taking</button>
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-select-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exA" data-ans="left">
+                        <p class="text-slate-700 text-sm sm:text-base mb-2"><span class="font-extrabold text-brand-600 me-1">8.</span>He must have ___ his phone at Anna's — he definitely had it there.</p>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <button type="button" onclick="selectOption(this)" data-val="leave" class="opt-btn px-3 py-1 rounded-lg border-2 border-slate-200 font-medium text-slate-700 hover:bg-slate-100">leave</button>
+                            <button type="button" onclick="selectOption(this)" data-val="left" class="opt-btn px-3 py-1 rounded-lg border-2 border-slate-200 font-medium text-slate-700 hover:bg-slate-100">left</button>
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- EX B: Open the brackets -->
+            <section class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm transition hover:shadow-md">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-slate-100">
+                    <div>
+                        <span class="inline-block px-3 py-1 bg-brand-50 text-brand-700 rounded-lg text-xs font-bold tracking-wide uppercase mb-1">Задание B</span>
+                        <h2 class="text-xl font-bold text-slate-900">Раскрой скобки</h2>
+                        <p class="text-xs text-slate-400 mt-1">Поставь глагол в скобках в правильную форму</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="checkExercise('exB')" class="px-3 py-1.5 bg-brand-50 text-brand-700 hover:bg-brand-100 font-semibold text-xs rounded-lg transition">Проверить</button>
+                        <button onclick="resetExercise('exB')" class="px-3 py-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold text-xs rounded-lg transition">Сбросить</button>
+                    </div>
+                </div>
+                <div class="space-y-4">
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exB" data-ans="taking">
+                        <div class="flex flex-wrap items-center gap-2 text-base sm:text-lg">
+                            <span><span class="font-extrabold text-brand-600 me-1">1.</span>I suggest</span>
+                            <input type="text" class="ex-input flex-1 min-w-40 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="...">
+                            <span>(take) a taxi to the station tomorrow.</span>
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exB" data-ans="to help">
+                        <div class="flex flex-wrap items-center gap-2 text-base sm:text-lg">
+                            <span><span class="font-extrabold text-brand-600 me-1">2.</span>She promised</span>
+                            <input type="text" class="ex-input flex-1 min-w-40 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="...">
+                            <span>(help) me with the report.</span>
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exB" data-ans="go">
+                        <div class="flex flex-wrap items-center gap-2 text-base sm:text-lg">
+                            <span><span class="font-extrabold text-brand-600 me-1">3.</span>You'd better not</span>
+                            <input type="text" class="ex-input flex-1 min-w-40 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="...">
+                            <span>(go) to work with such a cold.</span>
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exB" data-ans="didn't touch|did not touch">
+                        <div class="flex flex-wrap items-center gap-2 text-base sm:text-lg">
+                            <span><span class="font-extrabold text-brand-600 me-1">4.</span>I'd rather you</span>
+                            <input type="text" class="ex-input flex-1 min-w-40 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="...">
+                            <span>(not touch) my laptop.</span>
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exB" data-ans="forgotten|forgot">
+                        <div class="flex flex-wrap items-center gap-2 text-base sm:text-lg">
+                            <span><span class="font-extrabold text-brand-600 me-1">5.</span>He isn't here. He must have</span>
+                            <input type="text" class="ex-input flex-1 min-w-40 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="...">
+                            <span>(forget) about the meeting.</span>
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exB" data-ans="told">
+                        <div class="flex flex-wrap items-center gap-2 text-base sm:text-lg">
+                            <span><span class="font-extrabold text-brand-600 me-1">6.</span>You should have</span>
+                            <input type="text" class="ex-input flex-1 min-w-40 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="...">
+                            <span>(tell) me earlier about the party.</span>
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exB" data-ans="cleaning|to be cleaned">
+                        <div class="flex flex-wrap items-center gap-2 text-base sm:text-lg">
+                            <span><span class="font-extrabold text-brand-600 me-1">7.</span>The car needs</span>
+                            <input type="text" class="ex-input flex-1 min-w-40 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="...">
+                            <span>(clean). It's really dirty!</span>
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exB" data-ans="tidy">
+                        <div class="flex flex-wrap items-center gap-2 text-base sm:text-lg">
+                            <span><span class="font-extrabold text-brand-600 me-1">8.</span>My parents made me</span>
+                            <input type="text" class="ex-input flex-1 min-w-40 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="...">
+                            <span>(tidy) my room every Saturday.</span>
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- EX C: Use of English -->
+            <section class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm transition hover:shadow-md">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-slate-100">
+                    <div>
+                        <span class="inline-block px-3 py-1 bg-brand-50 text-brand-700 rounded-lg text-xs font-bold tracking-wide uppercase mb-1">Задание C</span>
+                        <h2 class="text-xl font-bold text-slate-900">Use of English: перефразируй предложение</h2>
+                        <p class="text-xs text-slate-400 mt-1">Допиши второе предложение (2–5 слов), используя слово в рамке, чтобы смысл не изменился</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="checkExercise('exC')" class="px-3 py-1.5 bg-brand-50 text-brand-700 hover:bg-brand-100 font-semibold text-xs rounded-lg transition">Проверить</button>
+                        <button onclick="resetExercise('exC')" class="px-3 py-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold text-xs rounded-lg transition">Сбросить</button>
+                    </div>
+                </div>
+                <div class="space-y-4">
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exC" data-ans="'d better ask|had better ask">
+                        <p class="text-slate-600 text-sm sm:text-base mb-2"><span class="font-extrabold text-brand-600 me-1">1.</span>You should ask someone to help you with your project.</p>
+                        <div class="flex flex-wrap items-center gap-2 text-base sm:text-lg">
+                            <span class="px-2.5 py-1 bg-amber-100 text-amber-800 rounded-lg text-sm font-extrabold">better</span>
+                            <span>You</span>
+                            <input type="text" class="ex-input flex-1 min-w-56 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="...">
+                            <span>someone to help you with your project.</span>
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exC" data-ans="wish I hadn't eaten|wish I had not eaten">
+                        <p class="text-slate-600 text-sm sm:text-base mb-2"><span class="font-extrabold text-brand-600 me-1">2.</span>I ate too much ice cream and now I don't feel well.</p>
+                        <div class="flex flex-wrap items-center gap-2 text-base sm:text-lg">
+                            <span class="px-2.5 py-1 bg-amber-100 text-amber-800 rounded-lg text-sm font-extrabold">wish</span>
+                            <span>I</span>
+                            <input type="text" class="ex-input flex-1 min-w-56 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="...">
+                            <span>so much ice cream.</span>
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exC" data-ans="rather not cook">
+                        <p class="text-slate-600 text-sm sm:text-base mb-2"><span class="font-extrabold text-brand-600 me-1">3.</span>I don't want to cook dinner tonight.</p>
+                        <div class="flex flex-wrap items-center gap-2 text-base sm:text-lg">
+                            <span class="px-2.5 py-1 bg-amber-100 text-amber-800 rounded-lg text-sm font-extrabold">rather</span>
+                            <span>I'd</span>
+                            <input type="text" class="ex-input flex-1 min-w-56 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="...">
+                            <span>dinner tonight.</span>
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exC" data-ans="might not have been|may not have been">
+                        <p class="text-slate-600 text-sm sm:text-base mb-2"><span class="font-extrabold text-brand-600 me-1">4.</span>Perhaps they weren't invited to the wedding.</p>
+                        <div class="flex flex-wrap items-center gap-2 text-base sm:text-lg">
+                            <span class="px-2.5 py-1 bg-amber-100 text-amber-800 rounded-lg text-sm font-extrabold">might</span>
+                            <span>They</span>
+                            <input type="text" class="ex-input flex-1 min-w-56 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="...">
+                            <span>invited to the wedding.</span>
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exC" data-ans="must have bought">
+                        <p class="text-slate-600 text-sm sm:text-base mb-2"><span class="font-extrabold text-brand-600 me-1">5.</span>I'm sure Lucy has bought a new car. I saw her driving a blue VW Golf!</p>
+                        <div class="flex flex-wrap items-center gap-2 text-base sm:text-lg">
+                            <span class="px-2.5 py-1 bg-amber-100 text-amber-800 rounded-lg text-sm font-extrabold">must</span>
+                            <span>Lucy</span>
+                            <input type="text" class="ex-input flex-1 min-w-56 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="...">
+                            <span>a new car.</span>
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exC" data-ans="can't have been my phone|couldn't have been my phone|could not have been my phone|can not have been my phone">
+                        <p class="text-slate-600 text-sm sm:text-base mb-2"><span class="font-extrabold text-brand-600 me-1">6.</span>It definitely wasn't my phone that rang in the cinema. Mine was on silent.</p>
+                        <div class="flex flex-wrap items-center gap-2 text-base sm:text-lg">
+                            <span class="px-2.5 py-1 bg-amber-100 text-amber-800 rounded-lg text-sm font-extrabold">can't</span>
+                            <span>It</span>
+                            <input type="text" class="ex-input flex-1 min-w-56 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="...">
+                            <span>that rang in the cinema.</span>
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- EX D: Find and correct the mistake -->
+            <section class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm transition hover:shadow-md">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-slate-100">
+                    <div>
+                        <span class="inline-block px-3 py-1 bg-brand-50 text-brand-700 rounded-lg text-xs font-bold tracking-wide uppercase mb-1">Задание D</span>
+                        <h2 class="text-xl font-bold text-slate-900">Найди и исправь ошибку</h2>
+                        <p class="text-xs text-slate-400 mt-1">В каждом предложении одна ошибка. Впиши исправленный вариант (слово или форму глагола)</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="checkExercise('exD')" class="px-3 py-1.5 bg-brand-50 text-brand-700 hover:bg-brand-100 font-semibold text-xs rounded-lg transition">Проверить</button>
+                        <button onclick="resetExercise('exD')" class="px-3 py-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold text-xs rounded-lg transition">Сбросить</button>
+                    </div>
+                </div>
+                <div class="space-y-4">
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exD" data-ans="listening|listening to music">
+                        <p class="text-slate-600 text-sm sm:text-base mb-2"><span class="font-extrabold text-brand-600 me-1">1.</span>I enjoy <span class="underline decoration-rose-400 decoration-2 underline-offset-4">to listen</span> to music when I'm sad.</p>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <input type="text" class="ex-input flex-1 min-w-56 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Исправление...">
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exD" data-ans="take|better take">
+                        <p class="text-slate-600 text-sm sm:text-base mb-2"><span class="font-extrabold text-brand-600 me-1">2.</span>You'd better <span class="underline decoration-rose-400 decoration-2 underline-offset-4">to take</span> an umbrella with you.</p>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <input type="text" class="ex-input flex-1 min-w-56 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Исправление...">
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exD" data-ans="can't have gone|couldn't have gone|cannot have gone|could not have gone|can't|cannot">
+                        <p class="text-slate-600 text-sm sm:text-base mb-2"><span class="font-extrabold text-brand-600 me-1">3.</span>She <span class="underline decoration-rose-400 decoration-2 underline-offset-4">mustn't have gone</span> to work — her car is still here.</p>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <input type="text" class="ex-input flex-1 min-w-56 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Исправление...">
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exD" data-ans="taking|suggested taking|taking a taxi">
+                        <p class="text-slate-600 text-sm sm:text-base mb-2"><span class="font-extrabold text-brand-600 me-1">4.</span>He suggested <span class="underline decoration-rose-400 decoration-2 underline-offset-4">to take</span> a taxi to the airport.</p>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <input type="text" class="ex-input flex-1 min-w-56 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Исправление...">
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exD" data-ans="told|have told">
+                        <p class="text-slate-600 text-sm sm:text-base mb-2"><span class="font-extrabold text-brand-600 me-1">5.</span>You should have <span class="underline decoration-rose-400 decoration-2 underline-offset-4">tell</span> me about the party earlier.</p>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <input type="text" class="ex-input flex-1 min-w-56 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Исправление...">
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exD" data-ans="stay|rather stay">
+                        <p class="text-slate-600 text-sm sm:text-base mb-2"><span class="font-extrabold text-brand-600 me-1">6.</span>I'd rather <span class="underline decoration-rose-400 decoration-2 underline-offset-4">to stay</span> at home tonight.</p>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <input type="text" class="ex-input flex-1 min-w-56 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Исправление...">
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+            <!-- EX E: Translation -->
+            <section class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm transition hover:shadow-md">
+                <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 mb-6 pb-4 border-b border-slate-100">
+                    <div>
+                        <span class="inline-block px-3 py-1 bg-brand-50 text-brand-700 rounded-lg text-xs font-bold tracking-wide uppercase mb-1">Задание E</span>
+                        <h2 class="text-xl font-bold text-slate-900">Переведи на английский</h2>
+                        <p class="text-xs text-slate-400 mt-1">Используй конструкции из трёх тем теста</p>
+                    </div>
+                    <div class="flex gap-2">
+                        <button onclick="checkExercise('exE')" class="px-3 py-1.5 bg-brand-50 text-brand-700 hover:bg-brand-100 font-semibold text-xs rounded-lg transition">Проверить</button>
+                        <button onclick="resetExercise('exE')" class="px-3 py-1.5 bg-slate-100 text-slate-600 hover:bg-slate-200 font-semibold text-xs rounded-lg transition">Сбросить</button>
+                    </div>
+                </div>
+                <div class="space-y-4">
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exE" data-ans="I enjoy listening to music in the evening|I like listening to music in the evening">
+                        <p class="text-slate-600 text-sm sm:text-base mb-2"><span class="font-extrabold text-brand-600 me-1">1.</span>Мне нравится слушать музыку по вечерам.</p>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <input type="text" class="ex-input flex-1 min-w-56 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Перевод...">
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exE" data-ans="You'd better take an umbrella it might rain|You had better take an umbrella it might rain|You'd better take an umbrella because it might rain|You had better take an umbrella because it might rain">
+                        <p class="text-slate-600 text-sm sm:text-base mb-2"><span class="font-extrabold text-brand-600 me-1">2.</span>Тебе лучше взять зонт — может пойти дождь.</p>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <input type="text" class="ex-input flex-1 min-w-56 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Перевод...">
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exE" data-ans="She must have forgotten about the meeting|She must have forgot about the meeting">
+                        <p class="text-slate-600 text-sm sm:text-base mb-2"><span class="font-extrabold text-brand-600 me-1">3.</span>Она, должно быть, забыла о встрече.</p>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <input type="text" class="ex-input flex-1 min-w-56 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Перевод...">
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exE" data-ans="I'd rather stay at home tonight|I would rather stay at home tonight|I'd prefer to stay at home tonight|I would prefer to stay at home tonight">
+                        <p class="text-slate-600 text-sm sm:text-base mb-2"><span class="font-extrabold text-brand-600 me-1">4.</span>Я бы предпочёл остаться дома сегодня вечером.</p>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <input type="text" class="ex-input flex-1 min-w-56 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Перевод...">
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exE" data-ans="You should have told me about it earlier|You ought to have told me about it earlier|You should have told me earlier">
+                        <p class="text-slate-600 text-sm sm:text-base mb-2"><span class="font-extrabold text-brand-600 me-1">5.</span>Тебе следовало сказать мне об этом раньше.</p>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <input type="text" class="ex-input flex-1 min-w-56 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Перевод...">
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                    <div class="q-row p-4 rounded-2xl hover:bg-slate-50/70 transition" data-ex="exE" data-ans="I'll never forget going to Venice as a child|I will never forget going to Venice as a child">
+                        <p class="text-slate-600 text-sm sm:text-base mb-2"><span class="font-extrabold text-brand-600 me-1">6.</span>Я никогда не забуду свою поездку в Венецию в детстве.</p>
+                        <div class="flex flex-wrap items-center gap-2">
+                            <input type="text" class="ex-input flex-1 min-w-56 px-3 py-1 border-2 border-slate-300 rounded-xl focus:border-brand-500 focus:outline-none transition text-base font-medium" placeholder="Перевод...">
+                            <span class="feedback"></span>
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+
+        </div>
+    </main>
+
+    <footer class="border-t border-slate-200 bg-white mt-10">
+        <div class="max-w-4xl mx-auto px-4 py-5 text-xs text-slate-500 flex items-center justify-between">
+            <span>English Lessons · Grammar Test</span>
+            <a href="index.html" class="font-semibold text-brand-600 hover:text-brand-700 transition">На главную</a>
+        </div>
+    </footer>
+
+    <!-- Exercises Logic Script -->
+    <script>
+        // Clean text string for easy comparison (strip extra spaces & punctuation)
+        function cleanStr(str) {
+            return str.trim()
+                .replace(/\s+/g, ' ')
+                .replace(/[.,!?«»"'’—–-]/g, '')
+                .toLowerCase();
+        }
+
+        // Compare user answer with target; several correct variants are separated by '|'
+        function answersMatch(userVal, targetAns) {
+            return targetAns.split('|').some(ans => cleanStr(userVal) === cleanStr(ans));
+        }
+
+        // Click selection option (no instant check — answers are revealed by the check buttons)
+        function selectOption(btn) {
+            const container = btn.closest('.q-select-row');
+            const buttons = container.querySelectorAll('.opt-btn');
+
+            buttons.forEach(b => {
+                b.classList.remove('selected', 'correct-opt', 'incorrect-opt');
+            });
+
+            btn.classList.add('selected');
+
+            const feedback = container.querySelector('.feedback');
+            if (feedback) feedback.innerHTML = '';
+            updateExScore();
+        }
+
+        // Evaluate single input element
+        function evaluateInput(input, targetAnswer) {
+            const userVal = input.value;
+
+            if (!userVal.trim()) {
+                input.classList.remove('input-correct', 'input-incorrect');
+                return null;
+            }
+
+            const isCorrect = answersMatch(userVal, targetAnswer);
+
+            if (isCorrect) {
+                input.classList.add('input-correct');
+                input.classList.remove('input-incorrect');
+            } else {
+                input.classList.add('input-incorrect');
+                input.classList.remove('input-correct');
+            }
+
+            return isCorrect;
+        }
+
+        // Check single input row
+        function checkRow(row) {
+            const input = row.querySelector('.ex-input');
+            const targetAns = row.dataset.ans;
+            const feedback = row.querySelector('.feedback');
+
+            const result = evaluateInput(input, targetAns);
+
+            if (result === true) {
+                feedback.innerHTML = `<span class="correct-badge"><i class="fa-solid fa-check me-1"></i> Верно</span>`;
+            } else if (result === false) {
+                feedback.innerHTML = `<span class="incorrect-badge"><i class="fa-solid fa-xmark me-1"></i> (Правильно: ${targetAns.split('|')[0]})</span>`;
+            } else {
+                feedback.innerHTML = '';
+            }
+
+            return result;
+        }
+
+        // Check select option row
+        function checkSelectRow(row) {
+            const selectedBtn = row.querySelector('.opt-btn.selected');
+            const targetAns = row.dataset.ans;
+            const feedback = row.querySelector('.feedback');
+            const buttons = row.querySelectorAll('.opt-btn');
+
+            buttons.forEach(b => b.classList.remove('correct-opt', 'incorrect-opt'));
+
+            if (!selectedBtn) {
+                feedback.innerHTML = '';
+                return null;
+            }
+
+            const isCorrect = cleanStr(selectedBtn.dataset.val) === cleanStr(targetAns);
+
+            if (isCorrect) {
+                selectedBtn.classList.add('correct-opt');
+                feedback.innerHTML = `<span class="correct-badge"><i class="fa-solid fa-check me-1"></i> Верно</span>`;
+            } else {
+                selectedBtn.classList.add('incorrect-opt');
+                buttons.forEach(b => {
+                    if (cleanStr(b.dataset.val) === cleanStr(targetAns)) {
+                        b.classList.add('correct-opt');
+                    }
+                });
+                feedback.innerHTML = `<span class="incorrect-badge"><i class="fa-solid fa-xmark me-1"></i> (Правильно: ${targetAns})</span>`;
+            }
+
+            return isCorrect;
+        }
+
+        // Check specific exercise
+        function checkExercise(exId) {
+            document.querySelectorAll(`.q-row[data-ex="${exId}"]`).forEach(row => checkRow(row));
+            document.querySelectorAll(`.q-select-row[data-ex="${exId}"]`).forEach(row => checkSelectRow(row));
+
+            updateExScore();
+        }
+
+        // Reset specific exercise
+        function resetExercise(exId) {
+            document.querySelectorAll(`.q-row[data-ex="${exId}"]`).forEach(row => {
+                const input = row.querySelector('.ex-input');
+                if (input) {
+                    input.value = '';
+                    input.classList.remove('input-correct', 'input-incorrect');
+                }
+                const feedback = row.querySelector('.feedback');
+                if (feedback) feedback.innerHTML = '';
+            });
+
+            document.querySelectorAll(`.q-select-row[data-ex="${exId}"]`).forEach(row => {
+                row.querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected', 'correct-opt', 'incorrect-opt'));
+                const feedback = row.querySelector('.feedback');
+                if (feedback) feedback.innerHTML = '';
+            });
+
+            updateExScore();
+        }
+
+        const EXERCISES = ['exA', 'exB', 'exC', 'exD', 'exE'];
+
+        function checkAllExercises() {
+            EXERCISES.forEach(exId => checkExercise(exId));
+        }
+
+        function resetAllExercises() {
+            EXERCISES.forEach(exId => resetExercise(exId));
+        }
+
+        // Calculate and update exercises score
+        function updateExScore() {
+            let totalPoints = 0;
+            let currentScore = 0;
+
+            document.querySelectorAll('.q-row').forEach(row => {
+                totalPoints++;
+                const input = row.querySelector('.ex-input');
+                if (input.value.trim() && answersMatch(input.value, row.dataset.ans)) {
+                    currentScore++;
+                }
+            });
+
+            document.querySelectorAll('.q-select-row').forEach(row => {
+                totalPoints++;
+                const selectedBtn = row.querySelector('.opt-btn.selected');
+                if (selectedBtn && cleanStr(selectedBtn.dataset.val) === cleanStr(row.dataset.ans)) {
+                    currentScore++;
+                }
+            });
+
+            document.getElementById('ex-score-val').textContent = currentScore;
+            document.getElementById('ex-total-val').textContent = totalPoints;
+            const percentage = totalPoints ? Math.round((currentScore / totalPoints) * 100) : 0;
+            document.getElementById('ex-percentage-val').textContent = `${percentage}%`;
+            document.getElementById('ex-progress-bar').style.width = `${percentage}%`;
+        }
+
+        // While typing, only clear stale feedback — answers are revealed by the check buttons
+        document.addEventListener('input', (e) => {
+            if (e.target.classList.contains('ex-input')) {
+                e.target.classList.remove('input-correct', 'input-incorrect');
+                const holder = e.target.closest('.q-row');
+                const feedback = holder ? holder.querySelector('.feedback') : null;
+                if (feedback) feedback.innerHTML = '';
+                updateExScore();
+            }
+        });
+
+        updateExScore();
+    </script>
+</body>
+</html>
