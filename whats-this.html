@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="ru" class="h-full bg-slate-50">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>What's this? - Карточки a / an</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Plus Jakarta Sans', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            500: '#3b82f6',
+                            600: '#2563eb',
+                            700: '#1d4ed8',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .card-scene {
+            perspective: 1200px;
+        }
+        .card-inner {
+            transform-style: preserve-3d;
+            transition: transform 0.55s cubic-bezier(0.4, 0.2, 0.2, 1);
+        }
+        .card-inner.flipped {
+            transform: rotateY(180deg);
+        }
+        .card-face {
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+        .card-back {
+            transform: rotateY(180deg);
+        }
+    </style>
+</head>
+<body class="font-sans antialiased text-slate-800 h-full flex flex-col selection:bg-brand-500 selection:text-white">
+
+    <!-- Sticky Header with Score Tracker -->
+    <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-brand-600 flex items-center justify-center text-white shadow-md shadow-brand-500/20">
+                    <i class="fa-solid fa-shapes text-lg"></i>
+                </div>
+                <div>
+                    <h1 class="font-bold text-lg text-slate-900 leading-tight">What's this?</h1>
+                    <p class="text-xs text-slate-500">Карточки: называем предметы и учим a / an</p>
+                </div>
+            </div>
+
+            <!-- Score Board -->
+            <div class="flex items-center gap-3 sm:gap-4">
+                <div class="flex items-center gap-2 bg-emerald-50 border border-emerald-200 px-3 py-1.5 rounded-xl">
+                    <i class="fa-solid fa-check text-emerald-600"></i>
+                    <span class="font-extrabold text-emerald-700" id="known-val">0</span>
+                </div>
+                <div class="flex items-center gap-2 bg-rose-50 border border-rose-200 px-3 py-1.5 rounded-xl">
+                    <i class="fa-solid fa-xmark text-rose-600"></i>
+                    <span class="font-extrabold text-rose-700" id="wrong-val">0</span>
+                </div>
+                <div class="flex items-center gap-2 bg-slate-100 border border-slate-200 px-3 py-1.5 rounded-xl">
+                    <i class="fa-solid fa-cards-blank text-slate-500"></i>
+                    <span class="font-extrabold text-slate-700" id="left-val">6</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content Area -->
+    <main class="flex-1 max-w-4xl w-full mx-auto px-4 sm:px-6 py-8 flex flex-col items-center gap-8">
+
+        <!-- Question under the header -->
+        <div class="flex items-center gap-3 bg-white border border-slate-200 rounded-2xl shadow-sm px-6 py-4">
+            <div class="w-9 h-9 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center shrink-0">
+                <i class="fa-solid fa-question"></i>
+            </div>
+            <div>
+                <div class="text-xl sm:text-2xl font-extrabold text-slate-900">What's this?</div>
+                <div class="text-xs text-slate-400 font-medium">Что это? Ответь: It's a / an ... — и переверни карточку</div>
+            </div>
+        </div>
+
+        <!-- Card -->
+        <div id="card-zone" class="w-full max-w-lg">
+            <div class="card-scene w-full h-80 sm:h-96 cursor-pointer select-none" id="card-scene" title="Нажми, чтобы перевернуть">
+                <div class="card-inner relative w-full h-full" id="card-inner">
+
+                    <!-- Front: picture -->
+                    <div class="card-face absolute inset-0 bg-white rounded-3xl border border-slate-200 shadow-lg flex flex-col items-center justify-center gap-4 p-8">
+                        <span class="text-xs font-bold uppercase tracking-widest text-slate-400">What's this?</span>
+                        <div id="front-picture" class="w-40 h-40 sm:w-48 sm:h-48 flex items-center justify-center"></div>
+                        <div class="flex items-center gap-2 text-sm text-slate-400 font-medium">
+                            <i class="fa-solid fa-hand-pointer"></i>
+                            <span>Нажми на карточку, чтобы проверить себя</span>
+                        </div>
+                    </div>
+
+                    <!-- Back: answer -->
+                    <div class="card-face card-back absolute inset-0 bg-gradient-to-br from-brand-600 to-indigo-700 rounded-3xl shadow-lg flex flex-col items-center justify-center gap-4 p-8 text-white">
+                        <div class="text-xs font-bold uppercase tracking-widest text-brand-100">Ответ</div>
+                        <div class="text-4xl sm:text-5xl font-extrabold text-center" id="back-answer">It's a pen.</div>
+                        <div class="text-sm text-brand-100 font-medium text-center" id="back-translation">Это ручка.</div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Controls: front state -->
+        <div id="controls-front" class="flex flex-col items-center gap-3">
+            <button onclick="flipCard()" class="px-8 py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-base rounded-2xl shadow-lg shadow-brand-500/30 transition hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0">
+                <i class="fa-solid fa-rotate me-2"></i>Показать ответ
+            </button>
+            <p class="text-xs text-slate-400">или нажми <b>Пробел</b></p>
+        </div>
+
+        <!-- Controls: back state (self-check) -->
+        <div id="controls-back" class="hidden flex-col items-center gap-3">
+            <p class="text-sm font-semibold text-slate-600">Ты ответил правильно?</p>
+            <div class="flex gap-4">
+                <button onclick="markWrong()" class="px-6 py-3.5 bg-rose-500 hover:bg-rose-600 text-white font-bold text-base rounded-2xl shadow-lg shadow-rose-500/30 transition hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0">
+                    <i class="fa-solid fa-xmark me-2"></i>Не знал
+                </button>
+                <button onclick="markKnown()" class="px-6 py-3.5 bg-emerald-500 hover:bg-emerald-600 text-white font-bold text-base rounded-2xl shadow-lg shadow-emerald-500/30 transition hover:shadow-xl hover:-translate-y-0.5 active:translate-y-0">
+                    <i class="fa-solid fa-check me-2"></i>Знал!
+                </button>
+            </div>
+            <p class="text-xs text-slate-400"><b>←</b> не знал · <b>→</b> знал</p>
+        </div>
+
+        <!-- Summary -->
+        <div id="summary" class="hidden w-full max-w-lg bg-white rounded-3xl border border-slate-200 shadow-lg p-8 text-center">
+            <div class="w-16 h-16 mx-auto rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center text-3xl mb-4">
+                <i class="fa-solid fa-star"></i>
+            </div>
+            <h2 class="text-2xl font-extrabold text-slate-900 mb-2">Be a star! ⭐</h2>
+            <p class="text-slate-600 mb-6" id="summary-text"></p>
+            <button onclick="restart()" class="px-8 py-3.5 bg-brand-600 hover:bg-brand-700 text-white font-bold text-base rounded-2xl shadow-lg shadow-brand-500/30 transition hover:shadow-xl active:translate-y-0">
+                <i class="fa-solid fa-rotate-right me-2"></i>Начать заново
+            </button>
+        </div>
+
+        <!-- Bottom controls -->
+        <div class="flex gap-3">
+            <button onclick="restart()" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold text-sm rounded-xl transition active:scale-95">
+                <i class="fa-solid fa-shuffle me-2"></i>Перемешать заново
+            </button>
+        </div>
+
+        <!-- Rule reminder -->
+        <div class="w-full max-w-lg bg-white rounded-3xl border border-slate-200 shadow-sm p-6">
+            <div class="flex items-center gap-2 mb-3">
+                <i class="fa-solid fa-lightbulb text-amber-500"></i>
+                <span class="font-bold text-slate-900">Помни правило!</span>
+            </div>
+            <div class="grid grid-cols-2 gap-3 text-center">
+                <div class="p-3 rounded-xl bg-brand-50 border border-brand-100">
+                    <div class="text-2xl font-extrabold text-brand-700">a</div>
+                    <div class="text-xs text-slate-500 mt-1">перед согласным звуком<br><b class="text-slate-700">a pen, a rubber</b></div>
+                </div>
+                <div class="p-3 rounded-xl bg-rose-50 border border-rose-100">
+                    <div class="text-2xl font-extrabold text-rose-600">an</div>
+                    <div class="text-xs text-slate-500 mt-1">перед гласным звуком<br><b class="text-slate-700">an apple, an orange</b></div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <script>
+        const PICTURES = {
+            pen: `
+                <svg viewBox="0 0 100 100" class="w-full h-full">
+                    <g transform="rotate(45 50 50)">
+                        <rect x="42" y="18" width="16" height="52" rx="4" fill="#22c55e"/>
+                        <rect x="42" y="18" width="16" height="10" rx="3" fill="#16a34a"/>
+                        <polygon points="42,70 58,70 50,88" fill="#f8fafc" stroke="#94a3b8" stroke-width="2"/>
+                        <circle cx="50" cy="82" r="2.5" fill="#475569"/>
+                        <rect x="58" y="24" width="5" height="26" rx="2.5" fill="#94a3b8"/>
+                    </g>
+                </svg>`,
+            rubber: `
+                <svg viewBox="0 0 100 100" class="w-full h-full">
+                    <g transform="rotate(-15 50 50)">
+                        <rect x="15" y="35" width="70" height="34" rx="8" fill="#f9a8d4"/>
+                        <rect x="15" y="35" width="30" height="34" rx="8" fill="#93c5fd"/>
+                        <rect x="41" y="35" width="8" height="34" fill="#f472b6"/>
+                        <rect x="15" y="35" width="70" height="34" rx="8" fill="none" stroke="#e879a9" stroke-width="2"/>
+                    </g>
+                </svg>`,
+            apple: `
+                <svg viewBox="0 0 100 100" class="w-full h-full">
+                    <path d="M50 32 C40 20 20 26 18 48 C16 70 34 88 50 86 C66 88 84 70 82 48 C80 26 60 20 50 32 Z" fill="#ef4444"/>
+                    <path d="M50 32 C46 26 44 20 46 14" stroke="#92400e" stroke-width="4" fill="none" stroke-linecap="round"/>
+                    <path d="M50 22 C58 10 70 12 72 14 C70 22 58 26 50 22 Z" fill="#22c55e"/>
+                    <ellipse cx="34" cy="48" rx="6" ry="10" fill="#fca5a5" opacity="0.8"/>
+                </svg>`,
+            umbrella: `
+                <svg viewBox="0 0 100 100" class="w-full h-full">
+                    <path d="M50 14 C24 14 12 36 12 48 C20 42 26 42 31 48 C37 42 44 42 50 48 C56 42 63 42 69 48 C74 42 80 42 88 48 C88 36 76 14 50 14 Z" fill="#f43f5e"/>
+                    <path d="M50 14 L50 12" stroke="#475569" stroke-width="3" stroke-linecap="round"/>
+                    <line x1="50" y1="14" x2="50" y2="48" stroke="#be123c" stroke-width="2" opacity="0.5"/>
+                    <line x1="31" y1="48" x2="40" y2="20" stroke="#be123c" stroke-width="2" opacity="0.5"/>
+                    <line x1="69" y1="48" x2="60" y2="20" stroke="#be123c" stroke-width="2" opacity="0.5"/>
+                    <path d="M50 48 L50 78 C50 86 42 86 42 79" stroke="#475569" stroke-width="4" fill="none" stroke-linecap="round"/>
+                </svg>`,
+            pencilcase: `
+                <svg viewBox="0 0 100 100" class="w-full h-full">
+                    <rect x="10" y="32" width="80" height="38" rx="12" fill="#3b82f6"/>
+                    <rect x="10" y="42" width="80" height="10" rx="5" fill="#1d4ed8" transform="rotate(0 50 50)"/>
+                    <rect x="10" y="32" width="14" height="38" rx="7" fill="#60a5fa"/>
+                    <rect x="72" y="38" width="10" height="14" rx="4" fill="#fbbf24"/>
+                    <circle cx="77" cy="55" r="3" fill="#f59e0b"/>
+                </svg>`,
+            orange: `
+                <svg viewBox="0 0 100 100" class="w-full h-full">
+                    <circle cx="50" cy="56" r="34" fill="#fb923c"/>
+                    <circle cx="38" cy="48" r="2" fill="#ea580c" opacity="0.4"/>
+                    <circle cx="58" cy="66" r="2" fill="#ea580c" opacity="0.4"/>
+                    <circle cx="62" cy="46" r="2" fill="#ea580c" opacity="0.4"/>
+                    <circle cx="42" cy="68" r="2" fill="#ea580c" opacity="0.4"/>
+                    <circle cx="52" cy="56" r="2" fill="#ea580c" opacity="0.4"/>
+                    <path d="M50 24 C48 18 46 14 47 10" stroke="#92400e" stroke-width="4" fill="none" stroke-linecap="round"/>
+                    <path d="M50 20 C58 8 72 10 74 13 C71 22 58 25 50 20 Z" fill="#22c55e"/>
+                    <ellipse cx="38" cy="46" rx="6" ry="9" fill="#fdba74" opacity="0.8"/>
+                </svg>`
+        };
+
+        const CARDS = [
+            { pic: 'pen',        answer: "It's a pen.",          translation: 'Это ручка.' },
+            { pic: 'rubber',     answer: "It's a rubber.",       translation: 'Это ластик.' },
+            { pic: 'apple',      answer: "It's an apple.",       translation: 'Это яблоко.' },
+            { pic: 'umbrella',   answer: "It's an umbrella.",    translation: 'Это зонт.' },
+            { pic: 'pencilcase', answer: "It's a pencil case.",  translation: 'Это пенал.' },
+            { pic: 'orange',     answer: "It's an orange.",      translation: 'Это апельсин.' }
+        ];
+
+        let deck = [];
+        let flipped = false;
+        let known = 0, wrong = 0;
+
+        const cardScene = document.getElementById('card-scene');
+        const cardInner = document.getElementById('card-inner');
+        const frontPicture = document.getElementById('front-picture');
+        const backAnswer = document.getElementById('back-answer');
+        const backTranslation = document.getElementById('back-translation');
+        const controlsFront = document.getElementById('controls-front');
+        const controlsBack = document.getElementById('controls-back');
+        const summary = document.getElementById('summary');
+        const cardZone = document.getElementById('card-zone');
+
+        function shuffle(arr) {
+            const a = arr.slice();
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        function updateScore() {
+            document.getElementById('known-val').textContent = known;
+            document.getElementById('wrong-val').textContent = wrong;
+            document.getElementById('left-val').textContent = deck.length;
+        }
+
+        function showCard() {
+            const card = deck[0];
+            frontPicture.innerHTML = PICTURES[card.pic];
+            backAnswer.textContent = card.answer;
+            backTranslation.textContent = card.translation;
+            flipped = false;
+            cardInner.classList.remove('flipped');
+            controlsFront.classList.remove('hidden');
+            controlsFront.classList.add('flex');
+            controlsBack.classList.add('hidden');
+            controlsBack.classList.remove('flex');
+            updateScore();
+        }
+
+        function flipCard() {
+            if (deck.length === 0) return;
+            flipped = !flipped;
+            cardInner.classList.toggle('flipped', flipped);
+            if (flipped) {
+                controlsFront.classList.add('hidden');
+                controlsFront.classList.remove('flex');
+                controlsBack.classList.remove('hidden');
+                controlsBack.classList.add('flex');
+            } else {
+                controlsFront.classList.remove('hidden');
+                controlsFront.classList.add('flex');
+                controlsBack.classList.add('hidden');
+                controlsBack.classList.remove('flex');
+            }
+        }
+
+        function nextCard() {
+            deck.shift();
+            if (deck.length === 0) {
+                cardZone.classList.add('hidden');
+                controlsFront.classList.add('hidden');
+                controlsFront.classList.remove('flex');
+                controlsBack.classList.add('hidden');
+                controlsBack.classList.remove('flex');
+                summary.classList.remove('hidden');
+                const total = known + wrong;
+                document.getElementById('summary-text').textContent =
+                    `Ты назвал ${known} из ${total} карточек правильно. ` +
+                    (wrong === 0 ? 'Идеально! You are a star! ⭐' : 'Перемешай колоду и повтори ещё раз!');
+                updateScore();
+            } else {
+                cardInner.classList.remove('flipped');
+                setTimeout(showCard, 200);
+            }
+        }
+
+        function markKnown() { known++; nextCard(); }
+        function markWrong() { wrong++; nextCard(); }
+
+        function restart() {
+            deck = shuffle(CARDS);
+            known = 0;
+            wrong = 0;
+            cardZone.classList.remove('hidden');
+            summary.classList.add('hidden');
+            showCard();
+        }
+
+        cardScene.addEventListener('click', flipCard);
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                flipCard();
+            } else if (flipped && e.code === 'ArrowRight') {
+                markKnown();
+            } else if (flipped && e.code === 'ArrowLeft') {
+                markWrong();
+            }
+        });
+
+        restart();
+    </script>
+</body>
+</html>
